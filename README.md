@@ -12,21 +12,37 @@ input data: the architectural plans of the HCU building(dxf, dwg...)
 
 사용하는 레이어
 AUSBAU - Darstellungen - Dämmung
+
 AUSBAU - Darstellungen - Dämmung-brennbar_B1
+
 AUSBAU - Darstellungen - Doppelbodenschottungen
+
 AUSBAU - Darstellungen - Fassade
+
 AUSBAU - Darstellungen - Fassade-Bemaßung
+
 AUSBAU - Darstellungen - Geländer
+
 AUSBAU - Darstellungen - Stahlbau
+
 AUSBAU - Darstellungen - Trockenbau
+
 AUSBAU - Darstellungen - Akustik
 
+
 AUSBAU - Objekte - Aufzüge
+
 AUSBAU - Objekte - Türen
+
 
 DARSTELLUNGEN - Aufsichtslinien
 
+
 ROHBAU - Darstellungen - Brandwand
+
 ROHBAU - Darstellungen - Treppen
+
 ROHBAU - Darstellungen - Wände
+
 ROHBAU - Darstellungen - Wände - Mauerwerk
+
