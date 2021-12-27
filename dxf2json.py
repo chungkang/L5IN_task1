@@ -40,6 +40,6 @@ def export_geojson(entity, m, index):
 
 idx = 0
 
-for e in msp.query('LINE'):
+for e in msp.query('LWPOLYLINE'):
     export_geojson(e, m, idx)
     idx = idx + 1
