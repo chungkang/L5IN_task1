@@ -1,6 +1,7 @@
 import ezdxf
 import ezdxf.addons.geo as geo
 import json
+from jsonmerge import merge
 
 dxf = "./removed_HCU_D_104_Grundriss_2OG_moved.dxf"
 
@@ -34,12 +35,22 @@ def export_geojson(entity, m, index):
     geo_proxy.map_to_globe()
     # Export GeoJSON data:
     name = entity.dxf.layer + '_' + str(index) + '.geojson'
+
     # with open(TRACK_DATA / name, 'wt', encoding='utf8') as fp:
-    with open(name, 'wt', encoding='utf8') as fp:
-        json.dump(geo_proxy.__geo_interface__, fp, indent=2)
+     with open( name, 'wt', encoding='utf8') as fp:
+         json.dump(geo_proxy.__geo_interface__, fp, indent=2)
+
+    # geojson_str.append(json.dumps(geo_proxy.__geo_interface__))
+    
 
 idx = 0
 
-for e in msp.query('LWPOLYLINE'):
+for e in msp.query('LWPOLYLINE') :
     export_geojson(e, m, idx)
     idx = idx + 1
+
+    if idx ==0:
+        break
+
+# with open( 'testfile.geojson', 'wt', encoding='utf8') as fp:
+#     json.dump(geojson, fp, indent=2)
