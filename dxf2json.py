@@ -35,6 +35,7 @@ geojson_format = {
     "features": []
 }
 
+
 # extract each entity
 for e in msp.query('LWPOLYLINE') :
     # Convert DXF entity into a GeoProxy object:
@@ -50,13 +51,11 @@ for e in msp.query('LWPOLYLINE') :
     # # with open(TRACK_DATA / name, 'wt', encoding='utf8') as fp:
     # with open( name, 'wt', encoding='utf8') as fp:
     #     json.dump(geo_proxy.__geo_interface__, fp, indent=2)
-
-    # print(geo_proxy.__geo_interface__)
     
     each_feature = {
         "type": "Feature",
-        "geometry": geo_proxy.__geo_interface__,
-        "properties": {}
+        "properties": {},
+        "geometry": geo_proxy.__geo_interface__
     }
 
     geojson_format["features"].append(each_feature)
