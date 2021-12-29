@@ -36,7 +36,7 @@ geojson_format = {
 }
 
 # initialize empty list for "features"
-features_list = {}
+features_list = []
 
 # extract each entity
 for e in msp.query('LWPOLYLINE') :
@@ -54,9 +54,11 @@ for e in msp.query('LWPOLYLINE') :
     # with open( name, 'wt', encoding='utf8') as fp:
     #     json.dump(geo_proxy.__geo_interface__, fp, indent=2)
 
+    # print(geo_proxy.__geo_interface__)
+    
     each_feature = {
         "type": "Feature",
-        "geometry": [geo_proxy.__geo_interface__],
+        "geometry": geo_proxy.__geo_interface__,
         "properties": {}
     }
 
@@ -70,10 +72,9 @@ for e in msp.query('LWPOLYLINE') :
 geojson_format["features"] = features_list
 
 print(geojson_format)
-# print(geojson_format)
 
-# with open( 'testfile.geojson', 'wt', encoding='utf8') as fp:
-#     json.dump(geojson_format, fp, indent=2)
+with open( 'testfile.geojson', 'wt', encoding='utf8') as fp:
+    json.dump(geojson_format, fp, indent=2)
 ## features 데이터를 geojson 포맷으로 입력 geometry
 ## {'type': 'Polygon', 'coordinates': [[(32.039104, 47.149722), (32.039094, 47.149752), (32.039104, 47.149722)]]}
 
