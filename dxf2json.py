@@ -35,9 +35,6 @@ geojson_format = {
     "features": []
 }
 
-# initialize empty list for "features"
-features_list = []
-
 # extract each entity
 for e in msp.query('LWPOLYLINE') :
     # Convert DXF entity into a GeoProxy object:
@@ -48,9 +45,9 @@ for e in msp.query('LWPOLYLINE') :
     # representation EPSG:4326
     geo_proxy.map_to_globe()
     # Export GeoJSON data:
-    name = e.dxf.layer + '_' + str(idx) + '.geojson'
+    # name = e.dxf.layer + '_' + str(idx) + '.geojson'
 
-    # with open(TRACK_DATA / name, 'wt', encoding='utf8') as fp:
+    # # with open(TRACK_DATA / name, 'wt', encoding='utf8') as fp:
     # with open( name, 'wt', encoding='utf8') as fp:
     #     json.dump(geo_proxy.__geo_interface__, fp, indent=2)
 
@@ -62,16 +59,18 @@ for e in msp.query('LWPOLYLINE') :
         "properties": {}
     }
 
-    features_list.append(each_feature)
+    geojson_format["features"].append(each_feature)
     
-    idx = idx + 1
+    idx += 1
 
     # if idx ==0:
     #     break
 
-geojson_format["features"] = features_list
+# geojson_format["features"] = features_list
 
-print(geojson_format)
+# print(geojson_format["features"])
+
+# print(geojson_format)
 
 with open( 'testfile.geojson', 'wt', encoding='utf8') as fp:
     json.dump(geojson_format, fp, indent=2)
