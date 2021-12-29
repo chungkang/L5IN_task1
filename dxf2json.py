@@ -2,6 +2,7 @@ import ezdxf
 import ezdxf.addons.geo as geo
 import json
 from jsonmerge import merge
+# import geopandas
 
 dxf = "./removed_HCU_D_104_Grundriss_2OG_moved.dxf"
 
@@ -25,7 +26,8 @@ else:
 
 # for track in msp.query('LWPOLYLINE'):
 
-def export_geojson(entity, m, index):
+
+def export_geojson(entity, m, index, list_01):
     # Convert DXF entity into a GeoProxy object:
     geo_proxy = geo.proxy(entity)
     # Transform DXF WCS coordinates into CRS coordinates:
@@ -37,20 +39,50 @@ def export_geojson(entity, m, index):
     name = entity.dxf.layer + '_' + str(index) + '.geojson'
 
     # with open(TRACK_DATA / name, 'wt', encoding='utf8') as fp:
-     with open( name, 'wt', encoding='utf8') as fp:
-         json.dump(geo_proxy.__geo_interface__, fp, indent=2)
+    # with open( name, 'wt', encoding='utf8') as fp:
+    #     json.dump(geo_proxy.__geo_interface__, fp, indent=2)
 
     # geojson_str.append(json.dumps(geo_proxy.__geo_interface__))
-    
 
+    
+    # json_param = json_param.update(geo_proxy.__geo_interface__)   
+    # print(geo_proxy.__geo_interface__) # class 'dict'
+
+    # each_feature = {
+    #     "type": "Feature",
+    #     "geometry": {geo_proxy.__geo_interface__},
+    #     "properties": {}
+    # }
+    
+    # list_01.append(each_feature)
+
+ 
 idx = 0
 
+data_list = []
+
 for e in msp.query('LWPOLYLINE') :
-    export_geojson(e, m, idx)
+    export_geojson(e, m, idx, data_list)
     idx = idx + 1
 
-    if idx ==0:
-        break
+    # if idx ==0:
+    #     break
+
+
+geojson_format = {
+    "type": "FeatureCollection",
+    "features": data_list
+}
+
+print(idx)
+# print(geojson_format)
 
 # with open( 'testfile.geojson', 'wt', encoding='utf8') as fp:
-#     json.dump(geojson, fp, indent=2)
+#     json.dump(geojson_format, fp, indent=2)
+
+## 각 데이터를 features에 입력
+## features 데이터를 geojson 포맷으로 입력
+## {'type': 'Polygon', 'coordinates': [[(32.039104, 47.149722), (32.039094, 47.149752), (32.039104, 47.149722)]]}
+
+## 통합 geojson을 파일로 출력
+
