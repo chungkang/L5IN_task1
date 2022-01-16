@@ -5,26 +5,32 @@ from jsonmerge import merge
 # import geopandas
 
 # source file
-dxf = "./removed_HCU_D_104_Grundriss_2OG_moved.dxf"
+# dxf = "./removed_HCU_D_104_Grundriss_2OG_moved.dxf"
+
+dxf = "./copied_HCU_D_104_Grundriss_2OG_moved.dxf"
 
 # loading dxf file
 doc = ezdxf.readfile(dxf)
 
-# get modelspace
+# get modelspace / 모형
 msp = doc.modelspace()
+
+# get layout / plan 레이아웃 페이지: 주석 등
+plan = doc.layout('16 - plan 2.OG_1_100')
+
+# get blocks
+blk = doc.blocks
+# my_block = doc.blocks.new('MyBlock')
 
 # Get the geo location information from the DXF file:
 geo_data = msp.get_geodata()
+
 if geo_data:
     # Get transformation matrix and epsg code:
     m, epsg = geo_data.get_crs_transformation()
 else:
     # Identity matrix for DXF files without geo reference data:
     m = ezdxf.math.Matrix44()
-
-# get lines of layer
-# lines = msp.query('LINE[layer=="01"]')
-# msp.query('LWPOLYLINE')
 
 # counting entities of dxf file  
 idx = 0
@@ -35,9 +41,27 @@ geojson_format = {
     "features": []
 }
 
+# get lines of layer
+# lines = msp.query('LINE[layer=="01"]')
+# lines = msp.query('LINE[layer=="MyLayer"]')
+# all_lines_by_color = msp.query('LINE').groupby('color')
+# lines_with_color_1 = all_lines_by_color.get(1, [])
+
+# delete entities
+# line = msp.add_line((0, 0), (1, 0))
+# msp.delete_entity(line)
+# line.destroy()
+
+# get attribute value
+# linetype = entity.dxf.linetype
+# entity.dxf.layer = "MyLayer"
 
 # extract each entity
-for e in msp.query('LWPOLYLINE') :
+# 전체 *, 블로참조 ATTRIB, 치수 DIMENSION, ARC_DIMENSION, HATCH,INSERT, LEADER, MESH, MTEXT, POINT, 정점 VERTEX, 보조선 RAY, SHAPE, SOLID, SURFACE, TEXT, TRACE, VIEWPORT, XLINE
+
+# ARC CIRCLE ELLIPSE 
+for e in msp.query('LWPOLYLINE MLINE POLYLINE SPLINE') :
+# for e in msp.query('LWPOLYLINE') :
     # Convert DXF entity into a GeoProxy object:
     geo_proxy = geo.proxy(e)
     # Transform DXF WCS coordinates into CRS coordinates:
@@ -62,20 +86,8 @@ for e in msp.query('LWPOLYLINE') :
     
     idx += 1
 
-    # if idx ==0:
-    #     break
-
-# geojson_format["features"] = features_list
-
-# print(geojson_format["features"])
-
-# print(geojson_format)
-
 with open( 'testfile.geojson', 'wt', encoding='utf8') as fp:
     json.dump(geojson_format, fp, indent=2)
-## features 데이터를 geojson 포맷으로 입력 geometry
-## {'type': 'Polygon', 'coordinates': [[(32.039104, 47.149722), (32.039094, 47.149752), (32.039104, 47.149722)]]}
 
-## 통합 geojson을 파일로 출력
 
 
