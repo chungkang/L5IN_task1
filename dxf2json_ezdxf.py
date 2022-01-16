@@ -56,12 +56,20 @@ geojson_format = {
 # linetype = entity.dxf.linetype
 # entity.dxf.layer = "MyLayer"
 
-# extract each entity
-# 전체 *, 블로참조 ATTRIB, 치수 DIMENSION, ARC_DIMENSION, HATCH,INSERT, LEADER, MESH, MTEXT, POINT, 정점 VERTEX, 보조선 RAY, SHAPE, SOLID, SURFACE, TEXT, TRACE, VIEWPORT, XLINE
+# Supported DXF entities are:
+# POINT as “Point”
+# LINE as “LineString”
+# LWPOLYLINE as “LineString” if open and “Polygon” if closed
+# POLYLINE as “LineString” if open and “Polygon” if closed, supports only 2D and 3D polylines, POLYMESH and POLYFACE are not supported
+# SOLID, TRACE, 3DFACE as “Polygon”
+# CIRCLE, ARC, ELLIPSE and SPLINE by approximation as “LineString” if open and “Polygon” if closed
+# HATCH as “Polygon”, holes are supported
 
-# ARC CIRCLE ELLIPSE 
-for e in msp.query('LWPOLYLINE MLINE POLYLINE SPLINE') :
-# for e in msp.query('LWPOLYLINE') :
+# extract each entity
+# CIRCLE ARC 문의 위치 나중에
+for e in msp.query('LINE LWPOLYLINE POLYLINE ELLIPSE SPLINE') :
+
+    print(e)
     # Convert DXF entity into a GeoProxy object:
     geo_proxy = geo.proxy(e)
     # Transform DXF WCS coordinates into CRS coordinates:
@@ -76,9 +84,15 @@ for e in msp.query('LWPOLYLINE MLINE POLYLINE SPLINE') :
     # with open( name, 'wt', encoding='utf8') as fp:
     #     json.dump(geo_proxy.__geo_interface__, fp, indent=2)
     
+    ## dxf와 json의 properties.subType 맞춰주기
+
+    print(geo_proxy.__geo_interface__)
+
     each_feature = {
         "type": "Feature",
-        "properties": {},
+        "properties": {
+
+        },
         "geometry": geo_proxy.__geo_interface__
     }
 
