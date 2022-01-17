@@ -1,13 +1,14 @@
 import ezdxf
 import ezdxf.addons.geo as geo
 import json
-from jsonmerge import merge
 # import geopandas
 
 # source file
 # dxf = "./removed_HCU_D_104_Grundriss_2OG_moved.dxf"
 
-dxf = "./copied_HCU_D_104_Grundriss_2OG_moved.dxf"
+# dxf = "./copied_HCU_D_104_Grundriss_2OG_moved.dxf"
+
+dxf = "./layername_HCU_D_105_Grundriss_3OG_moved.dxf"
 
 # loading dxf file
 doc = ezdxf.readfile(dxf)
@@ -16,11 +17,16 @@ doc = ezdxf.readfile(dxf)
 msp = doc.modelspace()
 
 # get layout / plan 레이아웃 페이지: 주석 등
-plan = doc.layout('16 - plan 2.OG_1_100')
+# plan = doc.layout('16 - plan 2.OG_1_100')
 
-# get blocks
-blk = doc.blocks
-# my_block = doc.blocks.new('MyBlock')
+# explode blocks
+for flag_ref in msp.query('INSERT'):
+    # print(str(flag_ref))
+    flag_ref.explode()
+
+# for flag_ref in msp.query('INSERT'):
+#     # print(str(flag_ref))
+#     flag_ref.explode()
 
 # Get the geo location information from the DXF file:
 geo_data = msp.get_geodata()
@@ -38,8 +44,28 @@ idx = 0
 # initialize empty geojson
 geojson_format = {
     "type": "FeatureCollection",
+    "crs":
+    {
+        "type": "name",
+        "properties":
+        {
+        }
+    },
     "features": []
 }
+# geojson_format = {
+#     "type": "FeatureCollection",
+#     "crs":
+#     {
+#         "type": "name",
+#         "properties":
+#         {
+#             "name": "EPSG: 8395"
+#         }
+#     },
+#     "features": []
+# }
+
 
 # get lines of layer
 # lines = msp.query('LINE[layer=="01"]')
@@ -66,27 +92,44 @@ geojson_format = {
 # HATCH as “Polygon”, holes are supported
 
 # extract each entity
-# CIRCLE ARC 문의 위치 나중에
-for e in msp.query('LINE LWPOLYLINE POLYLINE ELLIPSE SPLINE') :
+# CIRCLE ARC ELLIPSE 문의 위치 나중에  
+for e in msp.query("""LINE LWPOLYLINE SPLINE POLYLINE[
+                                                    layer=="AUSBAU - Bezeichnung - Parkplatz" 
+                                                    |layer=="AUSBAU - Darstellungen - Akustik" 
+                                                    |layer=="AUSBAU - Darstellungen - Daemmung" 
+                                                    |layer=="AUSBAU - Darstellungen - Daemmung-brennbar_B1" 
+                                                    |layer=="AUSBAU - Darstellungen - Doppelbodenschottungen" 
+                                                    |layer=="AUSBAU - Darstellungen - Fassade" 
+                                                    |layer=="AUSBAU - Darstellungen - Fassade-Bemassung" 
+                                                    |layer=="AUSBAU - Darstellungen - Gelaender" 
+                                                    |layer=="AUSBAU - Darstellungen - Stahlbau" 
+                                                    |layer=="AUSBAU - Darstellungen - Trockenbau" 
+                                                    |layer=="AUSBAU - Objekte - Aufzuege" 
+                                                    |layer=="AUSBAU - Objekte - Tueren" 
+                                                    |layer=="DARSTELLUNGEN - Aufsichtslinien" 
+                                                    |layer=="keine" 
+                                                    |layer=="ROHBAU - Darstellungen - Brandwand" 
+                                                    |layer=="ROHBAU - Darstellungen - Treppen" 
+                                                    |layer=="ROHBAU - Darstellungen - Waende" 
+                                                    |layer=="ROHBAU - Darstellungen - Waende - Mauerwerk" 
+                                                ]
+                    """) :
 
-    print(e)
+    # print(e)
+    
     # Convert DXF entity into a GeoProxy object:
     geo_proxy = geo.proxy(e)
     # Transform DXF WCS coordinates into CRS coordinates:
-    geo_proxy.wcs_to_crs(m)
+    # geo_proxy.wcs_to_crs(m)
     # Transform 2D map projection EPSG:3395 into globe (polar)
     # representation EPSG:4326
-    geo_proxy.map_to_globe()
+    # geo_proxy.map_to_globe()
+
     # Export GeoJSON data:
     # name = e.dxf.layer + '_' + str(idx) + '.geojson'
-
     # # with open(TRACK_DATA / name, 'wt', encoding='utf8') as fp:
     # with open( name, 'wt', encoding='utf8') as fp:
     #     json.dump(geo_proxy.__geo_interface__, fp, indent=2)
-    
-    ## dxf와 json의 properties.subType 맞춰주기
-
-    print(geo_proxy.__geo_interface__)
 
     each_feature = {
         "type": "Feature",
