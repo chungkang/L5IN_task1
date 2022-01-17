@@ -15,6 +15,7 @@ AutoCAD 파일을 열어서 사용할 레이어만 남기도 나머지를 삭제
 
 사용하는 레이어
 
+AUSBAU - Bezeichnung - Parkplatz
 
 AUSBAU - Darstellungen - Dämmung
 
