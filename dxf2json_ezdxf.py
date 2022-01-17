@@ -1,7 +1,8 @@
 import ezdxf
 import ezdxf.addons.geo as geo
 import json
-# import geopandas
+import geopandas
+import pyproj
 
 # source file
 # dxf = "./removed_HCU_D_104_Grundriss_2OG_moved.dxf"
@@ -24,9 +25,9 @@ for flag_ref in msp.query('INSERT'):
     # print(str(flag_ref))
     flag_ref.explode()
 
-# for flag_ref in msp.query('INSERT'):
-#     # print(str(flag_ref))
-#     flag_ref.explode()
+for flag_ref in msp.query('INSERT'):
+    # print(str(flag_ref))
+    flag_ref.explode()
 
 # Get the geo location information from the DXF file:
 geo_data = msp.get_geodata()
@@ -44,43 +45,14 @@ idx = 0
 # initialize empty geojson
 geojson_format = {
     "type": "FeatureCollection",
-    "crs":
-    {
-        "type": "name",
-        "properties":
-        {
-        }
-    },
+	"crs": {
+	    "type": "name",
+		"properties": {
+			"name": "+proj=tmerc +lat_0=0 +lon_0=9 +k=1 +x_0=3500000 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs"
+		}
+	},
     "features": []
 }
-# geojson_format = {
-#     "type": "FeatureCollection",
-#     "crs":
-#     {
-#         "type": "name",
-#         "properties":
-#         {
-#             "name": "EPSG: 8395"
-#         }
-#     },
-#     "features": []
-# }
-
-
-# get lines of layer
-# lines = msp.query('LINE[layer=="01"]')
-# lines = msp.query('LINE[layer=="MyLayer"]')
-# all_lines_by_color = msp.query('LINE').groupby('color')
-# lines_with_color_1 = all_lines_by_color.get(1, [])
-
-# delete entities
-# line = msp.add_line((0, 0), (1, 0))
-# msp.delete_entity(line)
-# line.destroy()
-
-# get attribute value
-# linetype = entity.dxf.linetype
-# entity.dxf.layer = "MyLayer"
 
 # Supported DXF entities are:
 # POINT as “Point”
@@ -131,6 +103,8 @@ for e in msp.query("""LINE LWPOLYLINE SPLINE POLYLINE[
     # with open( name, 'wt', encoding='utf8') as fp:
     #     json.dump(geo_proxy.__geo_interface__, fp, indent=2)
 
+    # print(geo_proxy.__geo_interface__)
+
     each_feature = {
         "type": "Feature",
         "properties": {
@@ -145,6 +119,3 @@ for e in msp.query("""LINE LWPOLYLINE SPLINE POLYLINE[
 
 with open( 'testfile.geojson', 'wt', encoding='utf8') as fp:
     json.dump(geojson_format, fp, indent=2)
-
-
-
