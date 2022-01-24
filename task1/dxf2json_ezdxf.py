@@ -5,12 +5,11 @@ import geopandas
 # import pyproj
 
 # source file
-# dxf = "./removed_HCU_D_104_Grundriss_2OG_moved.dxf"
-# dxf = "./copied_HCU_D_104_Grundriss_2OG_moved.dxf"
-dxf = "./layername_HCU_D_105_Grundriss_3OG_moved.dxf"
+# dxf_name = "layername_HCU_D_105_Grundriss_3OG_moved"
+dxf_name = "layer_HCU_D_106_Grundriss_4OG_moved_V2"
 
 # loading dxf file
-doc = ezdxf.readfile(dxf)
+doc = ezdxf.readfile("./" + dxf_name + ".dxf")
 
 # get modelspace / 모형
 msp = doc.modelspace()
@@ -56,7 +55,8 @@ layer_list = [
                 ,"AUSBAU - Darstellungen - Daemmung-brennbar_B1" 
                 ,"AUSBAU - Darstellungen - Doppelbodenschottungen" 
                 ,"AUSBAU - Darstellungen - Fassade" 
-                ,"AUSBAU - Darstellungen - Fassade-Bemassung" 
+                ,"AUSBAU - Darstellungen - Fassade-Bemassung"
+                ,"AUSBAU - Darstellungen - Fassade-Bemaßung"
                 ,"AUSBAU - Darstellungen - Gelaender" 
                 ,"AUSBAU - Darstellungen - Stahlbau" 
                 ,"AUSBAU - Darstellungen - Trockenbau" 
