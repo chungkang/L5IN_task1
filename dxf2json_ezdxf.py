@@ -1,7 +1,7 @@
 import ezdxf
 import ezdxf.addons.geo as geo
 import json
-# import geopandas
+import geopandas
 # import pyproj
 
 # source file
@@ -39,9 +39,6 @@ else:
     # Identity matrix for DXF files without geo reference data:
     m = ezdxf.math.Matrix44()
 
-# counting entities of dxf file  
-idx = 0
-
 # initialize empty geojson
 geojson_format = {
     "type": "FeatureCollection",
@@ -54,6 +51,30 @@ geojson_format = {
     "features": []
 }
 
+layer_list = [
+                "AUSBAU - Bezeichnung - Parkplatz" 
+                ,"AUSBAU - Darstellungen - Akustik" 
+                ,"AUSBAU - Darstellungen - Daemmung" 
+                ,"AUSBAU - Darstellungen - Daemmung-brennbar_B1" 
+                ,"AUSBAU - Darstellungen - Doppelbodenschottungen" 
+                ,"AUSBAU - Darstellungen - Fassade" 
+                ,"AUSBAU - Darstellungen - Fassade-Bemassung" 
+                ,"AUSBAU - Darstellungen - Gelaender" 
+                ,"AUSBAU - Darstellungen - Stahlbau" 
+                ,"AUSBAU - Darstellungen - Trockenbau" 
+                ,"AUSBAU - Objekte - Aufzuege" 
+                ,"AUSBAU - Objekte - Tueren" 
+                ,"DARSTELLUNGEN - Aufsichtslinien" 
+                ,"keine" 
+                ,"ROHBAU - Darstellungen - Brandwand" 
+                ,"ROHBAU - Darstellungen - Treppen" 
+                ,"ROHBAU - Darstellungen - Waende" 
+                ,"ROHBAU - Darstellungen - Waende - Mauerwerk" 
+]
+
+# counting entities of dxf file  
+idx = 0
+
 # Supported DXF entities are:
 # POINT as “Point”
 # LINE as “LineString”
@@ -62,57 +83,37 @@ geojson_format = {
 # SOLID, TRACE, 3DFACE as “Polygon”
 # CIRCLE, ARC, ELLIPSE and SPLINE by approximation as “LineString” if open and “Polygon” if closed
 # HATCH as “Polygon”, holes are supported
+# # extract each entity
+# # CIRCLE ARC ELLIPSE 문의 위치 나중에
+for layer in layer_list:
+    for e in msp.query("LINE LWPOLYLINE SPLINE POLYLINE[layer=='" + layer + "']"):
+        # Convert DXF entity into a GeoProxy object:
+        geo_proxy = geo.proxy(e)
 
-# extract each entity
-# CIRCLE ARC ELLIPSE 문의 위치 나중에  
-for e in msp.query("""LINE LWPOLYLINE SPLINE POLYLINE[
-                                                    layer=="AUSBAU - Bezeichnung - Parkplatz" 
-                                                    |layer=="AUSBAU - Darstellungen - Akustik" 
-                                                    |layer=="AUSBAU - Darstellungen - Daemmung" 
-                                                    |layer=="AUSBAU - Darstellungen - Daemmung-brennbar_B1" 
-                                                    |layer=="AUSBAU - Darstellungen - Doppelbodenschottungen" 
-                                                    |layer=="AUSBAU - Darstellungen - Fassade" 
-                                                    |layer=="AUSBAU - Darstellungen - Fassade-Bemassung" 
-                                                    |layer=="AUSBAU - Darstellungen - Gelaender" 
-                                                    |layer=="AUSBAU - Darstellungen - Stahlbau" 
-                                                    |layer=="AUSBAU - Darstellungen - Trockenbau" 
-                                                    |layer=="AUSBAU - Objekte - Aufzuege" 
-                                                    |layer=="AUSBAU - Objekte - Tueren" 
-                                                    |layer=="DARSTELLUNGEN - Aufsichtslinien" 
-                                                    |layer=="keine" 
-                                                    |layer=="ROHBAU - Darstellungen - Brandwand" 
-                                                    |layer=="ROHBAU - Darstellungen - Treppen" 
-                                                    |layer=="ROHBAU - Darstellungen - Waende" 
-                                                    |layer=="ROHBAU - Darstellungen - Waende - Mauerwerk" 
-                                                ]
-                    """) :
+        # Export GeoJSON data:
+        # name = e.dxf.layer + '_' + str(idx) + '.geojson'
+        # # with open(TRACK_DATA / name, 'wt', encoding='utf8') as fp:
+        # with open( name, 'wt', encoding='utf8') as fp:
+        #     json.dump(geo_proxy.__geo_interface__, fp, indent=2)
 
-    # Convert DXF entity into a GeoProxy object:
-    geo_proxy = geo.proxy(e)
-    # Transform DXF WCS coordinates into CRS coordinates:
-    # geo_proxy.wcs_to_crs(m)
-    # Transform 2D map projection EPSG:3395 into globe (polar)
-    # representation EPSG:4326
-    # geo_proxy.map_to_globe()
+        each_feature = {
+            "type": "Feature",
+            "properties": {
+                "index": idx,
+                "layer": layer 
+            },
+            "geometry": geo_proxy.__geo_interface__
+        }
 
-    # Export GeoJSON data:
-    # name = e.dxf.layer + '_' + str(idx) + '.geojson'
-    # # with open(TRACK_DATA / name, 'wt', encoding='utf8') as fp:
-    # with open( name, 'wt', encoding='utf8') as fp:
-    #     json.dump(geo_proxy.__geo_interface__, fp, indent=2)
+        geojson_format["features"].append(each_feature)
+        
+        idx += 1
 
-    each_feature = {
-        "type": "Feature",
-        "properties": {
-
-        },
-        "geometry": geo_proxy.__geo_interface__
-    }
-
-    geojson_format["features"].append(each_feature)
-    
-    idx += 1
-
-
+# write custom defined CRS geojson
 with open( 'testfile.geojson', 'wt', encoding='utf8') as fp:
     json.dump(geojson_format, fp, indent=2)
+
+# read created geojson / reprojection to EPSG:32632 / write reprojected geojson
+loaded_geojson = geopandas.read_file('testfile.geojson')
+loaded_geojson = loaded_geojson.to_crs("EPSG:32632")
+loaded_geojson.to_file("testfile_EPSG32632.geojson", driver='GeoJSON')
