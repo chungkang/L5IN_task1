@@ -1,8 +1,8 @@
 import ezdxf
 import ezdxf.addons.geo as geo
 import json
-import geopandas
-import pyproj
+# import geopandas
+# import pyproj
 
 # source file
 # dxf = "./removed_HCU_D_104_Grundriss_2OG_moved.dxf"
@@ -87,8 +87,6 @@ for e in msp.query("""LINE LWPOLYLINE SPLINE POLYLINE[
                                                 ]
                     """) :
 
-    # print(e)
-    
     # Convert DXF entity into a GeoProxy object:
     geo_proxy = geo.proxy(e)
     # Transform DXF WCS coordinates into CRS coordinates:
@@ -103,8 +101,6 @@ for e in msp.query("""LINE LWPOLYLINE SPLINE POLYLINE[
     # with open( name, 'wt', encoding='utf8') as fp:
     #     json.dump(geo_proxy.__geo_interface__, fp, indent=2)
 
-    # print(geo_proxy.__geo_interface__)
-
     each_feature = {
         "type": "Feature",
         "properties": {
@@ -116,6 +112,7 @@ for e in msp.query("""LINE LWPOLYLINE SPLINE POLYLINE[
     geojson_format["features"].append(each_feature)
     
     idx += 1
+
 
 with open( 'testfile.geojson', 'wt', encoding='utf8') as fp:
     json.dump(geojson_format, fp, indent=2)
