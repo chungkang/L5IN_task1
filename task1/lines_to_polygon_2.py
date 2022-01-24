@@ -1,20 +1,13 @@
-import matplotlib.pyplot as plt
-import numpy as np
-from copy import deepcopy
-import json
 import geopandas
 from shapely.ops import polygonize
 
-with open('testfile_EPSG32632.geojson') as f:
-    contact_gj = json.load(f)
-    del f
-    
-# contacts = contact_gj['features']
+# gdf = geopandas.GeoDataFrame.from_features(f)
+gdf = geopandas.read_file('testfile_EPSG32632.geojson')
+linestrings = gdf[gdf.geometry.type == "LineString"]
 
-gdf = geopandas.GeoDataFrame.from_features(f)
+polygons = geopandas.GeoSeries(polygonize(linestrings.geometry))
 
-polygons = geopandas.GeoSeries(polygonize(gdf.geometry))
+# polygons.plot()
 
-polygons.plot()
-
-
+polygons = polygons.set_crs("EPSG:32632")
+polygons.to_file("poligonized_test.geojson", driver='GeoJSON')
