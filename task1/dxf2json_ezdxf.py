@@ -16,6 +16,10 @@ msp = doc.modelspace()
 # get layout / plan - layout page
 # plan = doc.layout('16 - plan 2.OG_1_100')
 
+# myText = open(r'my_text_file.txt','w')
+# myText.write(str(msp.query('INSERT')))
+# myText.close()
+
 # explode blocks
 for flag_ref in msp.query('INSERT'):
     # print(str(flag_ref))
