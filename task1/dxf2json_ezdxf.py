@@ -2,14 +2,13 @@ import ezdxf
 import ezdxf.addons.geo as geo
 import json
 import geopandas
-# import pyproj
 
 # source file
 # dxf_name = "layername_HCU_D_105_Grundriss_3OG_moved"
 dxf_name = "layer_HCU_D_106_Grundriss_4OG_moved_V2"
 
 # loading dxf file
-doc = ezdxf.readfile("./" + dxf_name + ".dxf")
+doc = ezdxf.readfile("task1\\"+ dxf_name + ".dxf")
 
 # get modelspace / 모형
 msp = doc.modelspace()
@@ -96,11 +95,22 @@ for layer in layer_list:
         # with open( name, 'wt', encoding='utf8') as fp:
         #     json.dump(geo_proxy.__geo_interface__, fp, indent=2)
 
+        category = ""
+        if "waende" in layer or "Waende" in layer or "trockenbau" in layer or "Trockenbau" in layer:
+            category = "wall"
+        elif "tueren" in layer or "Tueren" in layer:
+            category = "door"
+        elif "treppen" in layer or "Treppen" in layer:
+            category = "stair"
+        else:
+            category = "etc"
+
         each_feature = {
             "type": "Feature",
             "properties": {
                 "index": idx,
-                "layer": layer 
+                "layer": layer,
+                "category": category
             },
             "geometry": geo_proxy.__geo_interface__
         }
