@@ -2,6 +2,7 @@ import ezdxf
 import ezdxf.addons.geo as geo
 import json
 import geopandas
+import math
 
 # source file
 # dxf_name = "layername_HCU_D_105_Grundriss_3OG_moved"
@@ -21,13 +22,13 @@ msp = doc.modelspace()
 # myText.close()
 
 # explode blocks
-for flag_ref in msp.query('INSERT'):
-    # print(str(flag_ref))
-    flag_ref.explode()
+# for flag_ref in msp.query('INSERT'):
+#     # print(str(flag_ref))
+#     flag_ref.explode()
 
-for flag_ref in msp.query('INSERT'):
-    # print(str(flag_ref))
-    flag_ref.explode()
+# for flag_ref in msp.query('INSERT'):
+#     # print(str(flag_ref))
+#     flag_ref.explode()
 
 # Get the geo location information from the DXF file:
 geo_data = msp.get_geodata()
@@ -65,12 +66,12 @@ layer_list = [
                 ,"AUSBAU - Darstellungen - Trennwaende"
                 ,"AUSBAU - Darstellungen - Trockenbau" 
                 ,"AUSBAU - Darstellungen - Waende - Mauerwerk"
-                ,"AUSBAU - Objekte - Aufzuege" 
-                ,"AUSBAU - Objekte - Tueren" 
+                # ,"AUSBAU - Objekte - Aufzuege" 
+                # ,"AUSBAU - Objekte - Tueren" 
                 ,"DARSTELLUNGEN - Aufsichtslinien" 
                 ,"keine" 
                 ,"ROHBAU - Darstellungen - Brandwand" 
-                ,"ROHBAU - Darstellungen - Treppen" 
+                # ,"ROHBAU - Darstellungen - Treppen" 
                 ,"ROHBAU - Darstellungen - Waende" 
                 ,"ROHBAU - Darstellungen - Waende - Mauerwerk" 
 ]
@@ -88,6 +89,42 @@ idx = 0
 # HATCH as “Polygon”, holes are supported
 # # extract each entity
 # # CIRCLE ARC ELLIPSE 문의 위치 나중에
+
+# for block in msp.query("INSERT[layer=='AUSBAU - Objekte - Tueren']"):
+#     block.dxf.insert
+#     x = block.dxf.insert.x
+#     y = block.dxf.insert.y
+#     angle = block.dxf.insert.vec2.angle             # radian
+#     angle_deg = block.dxf.insert.vec2.angle_deg     # degrees
+#     magnitude = block.dxf.insert.vec2.magnitude
+#     # print(block.dxf.insert)
+
+#     point_3_x = x + magnitude*math.sin(angle)
+#     point_3_y = y + magnitude*math.cos(angle)
+#     side_length = magnitude/math.sqrt(2)
+#     point_1 = [x, y]
+#     # point_2 = []
+#     point_3 = [point_3_x, point_3_y]
+#     # point_4 = []
+
+#     each_feature = {
+#             "type": "Feature",
+#             "properties": {
+#                 "index": idx,
+#                 "layer": 'AUSBAU - Objekte - Tueren',
+#                 "category": 'door'
+#             },
+#             "geometry": {
+#                 "type": "LineString",
+#                 "coordinates": [
+#                     point_1,
+#                     point_3
+#                 ]
+#             }
+#         }
+#     geojson_format["features"].append(each_feature)
+#     idx += 1
+
 for layer in layer_list:
     for e in msp.query("LINE LWPOLYLINE SPLINE POLYLINE[layer=='" + layer + "']"):
         # Convert DXF entity into a GeoProxy object:
@@ -102,8 +139,6 @@ for layer in layer_list:
         category = ""
         if "waende" in layer or "Waende" in layer or "trockenbau" in layer or "Trockenbau" in layer:
             category = "wall"
-        elif "tueren" in layer or "Tueren" in layer:
-            category = "door"
         elif "treppen" in layer or "Treppen" in layer:
             category = "stair"
         else:
