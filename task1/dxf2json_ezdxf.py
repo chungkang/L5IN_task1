@@ -90,14 +90,17 @@ idx = 0
 # # extract each entity
 # # CIRCLE ARC ELLIPSE 문의 위치 나중에
 
-# for block in msp.query("INSERT[layer=='AUSBAU - Objekte - Tueren']"):
-#     block.dxf.insert
-#     x = block.dxf.insert.x
-#     y = block.dxf.insert.y
-#     angle = block.dxf.insert.vec2.angle             # radian
-#     angle_deg = block.dxf.insert.vec2.angle_deg     # degrees
-#     magnitude = block.dxf.insert.vec2.magnitude
-#     # print(block.dxf.insert)
+for block in msp.query("INSERT[layer=='AUSBAU - Objekte - Tueren']"):
+    block.dxf.insert
+    x = block.dxf.insert.x
+    y = block.dxf.insert.y
+    angle = block.dxf.insert.vec2.angle             # radian
+    angle_deg = block.dxf.insert.vec2.angle_deg     # degrees
+    magnitude = block.dxf.insert.vec2.magnitude
+    
+    block.place
+    print(block.dxf.insert)
+
 
 #     point_3_x = x + magnitude*math.sin(angle)
 #     point_3_y = y + magnitude*math.cos(angle)
