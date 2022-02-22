@@ -21,14 +21,6 @@ msp = doc.modelspace()
 # myText.write(str(msp.query('INSERT')))
 # myText.close()
 
-# explode blocks
-for flag_ref in msp.query("INSERT[layer!='AUSBAU - Objekte - Tueren']"):
-    # print(str(flag_ref))
-    flag_ref.explode()
-
-for flag_ref in msp.query("INSERT[layer!='AUSBAU - Objekte - Tueren']"):
-    flag_ref.explode()
-
 # Get the geo location information from the DXF file:
 geo_data = msp.get_geodata()
 
@@ -66,7 +58,7 @@ layer_list = [
                 ,"AUSBAU - Darstellungen - Trockenbau" 
                 ,"AUSBAU - Darstellungen - Waende - Mauerwerk"
                 # ,"AUSBAU - Objekte - Aufzuege" 
-                # ,"AUSBAU - Objekte - Tueren" 
+                ,"AUSBAU - Objekte - Tueren" 
                 ,"DARSTELLUNGEN - Aufsichtslinien" 
                 ,"keine" 
                 ,"ROHBAU - Darstellungen - Brandwand" 
@@ -77,17 +69,6 @@ layer_list = [
 
 # counting entities of dxf file  
 idx = 0
-
-# Supported DXF entities are:
-# POINT as “Point”
-# LINE as “LineString”
-# LWPOLYLINE as “LineString” if open and “Polygon” if closed
-# POLYLINE as “LineString” if open and “Polygon” if closed, supports only 2D and 3D polylines, POLYMESH and POLYFACE are not supported
-# SOLID, TRACE, 3DFACE as “Polygon”
-# CIRCLE, ARC, ELLIPSE and SPLINE by approximation as “LineString” if open and “Polygon” if closed
-# HATCH as “Polygon”, holes are supported
-# # extract each entity
-# # CIRCLE ARC ELLIPSE 문의 위치 나중에
 
 for block in msp.query("INSERT[layer=='AUSBAU - Objekte - Tueren']"):
     name = block.dxf.name
@@ -109,7 +90,7 @@ for block in msp.query("INSERT[layer=='AUSBAU - Objekte - Tueren']"):
             "properties": {
                 "index": idx,
                 "layer": 'AUSBAU - Objekte - Tueren',
-                "category": 'door'
+                "category": 'door_start'
             },
             "geometry": {
                 "type": "LineString",
@@ -125,22 +106,29 @@ for block in msp.query("INSERT[layer=='AUSBAU - Objekte - Tueren']"):
     geojson_format["features"].append(each_feature)
     idx += 1
 
+# explode blocks
+# for flag_ref in msp.query("INSERT[layer!='AUSBAU - Objekte - Tueren']"):
+#     # print(str(flag_ref))
+#     flag_ref.explode()
+
+for flag_ref in msp.query("INSERT[layer!='AUSBAU - Objekte - Tueren']"):
+    flag_ref.explode()
+
+for flag_ref in msp.query("INSERT"):
+    flag_ref.explode()
+
 for layer in layer_list:
     for e in msp.query("LINE LWPOLYLINE SPLINE POLYLINE[layer=='" + layer + "']"):
         # Convert DXF entity into a GeoProxy object:
         geo_proxy = geo.proxy(e)
-
-        # Export GeoJSON data:
-        # name = e.dxf.layer + '_' + str(idx) + '.geojson'
-        # # with open(TRACK_DATA / name, 'wt', encoding='utf8') as fp:
-        # with open( name, 'wt', encoding='utf8') as fp:
-        #     json.dump(geo_proxy.__geo_interface__, fp, indent=2)
 
         category = ""
         if "waende" in layer or "Waende" in layer or "trockenbau" in layer or "Trockenbau" in layer:
             category = "wall"
         elif "treppen" in layer or "Treppen" in layer:
             category = "stair"
+        elif "tueren" in layer or "Tueren" in layer:
+            category = "door"
         else:
             category = "etc"
 
@@ -157,6 +145,8 @@ for layer in layer_list:
         geojson_format["features"].append(each_feature)
         
         idx += 1
+
+# Polyline으로 된 door 제거
 
 # write custom defined CRS geojson
 with open( 'testfile.geojson', 'wt', encoding='utf8') as fp:
