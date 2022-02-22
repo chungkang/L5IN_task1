@@ -3,6 +3,8 @@ import ezdxf.addons.geo as geo
 import json
 import geopandas
 import math
+from shapely.ops import polygonize
+import shapely
 
 # source file
 # dxf_name = "layername_HCU_D_105_Grundriss_3OG_moved"
@@ -156,3 +158,40 @@ with open( 'testfile.geojson', 'wt', encoding='utf8') as fp:
 loaded_geojson = geopandas.read_file('testfile.geojson')
 loaded_geojson = loaded_geojson.to_crs("EPSG:32632")
 loaded_geojson.to_file("testfile_EPSG32632.geojson", driver='GeoJSON')
+
+
+# shapely merge test
+gdf = geopandas.GeoDataFrame.from_features(geojson_format)
+polygons = geopandas.GeoSeries(polygonize(gdf.geometry))
+
+geojson_polygons = {
+    "type": "FeatureCollection",
+	"crs": {
+	    "type": "name",
+		"properties": {
+			"name": "+proj=tmerc +lat_0=0 +lon_0=9 +k=1 +x_0=3500000 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs"
+		}
+	},
+    "features": []
+}
+
+for polygon in polygons:
+    g1 = shapely.wkt.loads(polygon.wkt)
+    g2 = shapely.geometry.mapping(g1)
+
+    each_feature = {
+        "type": "Feature",
+        "properties": {
+            "index": idx,
+            "layer": 'layer',
+            "category": 'category'
+        },
+        "geometry": g2
+    }
+
+    geojson_polygons["features"].append(each_feature)
+    
+    idx += 1
+
+with open( 'shapely_test.geojson', 'wt', encoding='utf8') as fp:
+    json.dump(geojson_polygons, fp, indent=2)
