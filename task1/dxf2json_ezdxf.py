@@ -22,13 +22,12 @@ msp = doc.modelspace()
 # myText.close()
 
 # explode blocks
-# for flag_ref in msp.query('INSERT'):
-#     # print(str(flag_ref))
-#     flag_ref.explode()
+for flag_ref in msp.query("INSERT[layer!='AUSBAU - Objekte - Tueren']"):
+    # print(str(flag_ref))
+    flag_ref.explode()
 
-# for flag_ref in msp.query('INSERT'):
-#     # print(str(flag_ref))
-#     flag_ref.explode()
+for flag_ref in msp.query("INSERT[layer!='AUSBAU - Objekte - Tueren']"):
+    flag_ref.explode()
 
 # Get the geo location information from the DXF file:
 geo_data = msp.get_geodata()
@@ -91,29 +90,19 @@ idx = 0
 # # CIRCLE ARC ELLIPSE 문의 위치 나중에
 
 for block in msp.query("INSERT[layer=='AUSBAU - Objekte - Tueren']"):
-    block.dxf.insert
-    x = block.dxf.insert.x
-    y = block.dxf.insert.y
-    angle = block.dxf.insert.angle             # radian
-    angle_deg = block.dxf.insert.angle_deg     # degrees
-    magnitude = block.dxf.insert.magnitude
-    magnitude_square = block.dxf.insert.magnitude_square
+    name = block.dxf.name
+    insert = block.dxf.insert
+    x = insert.x
+    y = insert.y
+    # angle = block.dxf.insert.angle             # radian
+    angle_deg = insert.angle_deg     # degrees
+    magnitude = insert.magnitude
     
-    print(block.dxf.insert)
-
     gap = 0.1
-    point_1 = [x-gap,y+gap]
-    point_2 = [x+gap,y+gap]
+    point_1 = [x,y]
+    point_2 = [x+gap,y]
     point_3 = [x+gap,y-gap]
-    point_4 = [x-gap,y-gap]
-
-#     point_3_x = x + magnitude*math.sin(angle)
-#     point_3_y = y + magnitude*math.cos(angle)
-#     side_length = magnitude/math.sqrt(2)
-#     point_1 = [x, y]
-#     # point_2 = []
-#     point_3 = [point_3_x, point_3_y]
-#     # point_4 = []
+    point_4 = [x,y-gap]
 
     each_feature = {
             "type": "Feature",
@@ -128,7 +117,8 @@ for block in msp.query("INSERT[layer=='AUSBAU - Objekte - Tueren']"):
                     point_1,
                     point_2,
                     point_3,
-                    point_4
+                    point_4,
+                    point_1
                 ]
             }
         }
