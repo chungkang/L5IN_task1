@@ -11,7 +11,7 @@ import shapely
 dxf_name = "layer_HCU_D_106_Grundriss_4OG_moved_V2"
 
 # loading dxf file
-doc = ezdxf.readfile("task1\\"+ dxf_name + ".dxf")
+doc = ezdxf.readfile("option1\\"+ dxf_name + ".dxf")
 
 # get modelspace / 모형
 msp = doc.modelspace()
