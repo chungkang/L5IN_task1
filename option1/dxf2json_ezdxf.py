@@ -2,12 +2,10 @@ import ezdxf
 import ezdxf.addons.geo as geo
 import json
 import geopandas
-import math
 from shapely.ops import polygonize
 import shapely
 
 # source file
-# dxf_name = "layername_HCU_D_105_Grundriss_3OG_moved"
 dxf_name = "layer_HCU_D_106_Grundriss_4OG_moved_V2"
 
 # loading dxf file
@@ -24,14 +22,14 @@ msp = doc.modelspace()
 # myText.close()
 
 # Get the geo location information from the DXF file:
-geo_data = msp.get_geodata()
+# geo_data = msp.get_geodata()
 
-if geo_data:
-    # Get transformation matrix and epsg code:
-    m, epsg = geo_data.get_crs_transformation()
-else:
-    # Identity matrix for DXF files without geo reference data:
-    m = ezdxf.math.Matrix44()
+# if geo_data:
+#     # Get transformation matrix and epsg code:
+#     m, epsg = geo_data.get_crs_transformation()
+# else:
+#     # Identity matrix for DXF files without geo reference data:
+#     m = ezdxf.math.Matrix44()
 
 # initialize empty geojson
 geojson_format = {
@@ -45,6 +43,7 @@ geojson_format = {
     "features": []
 }
 
+# interested layer list
 layer_list = [
                 "AUSBAU - Bezeichnung - Parkplatz" 
                 ,"AUSBAU - Darstellungen - Akustik" 
@@ -69,51 +68,10 @@ layer_list = [
                 ,"ROHBAU - Darstellungen - Waende - Mauerwerk" 
 ]
 
-# counting entities of dxf file  
+# counting entities of dxf file => index 
 idx = 0
 
-for block in msp.query("INSERT[layer=='AUSBAU - Objekte - Tueren']"):
-    name = block.dxf.name
-    insert = block.dxf.insert
-    x = insert.x
-    y = insert.y
-    # angle = block.dxf.insert.angle             # radian
-    angle_deg = insert.angle_deg     # degrees
-    magnitude = insert.magnitude
-    
-    gap = 0.1
-    point_1 = [x,y]
-    point_2 = [x+gap,y]
-    point_3 = [x+gap,y-gap]
-    point_4 = [x,y-gap]
-
-    each_feature = {
-            "type": "Feature",
-            "properties": {
-                "index": idx,
-                "layer": 'AUSBAU - Objekte - Tueren',
-                "category": 'door_start'
-            },
-            "geometry": {
-                "type": "LineString",
-                "coordinates": [
-                    point_1,
-                    point_2,
-                    point_3,
-                    point_4,
-                    point_1
-                ]
-            }
-        }
-    geojson_format["features"].append(each_feature)
-    idx += 1
-
-# explode blocks
-# for flag_ref in msp.query("INSERT[layer!='AUSBAU - Objekte - Tueren']"):
-#     # print(str(flag_ref))
-#     flag_ref.explode()
-
-for flag_ref in msp.query("INSERT[layer!='AUSBAU - Objekte - Tueren']"):
+for flag_ref in msp.query("INSERT"):
     flag_ref.explode()
 
 for flag_ref in msp.query("INSERT"):
@@ -122,7 +80,7 @@ for flag_ref in msp.query("INSERT"):
 for layer in layer_list:
     for e in msp.query("LINE LWPOLYLINE SPLINE POLYLINE[layer=='" + layer + "']"):
         # Convert DXF entity into a GeoProxy object:
-        geo_proxy = geo.proxy(e)
+        geo_proxy = geo.proxy(e, distance=0.1, force_line_string=True)
 
         category = ""
         if "waende" in layer or "Waende" in layer or "trockenbau" in layer or "Trockenbau" in layer:
@@ -148,50 +106,11 @@ for layer in layer_list:
         
         idx += 1
 
-# Polyline으로 된 door 제거
-
 # write custom defined CRS geojson
-with open( 'testfile.geojson', 'wt', encoding='utf8') as fp:
+with open( 'option1\\testfile.geojson', 'wt', encoding='utf8') as fp:
     json.dump(geojson_format, fp, indent=2)
 
 # read created geojson / reprojection to EPSG:32632 / write reprojected geojson
-loaded_geojson = geopandas.read_file('testfile.geojson')
+loaded_geojson = geopandas.read_file('option1\\testfile.geojson')
 loaded_geojson = loaded_geojson.to_crs("EPSG:32632")
-loaded_geojson.to_file("testfile_EPSG32632.geojson", driver='GeoJSON')
-
-
-# shapely merge test
-gdf = geopandas.GeoDataFrame.from_features(geojson_format)
-polygons = geopandas.GeoSeries(polygonize(gdf.geometry))
-
-geojson_polygons = {
-    "type": "FeatureCollection",
-	"crs": {
-	    "type": "name",
-		"properties": {
-			"name": "+proj=tmerc +lat_0=0 +lon_0=9 +k=1 +x_0=3500000 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs"
-		}
-	},
-    "features": []
-}
-
-for polygon in polygons:
-    g1 = shapely.wkt.loads(polygon.wkt)
-    g2 = shapely.geometry.mapping(g1)
-
-    each_feature = {
-        "type": "Feature",
-        "properties": {
-            "index": idx,
-            "layer": 'layer',
-            "category": 'category'
-        },
-        "geometry": g2
-    }
-
-    geojson_polygons["features"].append(each_feature)
-    
-    idx += 1
-
-with open( 'shapely_test.geojson', 'wt', encoding='utf8') as fp:
-    json.dump(geojson_polygons, fp, indent=2)
+loaded_geojson.to_file("option1\\testfile_EPSG32632.geojson", driver='GeoJSON')
