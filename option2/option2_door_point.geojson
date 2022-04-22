@@ -1,0 +1,2516 @@
+{
+  "type": "FeatureCollection",
+  "crs": {
+    "type": "name",
+    "properties": {
+      "name": "+proj=tmerc +lat_0=0 +lon_0=9 +k=1 +x_0=3500000 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs"
+    }
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 0,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3500000.0,
+          5900000.0
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 1,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566613.243178147,
+          5935208.684329133
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 2,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566655.229847703,
+          5935235.060894731
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 3,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566544.165108656,
+          5935179.437883745
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 4,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566585.591174235,
+          5935234.026179844
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 5,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3500000.0,
+          5900000.0
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 6,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3500000.0,
+          5900000.0
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 7,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3500000.0,
+          5900000.0
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 8,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3500000.0,
+          5900000.0
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 9,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566612.624462003,
+          5935237.387188408
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 10,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566573.134097428,
+          5935234.826768524
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 11,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566580.143090804,
+          5935234.422150056
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 12,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566619.441489812,
+          5935207.66116713
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 13,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566634.967388367,
+          5935209.12998175
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 14,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566642.414222544,
+          5935208.48234939
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 15,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566588.778946944,
+          5935235.852382167
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 16,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566568.144493562,
+          5935196.035844628
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 17,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566609.228380944,
+          5935235.038463279
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 18,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566569.223411655,
+          5935200.275010304
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 19,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566648.826951576,
+          5935239.012854499
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 20,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566591.426850385,
+          5935235.746990689
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 21,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566644.509623317,
+          5935233.634198007
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 22,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566631.64478366,
+          5935234.146245075
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 23,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566627.448106379,
+          5935234.313277423
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 24,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566611.559947938,
+          5935238.300231827
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 25,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3500000.0,
+          5900000.0
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 26,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566618.687133189,
+          5935233.394653214
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 27,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566658.397119239,
+          5935237.271857872
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 28,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566645.715700121,
+          5935237.776609677
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 29,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566614.682154815,
+          5935212.19582444
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 30,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566566.368618055,
+          5935201.492103304
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 31,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566552.379525594,
+          5935196.313906245
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 32,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566577.177079817,
+          5935234.593412102
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 33,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566545.749930065,
+          5935195.251022341
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 34,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566545.381010187,
+          5935194.30355753
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 35,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566546.933421495,
+          5935197.757073966
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 36,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566547.430750393,
+          5935198.643897181
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 37,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566543.700189111,
+          5935190.910681106
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 38,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566543.331269232,
+          5935189.963216297
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 39,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566544.883680541,
+          5935193.416732734
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 40,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566545.381009439,
+          5935194.303555947
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 41,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566611.283127264,
+          5935205.170796897
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 42,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566588.326899064,
+          5935198.16301425
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 43,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566602.100637681,
+          5935202.367684357
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 44,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566606.69187597,
+          5935203.769238643
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 45,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566569.961919256,
+          5935192.556788971
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 46,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566574.553164745,
+          5935193.958345454
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 47,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566579.144410235,
+          5935195.359901938
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 48,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566583.735655724,
+          5935196.761458422
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 49,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566597.509392192,
+          5935200.966127872
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 50,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566592.918146703,
+          5935199.564571389
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 51,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566615.874001513,
+          5935206.572095568
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 52,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566567.246085996,
+          5935193.386848576
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 53,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566604.176158409,
+          5935203.990833647
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 54,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566653.792276687,
+          5935233.264730817
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 55,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566653.492515149,
+          5935233.276673402
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 56,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566589.904148353,
+          5935206.079420948
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 57,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566551.606691136,
+          5935197.601037574
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 58,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566649.076128769,
+          5935245.272904331
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 59,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566590.28861827,
+          5935236.693017141
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 60,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566578.110253412,
+          5935199.831829009
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 61,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566604.882110599,
+          5935208.237038239
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 62,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566615.173607218,
+          5935208.466102936
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 63,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566610.496112014,
+          5935207.122963157
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 64,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566614.784336652,
+          5935208.354329006
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 65,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3500000.0,
+          5900000.0
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 66,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566582.254780167,
+          5935206.977891067
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 67,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566586.900749727,
+          5935208.189959605
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 68,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566577.608789602,
+          5935205.765818492
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 69,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566572.962799738,
+          5935204.55374322
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 70,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566568.316808819,
+          5935203.341671998
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 71,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566576.60821838,
+          5935200.352599824
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 72,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566565.690425313,
+          5935196.304656321
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 73,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566564.770112619,
+          5935196.040400793
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 74,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566565.258508906,
+          5935197.808875185
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 75,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566564.338196212,
+          5935197.544619655
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 76,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566611.877769366,
+          5935209.245515352
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 77,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566608.755851077,
+          5935210.012457134
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 78,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566608.115717197,
+          5935209.828651219
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 79,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566612.155995589,
+          5935208.276547456
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 80,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566611.599543088,
+          5935210.214483443
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 81,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566574.914289664,
+          5935198.133832402
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 82,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566593.051301032,
+          5935207.836214122
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 83,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566602.728336718,
+          5935235.939644654
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 84,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566602.769459718,
+          5935236.972826444
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 85,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566602.809557275,
+          5935237.98024486
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 86,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566606.607537397,
+          5935237.337429779
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 87,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566605.757210677,
+          5935237.371274391
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 88,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566657.178661568,
+          5935233.805481183
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 89,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566547.365813179,
+          5935187.250052772
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 90,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566571.772178027,
+          5935198.937167125
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 91,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566572.348517467,
+          5935201.201655607
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 92,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3500000.0,
+          5900000.0
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 93,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566636.354595008,
+          5935234.309561256
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 94,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3500000.0,
+          5900000.0
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 95,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3500000.0,
+          5900000.0
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 96,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566595.18728511,
+          5935238.951888059
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 97,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566649.251330417,
+          5935202.821577322
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 98,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566619.548765967,
+          5935239.703265916
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 99,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566563.672246405,
+          5935202.130036333
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 100,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566559.02768768,
+          5935200.918411917
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 101,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566654.369577264,
+          5935238.717166531
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 102,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566657.317243058,
+          5935238.599843954
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 103,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566660.314869596,
+          5935238.480532847
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 104,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566663.312496166,
+          5935238.361221737
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 105,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566666.310122672,
+          5935238.241910633
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 106,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566584.25851078,
+          5935235.957255456
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 107,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566580.751287756,
+          5935236.096850078
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 108,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566576.704491867,
+          5935236.257920072
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 109,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566604.074210275,
+          5935233.044468276
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 110,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566597.354066348,
+          5935233.431537465
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 111,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566593.33393533,
+          5935233.663112142
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 112,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566669.307749159,
+          5935238.122598239
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 113,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3500000.0,
+          5900000.0
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 114,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566660.252897581,
+          5935207.141376522
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 115,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3500000.0,
+          5900000.0
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 116,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566609.512898199,
+          5935208.661418687
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 117,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566601.326611112,
+          5935236.096057758
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 118,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566607.814700257,
+          5935236.688906559
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 119,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566573.547149226,
+          5935198.277095118
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 120,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566555.230161449,
+          5935191.784735015
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 121,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566550.626099858,
+          5935189.77607001
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 122,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566604.454725842,
+          5935205.232258097
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 123,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566601.912459031,
+          5935204.502282338
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 124,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566591.658291954,
+          5935204.07342936
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 125,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566576.572268153,
+          5935198.609897541
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 126,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566552.968881491,
+          5935193.683978841
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 127,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566577.62926503,
+          5935198.427043149
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 128,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566604.780651374,
+          5935209.133864817
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 129,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566612.355826931,
+          5935229.370013647
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 130,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566618.293918319,
+          5935235.575698198
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 131,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566618.363202346,
+          5935237.31637897
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 132,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566589.033689723,
+          5935233.910799182
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 133,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566625.512032707,
+          5935239.461313332
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 134,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566609.993714271,
+          5935227.699641959
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 135,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3500000.0,
+          5900000.0
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 136,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566593.656925625,
+          5935241.309415594
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 137,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566643.509124887,
+          5935235.527403547
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 138,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566583.604355208,
+          5935234.222787625
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 139,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3500000.0,
+          5900000.0
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 140,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566607.49122174,
+          5935231.319418912
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 141,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3500000.0,
+          5900000.0
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 142,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3500000.0,
+          5900000.0
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 143,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566566.096247536,
+          5935196.96115621
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 144,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566593.754037981,
+          5935236.510042567
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 145,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566596.322004557,
+          5935236.407832311
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 146,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566630.184120111,
+          5935209.530063196
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 147,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3500000.0,
+          5900000.0
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 148,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566655.708313944,
+          5935207.395917736
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 149,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566650.925006978,
+          5935207.795869579
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 150,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566541.650454781,
+          5935186.570337596
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 151,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566541.281534902,
+          5935185.622872785
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 152,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566542.833629543,
+          5935189.075734981
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 153,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566543.331268484,
+          5935189.963214715
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 154,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566539.361894348,
+          5935181.72427647
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 155,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566540.256670601,
+          5935183.452697317
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 156,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566541.023025574,
+          5935185.241755152
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 157,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566540.256652593,
+          5935183.452695167
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 158,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566560.779527193,
+          5935189.753639798
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 159,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566556.188667363,
+          5935188.352204185
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 160,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3500000.0,
+          5900000.0
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 161,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566606.900222773,
+          5935209.089487334
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 162,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566606.701521091,
+          5935209.781533416
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 163,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3500000.0,
+          5900000.0
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 164,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3500000.0,
+          5900000.0
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 165,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3500000.0,
+          5900000.0
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 166,
+        "layer": "AUSBAU - Objekte - Tueren",
+        "category": "door_point"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3566554.618394651,
+          5935199.716095253
+        ]
+      }
+    }
+  ]
+}
