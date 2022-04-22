@@ -114,3 +114,11 @@ with open( 'option1\\testfile.geojson', 'wt', encoding='utf8') as fp:
 loaded_geojson = geopandas.read_file('option1\\testfile.geojson')
 loaded_geojson = loaded_geojson.to_crs("EPSG:32632")
 loaded_geojson.to_file("option1\\testfile_EPSG32632.geojson", driver='GeoJSON')
+
+
+# lineString to polygon [door]
+# linestrings = gdf[gdf.geometry.type == "LineString"]
+doors =  loaded_geojson[loaded_geojson.category == "door"]
+polygons = geopandas.GeoSeries(polygonize(doors.geometry))
+polygons = polygons.set_crs("EPSG:32632")
+polygons.to_file("option1\\poligonized_door.geojson", driver='GeoJSON')
