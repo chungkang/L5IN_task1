@@ -9,7 +9,7 @@ import shapely
 dxf_name = "layer_HCU_D_106_Grundriss_4OG_moved_V2"
 
 # loading dxf file
-doc = ezdxf.readfile("option1\\"+ dxf_name + ".dxf")
+doc = ezdxf.readfile("dxf\\"+ dxf_name + ".dxf")
 
 # get modelspace / 모형
 msp = doc.modelspace()
@@ -107,18 +107,10 @@ for layer in layer_list:
         idx += 1
 
 # write custom defined CRS geojson
-with open( 'option1\\testfile.geojson', 'wt', encoding='utf8') as fp:
+with open( 'option1\\option1.geojson', 'wt', encoding='utf8') as fp:
     json.dump(geojson_format, fp, indent=2)
 
 # read created geojson / reprojection to EPSG:32632 / write reprojected geojson
-loaded_geojson = geopandas.read_file('option1\\testfile.geojson')
+loaded_geojson = geopandas.read_file('option1\\option1.geojson')
 loaded_geojson = loaded_geojson.to_crs("EPSG:32632")
-loaded_geojson.to_file("option1\\testfile_EPSG32632.geojson", driver='GeoJSON')
-
-
-# lineString to polygon [door]
-# linestrings = gdf[gdf.geometry.type == "LineString"]
-doors =  loaded_geojson[loaded_geojson.category == "door"]
-polygons = geopandas.GeoSeries(polygonize(doors.geometry))
-polygons = polygons.set_crs("EPSG:32632")
-polygons.to_file("option1\\poligonized_door.geojson", driver='GeoJSON')
+loaded_geojson.to_file("option1\\option1_EPSG32632.geojson", driver='GeoJSON')
