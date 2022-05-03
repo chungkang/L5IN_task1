@@ -1,9 +1,10 @@
 import ezdxf
 import ezdxf.addons.geo as geo
 import json
+import geojson
+import fiona
 import geopandas
-from shapely.ops import polygonize
-import shapely
+from shapely import geometry, ops
 
 # source file
 dxf_name = "layer_HCU_D_106_Grundriss_4OG_moved_V2"
@@ -114,3 +115,31 @@ with open( 'option1\\option1.geojson', 'wt', encoding='utf8') as fp:
 loaded_geojson = geopandas.read_file('option1\\option1.geojson')
 loaded_geojson = loaded_geojson.to_crs("EPSG:32632")
 loaded_geojson.to_file("option1\\option1_EPSG32632.geojson", driver='GeoJSON')
+
+# divede lines with category / merge lines which have intersection each other
+with open('option1\\option1_EPSG32632.geojson') as f:
+    gj = geojson.load(f)
+lines_geojson = gj['features']
+
+doors = []
+walls = []
+for each in lines_geojson:
+    if each['properties']['category']=='door':
+        doors.append(each['geometry']['coordinates'])
+    else:
+        walls.append(each['geometry']['coordinates'])
+
+# merge lines with shapely.ops.linemerge
+merged_doors = ops.linemerge(doors)
+merged_walls = ops.linemerge(walls)
+
+# change shapely geometry to geojson format
+result_doors = geopandas.GeoSeries(merged_doors).__geo_interface__
+result_walls = geopandas.GeoSeries(merged_walls).__geo_interface__
+
+# write custom geojson
+with open( 'option1\\option1_merged_doors.geojson', 'wt', encoding='utf8') as fp:
+    json.dump(result_doors, fp, indent=2)
+
+with open( 'option1\\option1_merged_walls.geojson', 'wt', encoding='utf8') as fp:
+    json.dump(result_walls, fp, indent=2)
