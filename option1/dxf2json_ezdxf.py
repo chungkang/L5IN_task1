@@ -80,7 +80,37 @@ for flag_ref in msp.query("INSERT"):
 for layer in layer_list:
     for e in msp.query("LINE LWPOLYLINE SPLINE POLYLINE[layer=='" + layer + "']"):
         # Convert DXF entity into a GeoProxy object:
+        # non polygonize
         geo_proxy = geo.proxy(e, distance=0.1, force_line_string=True)
+        
+        category = ""
+        if "waende" in layer or "Waende" in layer or "trockenbau" in layer or "Trockenbau" in layer:
+            category = "wall"
+        elif "treppen" in layer or "Treppen" in layer:
+            category = "stair"
+        elif "tueren" in layer or "Tueren" in layer:
+            category = "door"
+        else:
+            category = "etc"
+
+        each_feature = {
+            "type": "Feature",
+            "properties": {
+                "index": idx,
+                "layer": layer,
+                "category": category
+            },
+            "geometry": geo_proxy.__geo_interface__
+        }
+
+        geojson_format["features"].append(each_feature)
+        
+        idx += 1
+    
+    for e in msp.query("LINE LWPOLYLINE SPLINE POLYLINE[layer=='" + layer + "']"):
+        # Convert DXF entity into a GeoProxy object:
+        # polygonize
+        geo_proxy = geo.proxy(e, distance=0.1, force_line_string=False)
 
         category = ""
         if "waende" in layer or "Waende" in layer or "trockenbau" in layer or "Trockenbau" in layer:
@@ -115,32 +145,33 @@ loaded_geojson = geopandas.read_file('option1\\option1.geojson')
 loaded_geojson = loaded_geojson.to_crs("EPSG:32632")
 loaded_geojson.to_file("option1\\option1_EPSG32632.geojson", driver='GeoJSON')
 
+
 # divede lines with category / merge lines which have intersection each other
-with open('option1\\option1_EPSG32632.geojson') as f:
-    gj = json.load(f)
-lines_geojson = gj['features']
+# with open('option1\\option1_EPSG32632.geojson') as f:
+#     gj = json.load(f)
+# lines_geojson = gj['features']
 
-doors = []
-walls = []
-for each in lines_geojson:
-    if each['properties']['category']=='door':
-        doors.append(each['geometry']['coordinates'])
-    else:
-        walls.append(each['geometry']['coordinates'])
+# doors = []
+# walls = []
+# for each in lines_geojson:
+#     if each['properties']['category']=='door':
+#         doors.append(each['geometry']['coordinates'])
+#     else:
+#         walls.append(each['geometry']['coordinates'])
 
-# merge lines with shapely.ops.linemerge
-merged_doors = ops.linemerge(doors)
-merged_walls = ops.linemerge(walls)
+# # merge lines with shapely.ops.linemerge
+# merged_doors = ops.linemerge(doors)
+# merged_walls = ops.linemerge(walls)
 
-# change shapely geometry to geojson format
-result_doors = geopandas.GeoSeries(merged_doors).__geo_interface__
-result_walls = geopandas.GeoSeries(merged_walls).__geo_interface__
-result_doors["crs"].append('{ "type": "name", "properties": { "name": "urn:ogc:def:crs:EPSG::32632" }}')
-result_walls["crs"].append('{ "type": "name", "properties": { "name": "urn:ogc:def:crs:EPSG::32632" }}')
+# # change shapely geometry to geojson format
+# result_doors = geopandas.GeoSeries(merged_doors).__geo_interface__
+# result_walls = geopandas.GeoSeries(merged_walls).__geo_interface__
+# result_doors["crs"].append('{ "type": "name", "properties": { "name": "urn:ogc:def:crs:EPSG::32632" }}')
+# result_walls["crs"].append('{ "type": "name", "properties": { "name": "urn:ogc:def:crs:EPSG::32632" }}')
 
-# write custom geojson
-with open( 'option1\\option1_merged_doors.geojson', 'wt', encoding='utf8') as fp:
-    json.dump(result_doors, fp, indent=2)
+# # write custom geojson
+# with open( 'option1\\option1_merged_doors.geojson', 'wt', encoding='utf8') as fp:
+#     json.dump(result_doors, fp, indent=2)
 
-with open( 'option1\\option1_merged_walls.geojson', 'wt', encoding='utf8') as fp:
-    json.dump(result_walls, fp, indent=2)
+# with open( 'option1\\option1_merged_walls.geojson', 'wt', encoding='utf8') as fp:
+#     json.dump(result_walls, fp, indent=2)
