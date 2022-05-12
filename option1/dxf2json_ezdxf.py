@@ -2,7 +2,8 @@ import ezdxf
 import ezdxf.addons.geo as geo
 import json
 import geopandas
-from shapely import geometry, ops
+from shapely import geometry, ops, wkt
+import matplotlib.pyplot as plt
 
 # source file
 # dxf_name = "layer_HCU_D_106_Grundriss_4OG_moved_V2"
@@ -80,9 +81,7 @@ for flag_ref in msp.query("INSERT"):
 for layer in layer_list:
     for e in msp.query("LINE LWPOLYLINE SPLINE POLYLINE[layer=='" + layer + "']"):
         # Convert DXF entity into a GeoProxy object:
-        # non polygonize
         geo_proxy = geo.proxy(e, distance=0.1, force_line_string=True)
-        
         category = ""
         if "waende" in layer or "Waende" in layer or "trockenbau" in layer or "Trockenbau" in layer:
             category = "wall"
@@ -102,38 +101,7 @@ for layer in layer_list:
             },
             "geometry": geo_proxy.__geo_interface__
         }
-
         geojson_format["features"].append(each_feature)
-        
-        idx += 1
-    
-    for e in msp.query("LINE LWPOLYLINE SPLINE POLYLINE[layer=='" + layer + "']"):
-        # Convert DXF entity into a GeoProxy object:
-        # polygonize
-        geo_proxy = geo.proxy(e, distance=0.1, force_line_string=False)
-
-        category = ""
-        if "waende" in layer or "Waende" in layer or "trockenbau" in layer or "Trockenbau" in layer:
-            category = "wall"
-        elif "treppen" in layer or "Treppen" in layer:
-            category = "stair"
-        elif "tueren" in layer or "Tueren" in layer:
-            category = "door"
-        else:
-            category = "etc"
-
-        each_feature = {
-            "type": "Feature",
-            "properties": {
-                "index": idx,
-                "layer": layer,
-                "category": category
-            },
-            "geometry": geo_proxy.__geo_interface__
-        }
-
-        geojson_format["features"].append(each_feature)
-        
         idx += 1
 
 # write custom defined CRS geojson
@@ -144,6 +112,54 @@ with open( 'option1\\option1.geojson', 'wt', encoding='utf8') as fp:
 loaded_geojson = geopandas.read_file('option1\\option1.geojson')
 loaded_geojson = loaded_geojson.to_crs("EPSG:32632")
 loaded_geojson.to_file("option1\\option1_EPSG32632.geojson", driver='GeoJSON')
+
+
+
+with open('option1\\option1_EPSG32632.geojson') as f:
+    gj = json.load(f)
+polygon_lines_geojson = gj['features']
+
+buffer_size = 0.01
+
+doors = []
+for each in polygon_lines_geojson:
+    if each['properties']['category']=='door':
+        linestring =  str(each['geometry']['coordinates']).replace('], [', ',').replace(', ',' ').replace('[','').replace(']','')
+        doors.append(wkt.loads('LINESTRING ('+linestring+')').buffer(buffer_size))
+
+# If the command above fails, try union first and then buffer:
+# buff_union = shapely.ops.unary_union([b1,b2,t1,t2]).buffer(buffer_size)
+
+door_buff_union = ops.unary_union(doors)
+
+result_door_buff_union = geopandas.GeoSeries(door_buff_union).__geo_interface__
+result_door_buff_union["crs"]=({ "type": "name", "properties": { "name": "urn:ogc:def:crs:EPSG::32632" }})
+
+with open('option1\\option1_result_door_union.geojson', 'wt', encoding='utf8') as fp:
+    json.dump(result_door_buff_union, fp, indent=2)
+
+
+
+# # Extracting all the interior geometries
+# # Idea taken from here: https://stackoverflow.com/a/21922058/8667016
+# all_internal_geoms = [geom for geom in door_buff_union.interiors]
+
+# # Fishing out the interior geometry we really need
+# internal_geom = all_internal_geoms[0]
+
+# # Plotting results
+# # Code taken from here: https://stackoverflow.com/a/56140178/8667016
+# plt.plot(*internal_geom.xy)
+
+
+
+
+
+
+
+
+
+
 
 
 # divede lines with category / merge lines which have intersection each other
