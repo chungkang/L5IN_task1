@@ -18,10 +18,6 @@ msp = doc.modelspace()
 # get layout / plan - layout page
 # plan = doc.layout('16 - plan 2.OG_1_100')
 
-# myText = open(r'my_text_file.txt','w')
-# myText.write(str(msp.query('INSERT')))
-# myText.close()
-
 # Get the geo location information from the DXF file:
 # geo_data = msp.get_geodata()
 
@@ -60,7 +56,7 @@ layer_list = [
                 ,"AUSBAU - Darstellungen - Trockenbau" 
                 ,"AUSBAU - Darstellungen - Waende - Mauerwerk"
                 # ,"AUSBAU - Objekte - Aufzuege" 
-                ,"AUSBAU - Objekte - Tueren" 
+                # ,"AUSBAU - Objekte - Tueren" 
                 ,"DARSTELLUNGEN - Aufsichtslinien" 
                 ,"keine" 
                 ,"ROHBAU - Darstellungen - Brandwand" 
@@ -72,11 +68,49 @@ layer_list = [
 # counting entities of dxf file => index 
 idx = 0
 
-for flag_ref in msp.query("INSERT"):
-    flag_ref.explode()
+# 1st exploding of blocks(except door blocks)
+for flag_ref in msp.query("INSERT[layer!='AUSBAU - Objekte - Tueren']"):
+    exploded_e = flag_ref.explode()
 
-for flag_ref in msp.query("INSERT"):
-    flag_ref.explode()
+    # exploded door layer lines(no actual door)
+    for e in exploded_e.query("LINE LWPOLYLINE SPLINE POLYLINE[layer=='AUSBAU - Objekte - Tueren']"):
+        geo_proxy = geo.proxy(e, distance=0.1, force_line_string=True)
+        each_feature = {
+            "type": "Feature",
+            "properties": {
+                "index": idx,
+                "layer": 'AUSBAU - Objekte - Tueren',
+                "category": "door"
+            },
+            "geometry": geo_proxy.__geo_interface__
+        }
+        geojson_format["features"].append(each_feature)
+        idx += 1
+
+# for flag_ref in msp.query("INSERT[layer!='AUSBAU - Objekte - Tueren']"):
+#     exploded_e = flag_ref.explode()
+
+# explode door block and give door ID
+door_block_id = 0
+for flag_ref in msp.query("INSERT[layer=='AUSBAU - Objekte - Tueren']"):
+    
+    exploded_door=flag_ref.explode()
+    for e in exploded_door.query("LINE LWPOLYLINE SPLINE POLYLINE"):
+        geo_proxy = geo.proxy(e, distance=0.1, force_line_string=True)
+        each_feature = {
+            "type": "Feature",
+            "properties": {
+                "index": idx,
+                "layer": 'AUSBAU - Objekte - Tueren',
+                "category": "door",
+                "door_id": door_block_id
+            },
+            "geometry": geo_proxy.__geo_interface__
+        }
+        geojson_format["features"].append(each_feature)
+        idx += 1
+    
+    door_block_id += 1
 
 for layer in layer_list:
     for e in msp.query("LINE LWPOLYLINE SPLINE POLYLINE[layer=='" + layer + "']"):
@@ -87,8 +121,6 @@ for layer in layer_list:
             category = "wall"
         elif "treppen" in layer or "Treppen" in layer:
             category = "stair"
-        elif "tueren" in layer or "Tueren" in layer:
-            category = "door"
         else:
             category = "etc"
 
@@ -119,7 +151,7 @@ with open('option1\\option1_EPSG32632.geojson') as f:
     gj = json.load(f)
 polygon_lines_geojson = gj['features']
 
-buffer_size = 0.01
+buffer_size = 0.001
 
 doors = []
 for each in polygon_lines_geojson:
