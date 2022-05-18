@@ -3,7 +3,6 @@ import ezdxf.addons.geo as geo
 import json
 import geopandas
 from shapely import geometry, ops, wkt
-import matplotlib.pyplot as plt
 
 # source file
 # dxf_name = "layer_HCU_D_106_Grundriss_4OG_moved_V2"
