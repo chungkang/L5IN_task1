@@ -71,7 +71,7 @@ idx = 0
 for flag_ref in msp.query("INSERT[layer!='AUSBAU - Objekte - Tueren']"):
     exploded_e = flag_ref.explode()
 
-    # exploded door layer lines(no actual door)
+    # exploded door layer lines(door layer, but not door block, door components)
     for e in exploded_e.query("LINE LWPOLYLINE SPLINE POLYLINE[layer=='AUSBAU - Objekte - Tueren']"):
         geo_proxy = geo.proxy(e, distance=0.1, force_line_string=True)
         each_feature = {
@@ -85,9 +85,6 @@ for flag_ref in msp.query("INSERT[layer!='AUSBAU - Objekte - Tueren']"):
         }
         geojson_format["features"].append(each_feature)
         idx += 1
-
-# for flag_ref in msp.query("INSERT[layer!='AUSBAU - Objekte - Tueren']"):
-#     exploded_e = flag_ref.explode()
 
 # explode door block and give door ID
 door_block_id = 0
@@ -110,6 +107,10 @@ for flag_ref in msp.query("INSERT[layer=='AUSBAU - Objekte - Tueren']"):
         idx += 1
     
     door_block_id += 1
+
+# explode all left blocks
+for flag_ref in msp.query("INSERT"):
+    flag_ref.explode()
 
 for layer in layer_list:
     for e in msp.query("LINE LWPOLYLINE SPLINE POLYLINE[layer=='" + layer + "']"):
@@ -146,28 +147,39 @@ loaded_geojson.to_file("option1\\option1_EPSG32632.geojson", driver='GeoJSON')
 
 
 
+
+
+
+# geojson 로드
 with open('option1\\option1_EPSG32632.geojson') as f:
     gj = json.load(f)
-polygon_lines_geojson = gj['features']
+lines_geojson = gj['features']
 
-buffer_size = 0.001
-
-doors = []
-for each in polygon_lines_geojson:
-    if each['properties']['category']=='door':
-        linestring =  str(each['geometry']['coordinates']).replace('], [', ',').replace(', ',' ').replace('[','').replace(']','')
+door_lines = []
+# lines 중에서 door_id 있는 것들만 추출
+for line in lines_geojson:
+    if line['properties']['door_id']!="":
+        
+        linestring =  str(line['geometry']['coordinates']).replace('], [', ',').replace(', ',' ').replace('[','').replace(']','')
         doors.append(wkt.loads('LINESTRING ('+linestring+')').buffer(buffer_size))
+
+
+# for문으로 door_id 단위로 돌리기
+#  option1) multilinestring으로 door_id 단위로 묶은 후 -> 가장 바깥 테두리 구하기
+#  option2) door_id 가 같은 lines 를 하나의 polygon으로 묶기/가장 바깥의 rectalgle만 남기기
+#  option3) door_id가 같은 lines의 가장 바깥 4개의 coordinate를 구하기 - manual
+
 
 # If the command above fails, try union first and then buffer:
 # buff_union = shapely.ops.unary_union([b1,b2,t1,t2]).buffer(buffer_size)
 
-door_buff_union = ops.unary_union(doors)
+# door_buff_union = ops.unary_union(doors)
 
-result_door_buff_union = geopandas.GeoSeries(door_buff_union).__geo_interface__
-result_door_buff_union["crs"]=({ "type": "name", "properties": { "name": "urn:ogc:def:crs:EPSG::32632" }})
+# result_door_buff_union = geopandas.GeoSeries(door_buff_union).__geo_interface__
+# result_door_buff_union["crs"]=({ "type": "name", "properties": { "name": "urn:ogc:def:crs:EPSG::32632" }})
 
-with open('option1\\option1_result_door_union.geojson', 'wt', encoding='utf8') as fp:
-    json.dump(result_door_buff_union, fp, indent=2)
+# with open('option1\\option1_result_door_union.geojson', 'wt', encoding='utf8') as fp:
+#     json.dump(result_door_buff_union, fp, indent=2)
 
 
 
