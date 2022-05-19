@@ -172,7 +172,6 @@ door_geojson = {
 door_geojson_idx = 0
 
 lines_geojson = epsg32632_geojson['features']
-
 # lines 중에서 door_id 있는 것들만 추출
 for line in lines_geojson:
     if line['properties']['door_id']!=None and line['geometry']!=None:
@@ -197,56 +196,51 @@ with open('option1\\option1_door.geojson', 'wt', encoding='utf8') as fp:
     json.dump(door_geojson, fp, indent=2)
 
 
-# for문으로 door_id 단위로 돌리기
-#  option1) door id 단위의 multilinestring의 가장 바깥 테두리 구하기
-#  option2) door_id 가 같은 lines 를 하나의 polygon으로 묶기/가장 바깥의 rectalgle만 남기기
-#  option3) door_id가 같은 lines의 가장 바깥 4개의 coordinate를 구하기 - manual
 
 
+# find intersections between doors and walls
+# initialize empty geojson
+intersections_geojson = {
+    "type": "FeatureCollection",
+	"crs": {
+	    "type": "name",
+        "properties": { "name": "urn:ogc:def:crs:EPSG::32632" }
+	},
+    "features": []
+}
 
+intersection_idx = 0
+# points = []
 
+buffer_size = 0.01
+# a = Point(1, 1).buffer(1.5)
 
-# # Extracting all the interior geometries
-# # Idea taken from here: https://stackoverflow.com/a/21922058/8667016
-# all_internal_geoms = [geom for geom in door_buff_union.interiors]
+# doors
+lines_geojson = door_geojson['features']
+for d_line in lines_geojson:
+    if d_line['geometry']!=None:
+        door = geometry.shape(d_line['geometry']).buffer(buffer_size)
 
-# # Fishing out the interior geometry we really need
-# internal_geom = all_internal_geoms[0]
+        # walls
+        walls_geojson = epsg32632_geojson['features']
+        for w_line in walls_geojson:
+            if w_line['properties']['category']=='wall' and w_line['geometry']!=None:
+                wall = geometry.shape(w_line['geometry']).buffer(buffer_size)
+                intersections = door.intersection(wall)
+                
+                intersections_geometry = geometry.mapping(intersections)
 
-# # Plotting results
-# # Code taken from here: https://stackoverflow.com/a/56140178/8667016
-# plt.plot(*internal_geom.xy)
+                if intersections_geometry['coordinates']:
+                    # points.append(intersections)
+                    each_feature = {
+                        "type": "Feature",
+                        "properties": {
+                            "index": intersection_idx
+                        },
+                        "geometry": intersections_geometry
+                    }
+                    intersections_geojson["features"].append(each_feature)
+                    intersection_idx += 1
 
-
-
-
-
-# divede lines with category / merge lines which have intersection each other
-# with open('option1\\option1_EPSG32632.geojson') as f:
-#     gj = json.load(f)
-# lines_geojson = gj['features']
-
-# doors = []
-# walls = []
-# for each in lines_geojson:
-#     if each['properties']['category']=='door':
-#         doors.append(each['geometry']['coordinates'])
-#     else:
-#         walls.append(each['geometry']['coordinates'])
-
-# # merge lines with shapely.ops.linemerge
-# merged_doors = ops.linemerge(doors)
-# merged_walls = ops.linemerge(walls)
-
-# # change shapely geometry to geojson format
-# result_doors = geopandas.GeoSeries(merged_doors).__geo_interface__
-# result_walls = geopandas.GeoSeries(merged_walls).__geo_interface__
-# result_doors["crs"].append('{ "type": "name", "properties": { "name": "urn:ogc:def:crs:EPSG::32632" }}')
-# result_walls["crs"].append('{ "type": "name", "properties": { "name": "urn:ogc:def:crs:EPSG::32632" }}')
-
-# # write custom geojson
-# with open( 'option1\\option1_merged_doors.geojson', 'wt', encoding='utf8') as fp:
-#     json.dump(result_doors, fp, indent=2)
-
-# with open( 'option1\\option1_merged_walls.geojson', 'wt', encoding='utf8') as fp:
-#     json.dump(result_walls, fp, indent=2)
+with open('option1\\option1_intersections.geojson', 'wt', encoding='utf8') as fp:
+    json.dump(intersections_geojson, fp, indent=2)
