@@ -91,22 +91,30 @@ door_block_id = 0
 for flag_ref in msp.query("INSERT[layer=='AUSBAU - Objekte - Tueren']"):
     
     exploded_door=flag_ref.explode()
+
+    each_door_line = []
+
     for e in exploded_door.query("LINE LWPOLYLINE SPLINE POLYLINE"):
         geo_proxy = geo.proxy(e, distance=0.1, force_line_string=True)
-        each_feature = {
-            "type": "Feature",
-            "properties": {
-                "index": idx,
-                "layer": 'AUSBAU - Objekte - Tueren',
-                "category": "door",
-                "door_id": door_block_id
-            },
-            "geometry": geo_proxy.__geo_interface__
-        }
-        geojson_format["features"].append(each_feature)
-        idx += 1
+        
+        each_door_line.append(geo_proxy.__geo_interface__['coordinates'])
+    multi_door_line = geometry.MultiLineString(each_door_line)
+
+    each_feature = {
+                    "type": "Feature",
+                    "properties":  {
+                                        "index": idx,
+                                        "layer": 'AUSBAU - Objekte - Tueren',
+                                        "category": "door",
+                                        "door_id": door_block_id
+                                    },
+                    "geometry": geometry.mapping(multi_door_line)
+                    }
+    geojson_format["features"].append(each_feature)
     
     door_block_id += 1
+    idx += 1
+
 
 # explode all left blocks
 for flag_ref in msp.query("INSERT"):
@@ -150,18 +158,18 @@ loaded_geojson.to_file("option1\\option1_EPSG32632.geojson", driver='GeoJSON')
 
 
 
-# geojson 로드
-with open('option1\\option1_EPSG32632.geojson') as f:
-    gj = json.load(f)
-lines_geojson = gj['features']
+# # geojson 로드
+# with open('option1\\option1_EPSG32632.geojson') as f:
+#     gj = json.load(f)
+# lines_geojson = gj['features']
 
-door_lines = []
-# lines 중에서 door_id 있는 것들만 추출
-for line in lines_geojson:
-    if line['properties']['door_id']!="":
+# door_lines = []
+# # lines 중에서 door_id 있는 것들만 추출
+# for line in lines_geojson:
+#     if line['properties']['door_id']!="":
         
-        linestring =  str(line['geometry']['coordinates']).replace('], [', ',').replace(', ',' ').replace('[','').replace(']','')
-        doors.append(wkt.loads('LINESTRING ('+linestring+')').buffer(buffer_size))
+#         linestring =  str(line['geometry']['coordinates']).replace('], [', ',').replace(', ',' ').replace('[','').replace(']','')
+#         doors.append(wkt.loads('LINESTRING ('+linestring+')').buffer(buffer_size))
 
 
 # for문으로 door_id 단위로 돌리기
