@@ -2,7 +2,13 @@ import ezdxf
 import ezdxf.addons.geo as geo
 import json
 import geopandas
-from shapely import geometry, ops, wkt
+from shapely import geometry
+import alphashape
+from descartes import PolygonPatch
+
+import matplotlib.pyplot as plt
+import numpy as np
+
 
 # source file
 # dxf_name = "layer_HCU_D_106_Grundriss_4OG_moved_V2"
@@ -155,6 +161,8 @@ loaded_geojson.to_file("option1\\option1_EPSG32632.geojson", driver='GeoJSON')
 
 
 
+
+
 # door multilinestring to convex_hull polygon
 with open('option1\\option1_EPSG32632.geojson') as f:
     epsg32632_geojson = json.load(f)
@@ -170,11 +178,9 @@ door_geojson = {
 }
 
 door_geojson_idx = 0
-
-lines_geojson = epsg32632_geojson['features']
 # lines 중에서 door_id 있는 것들만 추출
-for line in lines_geojson:
-    if line['properties']['door_id']!=None and line['geometry']!=None:
+for line in epsg32632_geojson['features']:
+    if line['properties']['door_id']!=None and line['geometry']:
         shapely_line = geometry.shape(line['geometry'])
         # door_polygons.append(shapely_line.convex_hull)
 
@@ -198,6 +204,8 @@ with open('option1\\option1_door.geojson', 'wt', encoding='utf8') as fp:
 
 
 
+
+
 # find intersections between doors and walls
 # initialize empty geojson
 intersections_geojson = {
@@ -210,21 +218,16 @@ intersections_geojson = {
 }
 
 intersection_idx = 0
-# points = []
-
 buffer_size = 0.01
-# a = Point(1, 1).buffer(1.5)
 
 # doors
-lines_geojson = door_geojson['features']
-for d_line in lines_geojson:
-    if d_line['geometry']!=None:
+for d_line in door_geojson['features']:
+    if d_line['geometry']:
         door = geometry.shape(d_line['geometry']).buffer(buffer_size)
-
         # walls
         walls_geojson = epsg32632_geojson['features']
         for w_line in walls_geojson:
-            if w_line['properties']['category']=='wall' and w_line['geometry']!=None:
+            if w_line['properties']['category']=='wall' and w_line['geometry']:
                 wall = geometry.shape(w_line['geometry']).buffer(buffer_size)
                 intersections = door.intersection(wall)
                 
@@ -244,3 +247,44 @@ for d_line in lines_geojson:
 
 with open('option1\\option1_intersections.geojson', 'wt', encoding='utf8') as fp:
     json.dump(intersections_geojson, fp, indent=2)
+
+
+
+
+
+
+# outer wall detection - concave hull, alpha shape
+# initialize empty geojson
+outer_wall_geojson = {
+    "type": "FeatureCollection",
+	"crs": {
+	    "type": "name",
+        "properties": { "name": "urn:ogc:def:crs:EPSG::32632" }
+	},
+    "features": []
+}
+
+wall_points = []
+for lines in epsg32632_geojson['features']:
+    if lines['geometry']:
+        shapely_line = lines['geometry']['coordinates']
+        for each_line in shapely_line:
+            for point in each_line:
+                wall_points.append(tuple(point))
+
+non_dup_wall_points = []
+[non_dup_wall_points.append(x) for x in wall_points if x not in non_dup_wall_points]
+
+# wall_alpha_shape = alphashape.alphashape(points, .5)
+wall_alpha_shape = alphashape.alphashape(non_dup_wall_points, .1)
+
+wall_feature = {
+    "type": "Feature",
+    "properties": {
+    },
+    "geometry": geometry.mapping(wall_alpha_shape)
+}
+outer_wall_geojson["features"].append(wall_feature)
+
+with open('option1\\option1_outer_wall.geojson', 'wt', encoding='utf8') as fp:
+    json.dump(outer_wall_geojson, fp, indent=2)
