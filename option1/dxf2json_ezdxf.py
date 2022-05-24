@@ -70,13 +70,15 @@ layer_list = [
                 ,"ROHBAU - Darstellungen - Waende - Mauerwerk" 
 ]
 
-# counting entities of dxf file => index 
+# door_id
+door_block_id = 0
+# entity index 
 idx = 0
 
 # 1st exploding of blocks(except door blocks)
 for flag_ref in msp.query("INSERT[layer!='AUSBAU - Objekte - Tueren']"):
     exploded_e = flag_ref.explode()
-
+    
     # exploded door layer lines(door layer, but not door block, door components)
     for e in exploded_e.query("LINE LWPOLYLINE SPLINE POLYLINE[layer=='AUSBAU - Objekte - Tueren']"):
         geo_proxy = geo.proxy(e, distance=0.1, force_line_string=True)
@@ -85,15 +87,17 @@ for flag_ref in msp.query("INSERT[layer!='AUSBAU - Objekte - Tueren']"):
             "properties": {
                 "index": idx,
                 "layer": 'AUSBAU - Objekte - Tueren',
-                "category": "door"
+                "category": "door",
+                "door_id": door_block_id
             },
             "geometry": geo_proxy.__geo_interface__
         }
         geojson_format["features"].append(each_feature)
         idx += 1
 
+    door_block_id += 1
+
 # explode door block and give door ID
-door_block_id = 0
 for flag_ref in msp.query("INSERT[layer=='AUSBAU - Objekte - Tueren']"):
     
     exploded_door=flag_ref.explode()
@@ -124,7 +128,26 @@ for flag_ref in msp.query("INSERT[layer=='AUSBAU - Objekte - Tueren']"):
 
 # explode all left blocks
 for flag_ref in msp.query("INSERT"):
-    flag_ref.explode()
+    exploded_e = flag_ref.explode()
+    
+    # exploded door layer lines(door layer, but not door block, door components)
+    for e in exploded_e.query("LINE LWPOLYLINE SPLINE POLYLINE[layer=='AUSBAU - Objekte - Tueren']"):
+        geo_proxy = geo.proxy(e, distance=0.1, force_line_string=True)
+        each_feature = {
+            "type": "Feature",
+            "properties": {
+                "index": idx,
+                "layer": 'AUSBAU - Objekte - Tueren',
+                "category": "door",
+                "door_id": door_block_id
+            },
+            "geometry": geo_proxy.__geo_interface__
+        }
+        geojson_format["features"].append(each_feature)
+        idx += 1
+
+    door_block_id += 1
+
 
 for layer in layer_list:
     for e in msp.query("LINE LWPOLYLINE SPLINE POLYLINE[layer=='" + layer + "']"):
@@ -163,10 +186,17 @@ loaded_geojson.to_file("option1\\option1_EPSG32632.geojson", driver='GeoJSON')
 
 
 
-# door multilinestring to convex_hull polygon
+# load EPSG32632 geojson
 with open('option1\\option1_EPSG32632.geojson') as f:
     epsg32632_geojson = json.load(f)
 
+
+
+
+
+
+
+# door multilinestring to convex_hull polygon
 # initialize empty geojson
 door_geojson = {
     "type": "FeatureCollection",
@@ -217,36 +247,36 @@ intersections_geojson = {
     "features": []
 }
 
-intersection_idx = 0
-buffer_size = 0.01
+# intersection_idx = 0
+# buffer_size = 0.01
 
-# doors
-for d_line in door_geojson['features']:
-    if d_line['geometry']:
-        door = geometry.shape(d_line['geometry']).buffer(buffer_size)
-        # walls
-        walls_geojson = epsg32632_geojson['features']
-        for w_line in walls_geojson:
-            if w_line['properties']['category']=='wall' and w_line['geometry']:
-                wall = geometry.shape(w_line['geometry']).buffer(buffer_size)
-                intersections = door.intersection(wall)
+# # doors
+# for d_line in door_geojson['features']:
+#     if d_line['geometry']:
+#         door = geometry.shape(d_line['geometry']).buffer(buffer_size)
+#         # walls
+#         walls_geojson = epsg32632_geojson['features']
+#         for w_line in walls_geojson:
+#             if w_line['properties']['category']=='wall' and w_line['geometry']:
+#                 wall = geometry.shape(w_line['geometry']).buffer(buffer_size)
+#                 intersections = door.intersection(wall)
                 
-                intersections_geometry = geometry.mapping(intersections)
+#                 intersections_geometry = geometry.mapping(intersections)
 
-                if intersections_geometry['coordinates']:
-                    # points.append(intersections)
-                    each_feature = {
-                        "type": "Feature",
-                        "properties": {
-                            "index": intersection_idx
-                        },
-                        "geometry": intersections_geometry
-                    }
-                    intersections_geojson["features"].append(each_feature)
-                    intersection_idx += 1
+#                 if intersections_geometry['coordinates']:
+#                     # points.append(intersections)
+#                     each_feature = {
+#                         "type": "Feature",
+#                         "properties": {
+#                             "index": intersection_idx
+#                         },
+#                         "geometry": intersections_geometry
+#                     }
+#                     intersections_geojson["features"].append(each_feature)
+#                     intersection_idx += 1
 
-with open('option1\\option1_intersections.geojson', 'wt', encoding='utf8') as fp:
-    json.dump(intersections_geojson, fp, indent=2)
+# with open('option1\\option1_intersections.geojson', 'wt', encoding='utf8') as fp:
+#     json.dump(intersections_geojson, fp, indent=2)
 
 
 
@@ -267,16 +297,18 @@ outer_wall_geojson = {
 wall_points = []
 for lines in epsg32632_geojson['features']:
     if lines['geometry']:
-        shapely_line = lines['geometry']['coordinates']
-        for each_line in shapely_line:
-            for point in each_line:
-                wall_points.append(tuple(point))
+        shapely_lines = lines['geometry']['coordinates']
+        for each_line in shapely_lines:
+            if type(each_line[0]) == float:
+                wall_points.append(tuple(each_line))
+            else:
+                for point in each_line:
+                    wall_points.append(tuple(point))                
 
 non_dup_wall_points = []
 [non_dup_wall_points.append(x) for x in wall_points if x not in non_dup_wall_points]
 
-# wall_alpha_shape = alphashape.alphashape(points, .5)
-wall_alpha_shape = alphashape.alphashape(non_dup_wall_points, .1)
+wall_alpha_shape = alphashape.alphashape(non_dup_wall_points, .23)
 
 wall_feature = {
     "type": "Feature",
