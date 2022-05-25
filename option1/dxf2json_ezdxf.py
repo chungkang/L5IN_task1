@@ -198,7 +198,7 @@ with open('option1\\option1_EPSG32632.geojson') as f:
 
 # door multilinestring to convex_hull polygon
 # initialize empty geojson
-door_geojson = {
+door_polygon_geojson = {
     "type": "FeatureCollection",
 	"crs": {
 	    "type": "name",
@@ -207,45 +207,71 @@ door_geojson = {
     "features": []
 }
 
-door_geojson_idx = 0
+# initialize empty geojson
+door_point_geojson = {
+    "type": "FeatureCollection",
+	"crs": {
+	    "type": "name",
+        "properties": { "name": "urn:ogc:def:crs:EPSG::32632" }
+	},
+    "features": []
+}
+
+door_polygon_geojson_idx = 0
+door_point_geojson_idx = 0
 # lines 중에서 door_id 있는 것들만 추출
 for line in epsg32632_geojson['features']:
     if line['properties']['door_id']!=None and line['geometry']:
         shapely_line = geometry.shape(line['geometry'])
-        # door_polygons.append(shapely_line.convex_hull)
-
+        outer_door_polygon = shapely_line.convex_hull
+        if outer_door_polygon.geom_type == 'LineString': continue
+        door_points = list(outer_door_polygon.exterior.coords)
         each_feature = {
             "type": "Feature",
             "properties": {
-                "index": door_geojson_idx
-                # "layer": layer,
-                # "category": category
+                "index": door_polygon_geojson_idx
             },
-            "geometry": geometry.mapping(shapely_line.convex_hull)
+            "geometry": geometry.mapping(outer_door_polygon)
         }
-        door_geojson["features"].append(each_feature)
-        door_geojson_idx += 1
+        door_polygon_geojson["features"].append(each_feature)
+        door_polygon_geojson_idx += 1
+
+        for x in door_points:  
+            each_feature = {
+                "type": "Feature",
+                "properties": {
+                    "index": door_point_geojson_idx
+                },
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": list(x)
+                }
+            }
+            door_point_geojson["features"].append(each_feature)
+            door_point_geojson_idx += 1
 
 # result_door_buff_union["crs"]=({ "type": "name", "properties": { "name": "urn:ogc:def:crs:EPSG::32632" }})
 
-with open('option1\\option1_door.geojson', 'wt', encoding='utf8') as fp:
-    json.dump(door_geojson, fp, indent=2)
+with open('option1\\option1_door_polygon.geojson', 'wt', encoding='utf8') as fp:
+    json.dump(door_polygon_geojson, fp, indent=2)
+
+with open('option1\\option1_door_point.geojson', 'wt', encoding='utf8') as fp:
+    json.dump(door_point_geojson, fp, indent=2)
 
 
 
 
 
-
-# find intersections between doors and walls
-# initialize empty geojson
-intersections_geojson = {
-    "type": "FeatureCollection",
-	"crs": {
-	    "type": "name",
-        "properties": { "name": "urn:ogc:def:crs:EPSG::32632" }
-	},
-    "features": []
-}
+# # find intersections between doors and walls
+# # initialize empty geojson
+# intersections_geojson = {
+#     "type": "FeatureCollection",
+# 	"crs": {
+# 	    "type": "name",
+#         "properties": { "name": "urn:ogc:def:crs:EPSG::32632" }
+# 	},
+#     "features": []
+# }
 
 # intersection_idx = 0
 # buffer_size = 0.01
@@ -279,6 +305,16 @@ intersections_geojson = {
 #     json.dump(intersections_geojson, fp, indent=2)
 
 
+from shapely.geometry import Point, LineString
+
+line = LineString([(-9765787.9981184918, 5488940.9749489054), (-9748582.8016368076, 5488402.1275707092)])
+point = Point(-9763788.9782693591, 5488878.3678984242)
+
+line.within(point)  # False
+line.distance(point)  # 7.765244949417793e-11
+line.distance(point) < 1e-8  # True
+
+
 
 
 
@@ -308,7 +344,7 @@ for lines in epsg32632_geojson['features']:
 non_dup_wall_points = []
 [non_dup_wall_points.append(x) for x in wall_points if x not in non_dup_wall_points]
 
-wall_alpha_shape = alphashape.alphashape(non_dup_wall_points, .23)
+wall_alpha_shape = alphashape.alphashape(non_dup_wall_points, .18)
 
 wall_feature = {
     "type": "Feature",
