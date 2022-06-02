@@ -201,6 +201,9 @@ with open('option1\\option1_EPSG32632.geojson') as f:
 # door multipoints to convex_hull polygon
 door_dict = {}
 for lines in epsg32632_geojson['features']:
+    # filter short lines
+    # if geometry.LineString(lines).length < 0.05: continue
+
     door_points = []
     if lines['properties']['door_id']!=None and lines['geometry']:
         shapely_lines = lines['geometry']['coordinates']
@@ -224,7 +227,17 @@ door_polygon_geojson = {
 	},
     "features": []
 }
+door_points_geojson = {
+    "type": "FeatureCollection",
+	"crs": {
+	    "type": "name",
+        "properties": { "name": "urn:ogc:def:crs:EPSG::32632" }
+	},
+    "features": []
+}
+
 door_polygon_geojson_idx = 0
+
 # door_points dictionary를 key 단위로 돌려줌
 for key in door_dict.keys():
     door_array = []
@@ -234,25 +247,43 @@ for key in door_dict.keys():
         else:
             for point in i:
                 door_array.append(tuple(point))
-                
-    each_feature = {
+    door_polygon = geometry.MultiPoint(door_array).convex_hull
+
+    # filter small polygon
+    if(door_polygon.area<0.03): continue
+
+    door_polygon_feature = {
         "type": "Feature",
         "properties": {
             "index": door_polygon_geojson_idx
         },
-        "geometry": geometry.mapping(geometry.MultiPoint(door_array).convex_hull)
+        "geometry": geometry.mapping(door_polygon)
     }
-    door_polygon_geojson["features"].append(each_feature)
+    door_polygon_geojson["features"].append(door_polygon_feature)
     door_polygon_geojson_idx += 1
 
     # polygon의 테두리 points를 뽑는다
+    door_points = geometry.MultiPoint(door_polygon.exterior.coords)
+    door_points_feature = {
+        "type": "Feature",
+        "properties": {
+            "index": door_polygon_geojson_idx
+        },
+        "geometry": geometry.mapping(door_points)
+    }
+    door_points_geojson["features"].append(door_points_feature)
+    door_polygon_geojson_idx += 1
+
 
 with open('option1\\option1_door_polygon.geojson', 'wt', encoding='utf8') as fp:
     json.dump(door_polygon_geojson, fp, indent=2)
+with open('option1\\option1_door_points.geojson', 'wt', encoding='utf8') as fp:
+    json.dump(door_points_geojson, fp, indent=2)
 
 
 
-# find intersections between doors and walls
+
+# find lines with door points
 # initialize empty geojson
 intersections_geojson = {
     "type": "FeatureCollection",
@@ -263,44 +294,39 @@ intersections_geojson = {
     "features": []
 }
 
-# intersection_idx = 0
-# buffer_size = 0.01
+intersection_idx = 0
+# door buffer point랑 교점이 있으면 다 저장
+for line in epsg32632_geojson['features']:
+    if line['geometry']:
+        # 라인 1줄-door point 전부와 비교
+        line_shp = geometry.shape(line['geometry'])
+        
+        intersect_YN = 'N'
+        # door line단위 for문 - multiPoints
+        for door in door_points_geojson["features"]:
+            # point 단위 for문
+            door_shp = geometry.shape(door['geometry'])
+            if line_shp.distance(door_shp.buffer(0.5)) < 1e-8:
+                intersect_YN = 'Y'
+                continue
+    
+        if intersect_YN == 'N':
+            continue
 
-# # doors
-# for d_line in door_geojson['features']:
-#     if d_line['geometry']:
-#         door = geometry.shape(d_line['geometry']).buffer(buffer_size)
-#         # walls
-#         walls_geojson = epsg32632_geojson['features']
-#         for w_line in walls_geojson:
-#             if w_line['properties']['category']=='wall' and w_line['geometry']:
-#                 wall = geometry.shape(w_line['geometry']).buffer(buffer_size)
-#                 intersections = door.intersection(wall)
-                
-#                 intersections_geometry = geometry.mapping(intersections)
+        each_feature = {
+            "type": "Feature",
+            "properties": {
+                "index": intersection_idx
+            },
+            "geometry":geometry.mapping(line_shp)
+        }
+        intersections_geojson["features"].append(each_feature)
+        intersection_idx += 1
 
-#                 if intersections_geometry['coordinates']:
-#                     # points.append(intersections)
-#                     each_feature = {
-#                         "type": "Feature",
-#                         "properties": {
-#                             "index": intersection_idx
-#                         },
-#                         "geometry": intersections_geometry
-#                     }
-#                     intersections_geojson["features"].append(each_feature)
-#                     intersection_idx += 1
-
-# with open('option1\\option1_intersections.geojson', 'wt', encoding='utf8') as fp:
-#     json.dump(intersections_geojson, fp, indent=2)
+with open('option1\\option1_intersections.geojson', 'wt', encoding='utf8') as fp:
+    json.dump(intersections_geojson, fp, indent=2)
 
 
-# line = LineString([(-9765787.9981184918, 5488940.9749489054), (-9748582.8016368076, 5488402.1275707092)])
-# point = Point(-9763788.9782693591, 5488878.3678984242)
-
-# line.within(point)  # False
-# line.distance(point)  # 7.765244949417793e-11
-# line.distance(point) < 1e-8  # True
 
 
 
