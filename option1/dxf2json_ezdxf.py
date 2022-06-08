@@ -283,48 +283,48 @@ with open('option1\\option1_door_points.geojson', 'wt', encoding='utf8') as fp:
 
 
 
-# find lines with door points
-# initialize empty geojson
-intersections_geojson = {
-    "type": "FeatureCollection",
-	"crs": {
-	    "type": "name",
-        "properties": { "name": "urn:ogc:def:crs:EPSG::32632" }
-	},
-    "features": []
-}
+# # find lines with door points
+# # initialize empty geojson
+# intersections_geojson = {
+#     "type": "FeatureCollection",
+# 	"crs": {
+# 	    "type": "name",
+#         "properties": { "name": "urn:ogc:def:crs:EPSG::32632" }
+# 	},
+#     "features": []
+# }
 
-intersection_idx = 0
-# door buffer point랑 교점이 있으면 다 저장
-for line in epsg32632_geojson['features']:
-    if line['geometry']:
-        # 라인 1줄-door point 전부와 비교
-        line_shp = geometry.shape(line['geometry'])
+# intersection_idx = 0
+# # door buffer point랑 교점이 있으면 다 저장
+# for line in epsg32632_geojson['features']:
+#     if line['geometry']:
+#         # 라인 1줄-door point 전부와 비교
+#         line_shp = geometry.shape(line['geometry'])
         
-        intersect_YN = 'N'
-        # door line단위 for문 - multiPoints
-        for door in door_points_geojson["features"]:
-            # point 단위 for문
-            door_shp = geometry.shape(door['geometry'])
-            if line_shp.distance(door_shp.buffer(0.5)) < 1e-8:
-                intersect_YN = 'Y'
-                continue
+#         intersect_YN = 'N'
+#         # door line단위 for문 - multiPoints
+#         for door in door_points_geojson["features"]:
+#             # point 단위 for문
+#             door_shp = geometry.shape(door['geometry'])
+#             if line_shp.distance(door_shp.buffer(0.5)) < 1e-8:
+#                 intersect_YN = 'Y'
+#                 continue
     
-        if intersect_YN == 'N':
-            continue
+#         if intersect_YN == 'N':
+#             continue
 
-        each_feature = {
-            "type": "Feature",
-            "properties": {
-                "index": intersection_idx
-            },
-            "geometry":geometry.mapping(line_shp)
-        }
-        intersections_geojson["features"].append(each_feature)
-        intersection_idx += 1
+#         each_feature = {
+#             "type": "Feature",
+#             "properties": {
+#                 "index": intersection_idx
+#             },
+#             "geometry":geometry.mapping(line_shp)
+#         }
+#         intersections_geojson["features"].append(each_feature)
+#         intersection_idx += 1
 
-with open('option1\\option1_intersections.geojson', 'wt', encoding='utf8') as fp:
-    json.dump(intersections_geojson, fp, indent=2)
+# with open('option1\\option1_intersections.geojson', 'wt', encoding='utf8') as fp:
+#     json.dump(intersections_geojson, fp, indent=2)
 
 
 
