@@ -16,8 +16,11 @@ dxf_name = "rev_vert_HCU_D_106_Grundriss_4OG_moved_V2"
 # loading dxf file
 doc = ezdxf.readfile("dxf\\"+ dxf_name + ".dxf")
 
-# get modelspace / 모형
+# get modelspace
 msp = doc.modelspace()
+
+# minimum length of lines
+min_length = 0.2
 
 # get layout / plan - layout page
 # plan = doc.layout('16 - plan 2.OG_1_100')
@@ -87,7 +90,7 @@ for flag_ref in msp.query("INSERT[layer!='AUSBAU - Objekte - Tueren']"):
         
         # skip short lines
         line = geometry.shape(geo_proxy.__geo_interface__)
-        if line.length < 0.5:
+        if line.length < min_length:
             continue
 
         each_feature = {
@@ -117,7 +120,7 @@ for flag_ref in msp.query("INSERT[layer=='AUSBAU - Objekte - Tueren']"):
 
         # skip short lines
         line = geometry.shape(geo_proxy.__geo_interface__)
-        if line.length < 0.5:
+        if line.length < min_length:
             continue
 
         each_door_line.append(geo_proxy.__geo_interface__['coordinates'])
@@ -150,7 +153,7 @@ for flag_ref in msp.query("INSERT"):
         
         # skip short lines
         line = geometry.shape(geo_proxy.__geo_interface__)
-        if line.length < 0.5:
+        if line.length < min_length:
             continue
 
         each_feature = {
@@ -176,7 +179,7 @@ for layer in layer_list:
         
         # skip short lines
         line = geometry.shape(geo_proxy.__geo_interface__)
-        if line.length < 0.5:
+        if line.length < min_length:
             continue
         
         category = ""
@@ -219,15 +222,17 @@ with open('option1\\option1_EPSG32632.geojson') as f:
 
 
 
+# # get all the points from end of lines
+# lines = [geometry.shape(line['geometry']) for line in epsg32632_geojson['features']]
+# endpts = [(geometry.Point(list(line.coords)[0]), geometry.Point(list(line.coords)[-1])) for line  in lines]
+# # flatten the resulting list to a simple list of points
+# endpts= [pt for sublist in endpts  for pt in sublist] 
 
 
 
 # door multipoints to convex_hull polygon
 door_dict = {}
 for lines in epsg32632_geojson['features']:
-    # filter short lines
-    # if geometry.LineString(lines).length < 0.05: continue
-
     door_points = []
     if lines['properties']['door_id']!=None and lines['geometry']:
         shapely_lines = lines['geometry']['coordinates']
