@@ -247,7 +247,7 @@ for key in door_dict.keys():
         else:
             for point in i:
                 door_array.append(tuple(point))
-    door_polygon = geometry.MultiPoint(door_array).convex_hull
+    door_polygon = geometry.MultiPoint(door_array).convex_hull.simplify(0.1, preserve_topology=True)
 
     # filter small polygon
     if(door_polygon.area<0.03): continue
