@@ -84,6 +84,12 @@ for flag_ref in msp.query("INSERT[layer!='AUSBAU - Objekte - Tueren']"):
     # exploded door layer lines(door layer, but not door block, door components)
     for e in exploded_e.query("LINE LWPOLYLINE SPLINE POLYLINE[layer=='AUSBAU - Objekte - Tueren']"):
         geo_proxy = geo.proxy(e, distance=0.1, force_line_string=True)
+        
+        # skip short lines
+        line = geometry.shape(geo_proxy.__geo_interface__)
+        if line.length < 0.5:
+            continue
+
         each_feature = {
             "type": "Feature",
             "properties": {
@@ -108,8 +114,14 @@ for flag_ref in msp.query("INSERT[layer=='AUSBAU - Objekte - Tueren']"):
 
     for e in exploded_door.query("LINE LWPOLYLINE SPLINE POLYLINE"):
         geo_proxy = geo.proxy(e, distance=0.1, force_line_string=True)
-        
+
+        # skip short lines
+        line = geometry.shape(geo_proxy.__geo_interface__)
+        if line.length < 0.5:
+            continue
+
         each_door_line.append(geo_proxy.__geo_interface__['coordinates'])
+
     multi_door_line = geometry.MultiLineString(each_door_line)
 
     each_feature = {
@@ -135,6 +147,12 @@ for flag_ref in msp.query("INSERT"):
     # exploded door layer lines(door layer, but not door block, door components)
     for e in exploded_e.query("LINE LWPOLYLINE SPLINE POLYLINE[layer=='AUSBAU - Objekte - Tueren']"):
         geo_proxy = geo.proxy(e, distance=0.1, force_line_string=True)
+        
+        # skip short lines
+        line = geometry.shape(geo_proxy.__geo_interface__)
+        if line.length < 0.5:
+            continue
+
         each_feature = {
             "type": "Feature",
             "properties": {
@@ -155,6 +173,12 @@ for layer in layer_list:
     for e in msp.query("LINE LWPOLYLINE SPLINE POLYLINE[layer=='" + layer + "']"):
         # Convert DXF entity into a GeoProxy object:
         geo_proxy = geo.proxy(e, distance=0.1, force_line_string=True)
+        
+        # skip short lines
+        line = geometry.shape(geo_proxy.__geo_interface__)
+        if line.length < 0.5:
+            continue
+        
         category = ""
         if "waende" in layer or "Waende" in layer or "trockenbau" in layer or "Trockenbau" in layer:
             category = "wall"
