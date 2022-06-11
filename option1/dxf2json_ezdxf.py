@@ -7,6 +7,8 @@ import shapely
 import alphashape
 from descartes import PolygonPatch
 import numpy as np
+import itertools
+
 
 # source file
 # dxf_name = "layer_HCU_D_106_Grundriss_4OG_moved_V2"
@@ -248,12 +250,6 @@ with open('option1\\option1_EPSG32632.geojson') as f:
 
 
 
-# # get all the points from end of lines
-# lines = [geometry.shape(line['geometry']) for line in epsg32632_geojson['features']]
-# endpts = [(geometry.Point(list(line.coords)[0]), geometry.Point(list(line.coords)[-1])) for line  in lines]
-# # flatten the resulting list to a simple list of points
-# endpts= [pt for sublist in endpts  for pt in sublist] 
-
 
 
 # door multipoints to convex_hull polygon
@@ -334,6 +330,79 @@ with open('option1\\option1_door_polygon.geojson', 'wt', encoding='utf8') as fp:
     json.dump(door_polygon_geojson, fp, indent=2)
 with open('option1\\option1_door_points.geojson', 'wt', encoding='utf8') as fp:
     json.dump(door_points_geojson, fp, indent=2)
+
+
+
+
+
+# find intersections + split lines with intersections
+# get all lines from geojson
+all_lines = []
+for lines in epsg32632_geojson['features']:
+    if lines['properties']['door_id']==None and lines['geometry']:
+        all_lines.append(geometry.shape(lines['geometry']))
+
+# get all the points from end of lines
+endpts = [(geometry.Point(list(line.coords)[0]), geometry.Point(list(line.coords)[-1])) for line  in all_lines]
+# flatten the resulting list to a simple list of points
+endpts= [pt for sublist in endpts  for pt in sublist] 
+
+# find intersections
+inters = []
+for line1,line2 in  itertools.combinations(all_lines, 2):
+  if  line1.intersects(line2):
+    inter = line1.intersection(line2)
+    if "Point" == inter.type:
+        inters.append(inter)
+    elif "MultiPoint" == inter.type:
+        inters.extend([pt for pt in inter])
+    elif "MultiLineString" == inter.type:
+        multiLine = [line for line in inter]
+        first_coords = multiLine[0].coords[0]
+        last_coords = multiLine[len(multiLine)-1].coords[1]
+        inters.append(geometry.Point(first_coords[0], first_coords[1]))
+        inters.append(geometry.Point(last_coords[0], last_coords[1]))
+    elif "GeometryCollection" == inter.type:
+        for geom in inter:
+            if "Point" == geom.type:
+                inters.append(geom)
+            elif "MultiPoint" == geom.type:
+                inters.extend([pt for pt in geom])
+            elif "MultiLineString" == geom.type:
+                multiLine = [line for line in geom]
+                first_coords = multiLine[0].coords[0]
+                last_coords = multiLine[len(multiLine)-1].coords[1]
+                inters.append(geometry.Point(first_coords[0], first_coords[1]))
+                inters.append(geometry.Point(last_coords[0], last_coords[1]))
+
+# remove duplicate of intersection points
+result = endpts.extend([pt for pt in inters  if pt not in endpts])
+
+intersections_geojson = {
+    "type": "FeatureCollection",
+	"crs": {
+	    "type": "name",
+        "properties": { "name": "urn:ogc:def:crs:EPSG::32632" }
+	},
+    "features": []
+}
+for i, pt in enumerate(result):
+    points_feature = {
+        "type": "Feature",
+        "properties": {
+            "index": i
+        },
+        "geometry": geometry.mapping(pt)
+    }
+    intersections_geojson["features"].append(points_feature)
+
+with open('option1\\option1_intersections.geojson', 'wt', encoding='utf8') as fp:
+    json.dump(intersections_geojson, fp, indent=2)
+
+
+
+
+
 
 
 
