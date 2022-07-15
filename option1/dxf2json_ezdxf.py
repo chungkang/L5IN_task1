@@ -334,6 +334,24 @@ with open('option1\\option1_door_points.geojson', 'wt', encoding='utf8') as fp:
 
 
 
+# index 0 door polygon for test
+index0_polygon_geojson = {
+    "type": "FeatureCollection",
+	"crs": {
+	    "type": "name",
+        "properties": { "name": "urn:ogc:def:crs:EPSG::32632" }
+	},
+    "features": [{
+        "type": "Feature",
+        "properties": {
+            "index": 1
+        },
+        "geometry": door_polygon_geojson['features'][1]['geometry']
+    }]
+}
+
+with open('option1\\index0_door_polygon.geojson', 'wt', encoding='utf8') as fp:
+    json.dump(index0_polygon_geojson, fp, indent=2)
 
 
 # # find intersections + split lines with intersections
@@ -399,6 +417,24 @@ with open('option1\\option1_door_points.geojson', 'wt', encoding='utf8') as fp:
 
 # with open('option1\\option1_intersections.geojson', 'wt', encoding='utf8') as fp:
 #     json.dump(intersections_geojson, fp, indent=2)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
