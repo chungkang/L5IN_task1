@@ -404,6 +404,7 @@ with open('option1\\option1_door_points.geojson', 'wt', encoding='utf8') as fp:
 
 
 
+"""
 
 
 # find lines with door points
@@ -451,7 +452,7 @@ with open('option1\\option1_intersections.geojson', 'wt', encoding='utf8') as fp
 
 
 
-
+"""
 
 
 
