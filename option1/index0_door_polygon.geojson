@@ -10,7 +10,7 @@
     {
       "type": "Feature",
       "properties": {
-        "index": 0
+        "index": 1
       },
       "geometry": {
         "type": "Polygon",

@@ -23,7 +23,7 @@ doc = ezdxf.readfile("dxf\\"+ dxf_name + ".dxf")
 msp = doc.modelspace()
 
 # minimum length of lines
-min_length = 0.5
+min_length = 0.2
 
 # get layout / plan - layout page
 # plan = doc.layout('16 - plan 2.OG_1_100')
@@ -68,14 +68,14 @@ layer_list = [
                 # ,"AUSBAU - Objekte - Aufzuege" 
                 ,"AUSBAU - Objekte - Tueren"
                 ,"DARSTELLUNGEN - Aufsichtslinien"
-                ,"DARSTELLUNGEN - Brandwand"
-                ,"ROHBAU - Darstellungen - Unterzug - Deckenversprung - Oeffnung"
+                # ,"DARSTELLUNGEN - Brandwand"
+                # ,"ROHBAU - Darstellungen - Unterzug - Deckenversprung - Oeffnung"
                 ,"keine" 
                 ,"ROHBAU - Darstellungen - Brandwand" 
                 # ,"ROHBAU - Darstellungen - Treppen" 
                 ,"ROHBAU - Darstellungen - Waende" 
                 ,"ROHBAU - Darstellungen - Waende - Mauerwerk" 
-                ,"ROHBAU - Darstellungen - Ansichtslinien" 
+                # ,"ROHBAU - Darstellungen - Ansichtslinien" 
 ]
 
 # door_id
@@ -206,10 +206,10 @@ for layer in layer_list:
         # Convert DXF entity into a GeoProxy object:
         geo_proxy = geo.proxy(e, distance=0.1, force_line_string=True)
         
-        # # skip short lines
-        # line = geometry.shape(geo_proxy.__geo_interface__)
-        # if line.length < min_length:
-        #     continue
+        # skip short lines
+        line = geometry.shape(geo_proxy.__geo_interface__)
+        if line.length < min_length:
+            continue
         
         category = ""
         if "waende" in layer or "Waende" in layer or "trockenbau" in layer or "Trockenbau" in layer:
