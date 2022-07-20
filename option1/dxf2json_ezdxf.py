@@ -66,7 +66,7 @@ layer_list = [
                 ,"AUSBAU - Darstellungen - Trockenbau" 
                 ,"AUSBAU - Darstellungen - Waende - Mauerwerk"
                 # ,"AUSBAU - Objekte - Aufzuege" 
-                ,"AUSBAU - Objekte - Tueren"
+                # ,"AUSBAU - Objekte - Tueren"
                 ,"DARSTELLUNGEN - Aufsichtslinien"
                 # ,"DARSTELLUNGEN - Brandwand"
                 # ,"ROHBAU - Darstellungen - Unterzug - Deckenversprung - Oeffnung"
@@ -249,27 +249,47 @@ with open('option1\\option1_EPSG32632.geojson') as f:
     epsg32632_geojson = json.load(f)
 
 
-
-
-
-
 # door multipoints to convex_hull polygon
+# + get wall lines(none door layers)
+wall_lines_geojson = {
+    "type": "FeatureCollection",
+	"crs": {
+	    "type": "name",
+        "properties": { "name": "urn:ogc:def:crs:EPSG::32632" }
+	},
+    "features": []
+}
+wall_line_idx = 0
+
 door_dict = {}
 for lines in epsg32632_geojson['features']:
     door_points = []
-    if lines['properties']['door_id']!=None and lines['geometry']:
-        shapely_lines = lines['geometry']['coordinates']
-        for each_line in shapely_lines:
-            if type(each_line[0]) == float:
-                door_points.append(each_line)
-            else:
-                for point in each_line:
-                    door_points.append(point)
+    
+    # door lines
+    if lines['properties']['category']=='door':
+        if lines['properties']['door_id']!=None and lines['geometry']:
+            shapely_lines = lines['geometry']['coordinates']
+            for each_line in shapely_lines:
+                if type(each_line[0]) == float:
+                    door_points.append(each_line)
+                else:
+                    for point in each_line:
+                        door_points.append(point)
 
-        if lines['properties']['door_id'] in door_dict:
-            door_dict[lines['properties']['door_id']].append(door_points)
-        else:
-            door_dict[lines['properties']['door_id']] = door_points
+            if lines['properties']['door_id'] in door_dict:
+                door_dict[lines['properties']['door_id']].append(door_points)
+            else:
+                door_dict[lines['properties']['door_id']] = door_points
+    # wall lines
+    else:
+        if lines['geometry']:
+            wall_line_feature = {
+                "type": "Feature",
+                "properties": lines['properties'],
+                "geometry": lines['geometry']
+            }
+            wall_lines_geojson["features"].append(wall_line_feature)
+            wall_line_idx+=1
 
 door_polygon_geojson = {
     "type": "FeatureCollection",
@@ -331,7 +351,8 @@ with open('option1\\option1_door_polygon.geojson', 'wt', encoding='utf8') as fp:
     json.dump(door_polygon_geojson, fp, indent=2)
 with open('option1\\option1_door_points.geojson', 'wt', encoding='utf8') as fp:
     json.dump(door_points_geojson, fp, indent=2)
-
+with open('option1\\option1_wall_lines.geojson', 'wt', encoding='utf8') as fp:
+    json.dump(wall_lines_geojson, fp, indent=2)
 
 
 # index 0 door polygon for test
@@ -352,6 +373,19 @@ index0_polygon_geojson = {
 
 with open('option1\\index0_door_polygon.geojson', 'wt', encoding='utf8') as fp:
     json.dump(index0_polygon_geojson, fp, indent=2)
+
+
+# 	1. Door의 한 포인트에서 랜덤으로 시작(door point1)
+door_polygon_geojson['features'][1]['geometry']
+
+# 	2. 해당 Door의 Point와 접하는 Wall Line을 찾음(line1)
+# 	3. Line1의 end points 중 하나를 선택(line1endpoint1)
+# 	4. Line1endpoint1에 접하는 wall line을 찾음(line2)
+# 	5. Door point1과 line1endpoint1의 진행 방향 각도를 고려하고
+# 	Line2의 2개의 endpoints 중에 clock wise 방향에 위치한 포인트를 다음 포인트로 지정(line2endpoint1)
+# Line2endpoint1 의 각도 혹은, 기존 포인트와의 coordinate 관계를 따져서 선택
+
+
 
 
 # # find intersections + split lines with intersections
