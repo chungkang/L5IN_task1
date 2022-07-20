@@ -349,10 +349,10 @@ for key in door_dict.keys():
 
 with open('option1\\option1_door_polygon.geojson', 'wt', encoding='utf8') as fp:
     json.dump(door_polygon_geojson, fp, indent=2)
-with open('option1\\option1_door_points.geojson', 'wt', encoding='utf8') as fp:
-    json.dump(door_points_geojson, fp, indent=2)
-with open('option1\\option1_wall_lines.geojson', 'wt', encoding='utf8') as fp:
-    json.dump(wall_lines_geojson, fp, indent=2)
+# with open('option1\\option1_door_points.geojson', 'wt', encoding='utf8') as fp:
+#     json.dump(door_points_geojson, fp, indent=2)
+# with open('option1\\option1_wall_lines.geojson', 'wt', encoding='utf8') as fp:
+#     json.dump(wall_lines_geojson, fp, indent=2)
 
 
 # index 0 door polygon for test
@@ -375,15 +375,90 @@ with open('option1\\index0_door_polygon.geojson', 'wt', encoding='utf8') as fp:
     json.dump(index0_polygon_geojson, fp, indent=2)
 
 
-# 	1. Door의 한 포인트에서 랜덤으로 시작(door point1)
-door_polygon_geojson['features'][1]['geometry']
 
-# 	2. 해당 Door의 Point와 접하는 Wall Line을 찾음(line1)
-# 	3. Line1의 end points 중 하나를 선택(line1endpoint1)
-# 	4. Line1endpoint1에 접하는 wall line을 찾음(line2)
-# 	5. Door point1과 line1endpoint1의 진행 방향 각도를 고려하고
+
+
+
+
+# 	1. Start from 1 edge of door polygon (door point1)
+door1_point1_coord = door_polygon_geojson['features'][1]['geometry']["coordinates"][0][0]
+door_point1 = geometry.Point(door1_point1_coord[0], door1_point1_coord[1])
+
+# 	2. get intersection line from the door point1(line1)
+intersection_line1_geojson = {
+    "type": "FeatureCollection",
+	"crs": {
+	    "type": "name",
+        "properties": { "name": "urn:ogc:def:crs:EPSG::32632" }
+	},
+    "features": []
+}
+intersection_idx = 0
+line1 = geometry.LineString()
+for line in epsg32632_geojson['features']:
+    if line['properties']['category']!='door' and line['geometry']:
+        line_shp = geometry.shape(line['geometry'])
+        
+        if line_shp.distance(door_point1) < 1e-3:
+            each_feature = {
+                "type": "Feature",
+                "properties": {
+                    "index": intersection_idx
+                },
+                "geometry":geometry.mapping(line_shp)
+            }
+            intersection_line1_geojson["features"].append(each_feature)
+            intersection_idx+=1
+            line1 = line_shp
+
+with open('option1\\index0_line1.geojson', 'wt', encoding='utf8') as fp:
+    json.dump(intersection_line1_geojson, fp, indent=2)
+
+# 	3. split line1 with door_point1
+line1_splited = shapely.ops.split(line1, door_point1)
+
+#   4. use one of splited line1(line1_index0)
+line1_index0 = line1_splited[0]
+
+#   5. line1_index0's edgepoint(index0_edge)
+index0_edge = geometry.Point()
+for edge_point in line1_index0.boundary:
+    if edge_point.distance(door_point1) > 1e-3:
+        index0_edge = edge_point
+
+# 	6. find 2nd wall line which has intersection with index0_edge(line2)
+intersection_line2_geojson = {
+    "type": "FeatureCollection",
+	"crs": {
+	    "type": "name",
+        "properties": { "name": "urn:ogc:def:crs:EPSG::32632" }
+	},
+    "features": []
+}
+intersection_idx2 = 0
+line2 = geometry.LineString()
+for line in epsg32632_geojson['features']:
+    if line['properties']['category']!='door' and line['geometry']:
+        line_shp = geometry.shape(line['geometry'])
+        
+        if line_shp.distance(index0_edge) < 1e-3:
+            each_feature = {
+                "type": "Feature",
+                "properties": {
+                    "index": intersection_idx2
+                },
+                "geometry":geometry.mapping(line_shp)
+            }
+            intersection_line2_geojson["features"].append(each_feature)
+            intersection_idx2+=1
+            line2 = line_shp
+
+with open('option1\\index0_line2.geojson', 'wt', encoding='utf8') as fp:
+    json.dump(intersection_line2_geojson, fp, indent=2)
+
+# 	7. Door point1과 line1endpoint1의 진행 방향 각도를 고려하고
 # 	Line2의 2개의 endpoints 중에 clock wise 방향에 위치한 포인트를 다음 포인트로 지정(line2endpoint1)
-# Line2endpoint1 의 각도 혹은, 기존 포인트와의 coordinate 관계를 따져서 선택
+# Line2endpoint1 의 각도 혹은, 기존 포인트와의 coordinate 관계를 따져서 선택    
 
 
 
