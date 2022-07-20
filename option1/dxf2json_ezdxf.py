@@ -379,13 +379,7 @@ with open('option1\\index0_door_polygon.geojson', 'wt', encoding='utf8') as fp:
 
 
 
-
-# 	1. Start from 1 edge of door polygon (door point1)
-door1_point1_coord = door_polygon_geojson['features'][1]['geometry']["coordinates"][0][0]
-door_point1 = geometry.Point(door1_point1_coord[0], door1_point1_coord[1])
-
-# 	2. get intersection line from the door point1(line1)
-intersection_line1_geojson = {
+door1_test_geojson = {
     "type": "FeatureCollection",
 	"crs": {
 	    "type": "name",
@@ -393,7 +387,22 @@ intersection_line1_geojson = {
 	},
     "features": []
 }
-intersection_idx = 0
+door1_idx = 0
+# 	1. Start from 1 edge of door polygon (door1_point1)
+door1_point1_coord = door_polygon_geojson['features'][1]['geometry']["coordinates"][0][0]
+door_point1 = geometry.Point(door1_point1_coord[0], door1_point1_coord[1])
+each_feature = {
+                "type": "Feature",
+                "properties": {
+                    "index": door1_idx
+                    ,"name": 'door1_point1'
+                },
+                "geometry":geometry.mapping(door_point1)
+            }
+door1_test_geojson["features"].append(each_feature)
+door1_idx+=1
+
+# 	2. get intersection line from the door point1(line1)
 line1 = geometry.LineString()
 for line in epsg32632_geojson['features']:
     if line['properties']['category']!='door' and line['geometry']:
@@ -403,16 +412,14 @@ for line in epsg32632_geojson['features']:
             each_feature = {
                 "type": "Feature",
                 "properties": {
-                    "index": intersection_idx
+                    "index": door1_idx
+                    ,"name": 'line1'
                 },
                 "geometry":geometry.mapping(line_shp)
             }
-            intersection_line1_geojson["features"].append(each_feature)
-            intersection_idx+=1
+            door1_test_geojson["features"].append(each_feature)
+            door1_idx+=1
             line1 = line_shp
-
-with open('option1\\index0_line1.geojson', 'wt', encoding='utf8') as fp:
-    json.dump(intersection_line1_geojson, fp, indent=2)
 
 # 	3. split line1 with door_point1
 line1_splited = shapely.ops.split(line1, door_point1)
@@ -427,15 +434,6 @@ for edge_point in line1_index0.boundary:
         index0_edge = edge_point
 
 # 	6. find 2nd wall line which has intersection with index0_edge(line2)
-intersection_line2_geojson = {
-    "type": "FeatureCollection",
-	"crs": {
-	    "type": "name",
-        "properties": { "name": "urn:ogc:def:crs:EPSG::32632" }
-	},
-    "features": []
-}
-intersection_idx2 = 0
 line2 = geometry.LineString()
 for line in epsg32632_geojson['features']:
     if line['properties']['category']!='door' and line['geometry']:
@@ -445,16 +443,17 @@ for line in epsg32632_geojson['features']:
             each_feature = {
                 "type": "Feature",
                 "properties": {
-                    "index": intersection_idx2
+                    "index": door1_idx
+                    ,"name": 'line2'
                 },
                 "geometry":geometry.mapping(line_shp)
             }
-            intersection_line2_geojson["features"].append(each_feature)
-            intersection_idx2+=1
+            door1_test_geojson["features"].append(each_feature)
+            door1_idx+=1
             line2 = line_shp
 
-with open('option1\\index0_line2.geojson', 'wt', encoding='utf8') as fp:
-    json.dump(intersection_line2_geojson, fp, indent=2)
+with open('option1\\door1_test.geojson', 'wt', encoding='utf8') as fp:
+    json.dump(door1_test_geojson, fp, indent=2)
 
 # 	7. Door point1과 line1endpoint1의 진행 방향 각도를 고려하고
 # 	Line2의 2개의 endpoints 중에 clock wise 방향에 위치한 포인트를 다음 포인트로 지정(line2endpoint1)
