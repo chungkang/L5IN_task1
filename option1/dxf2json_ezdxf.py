@@ -270,10 +270,8 @@ door1_polygon_geojson = {
         "geometry": door_polygon_geojson['features'][1]['geometry']
     }]
 }
-
 with open('option1\\door1_polygon.geojson', 'wt', encoding='utf8') as fp:
     json.dump(door1_polygon_geojson, fp, indent=2)
-
 
 
 
@@ -333,59 +331,89 @@ line1 = geometry.LineString()
 for line in door1_filtered_walls_geojson['features']:
     line_shp = geometry.shape(line['geometry'])
     if line_shp.distance(door_point1) < 1e-3:
+        each_feature = {
+            "type": "Feature",
+            "properties": {
+                "index": door1_idx
+                ,"name": 'line1'
+            },
+            "geometry":geometry.mapping(line_shp)
+        }
+        door1_geojson["features"].append(each_feature)
+        door1_idx+=1
         line1 = line_shp
 
-# # find intersections + split lines with intersections
-# # get all lines from geojson
-# all_lines = []
-# for lines in door1_filtered_walls_geojson['features']:
-#     if lines['geometry']:
-#         all_lines.append(geometry.shape(lines['geometry']))
+# 4. Make orthogonal line from line1(rotated_line1)
+rotated_line1 = shapely.affinity.rotate(line1, 90, origin=door_point1)
+l_coords = list(rotated_line1.coords)
+EXTRAPOL_RATIO = 5
+p1 = l_coords[-2:][0]
+p2 = l_coords[-2:][1]
+a = (p1[0]-EXTRAPOL_RATIO*(p2[0]-p1[0]), p1[1]-EXTRAPOL_RATIO*(p2[1]-p1[1]))
+b = (p1[0]+EXTRAPOL_RATIO*(p2[0]-p1[0]), p1[1]+EXTRAPOL_RATIO*(p2[1]-p1[1]))
+rotated_line1 = geometry.LineString([a,b])
 
-# # get all the points from end of lines
-# endpts = [(geometry.Point(list(line.coords)[0]), geometry.Point(list(line.coords)[-1])) for line  in all_lines]
-# # flatten the resulting list to a simple list of points
-# endpts= [pt for sublist in endpts  for pt in sublist] 
+rotated_line1_feature = {
+        "type": "Feature",
+        "properties": {
+            "index": door1_idx
+            ,"name": 'rotated_line1'
+        },
+        "geometry":geometry.mapping(rotated_line1)
+    }
+door1_geojson["features"].append(rotated_line1_feature)
 
-# # find intersections
-# inters = []
-# for line1,line2 in  itertools.combinations(all_lines, 2):
-#   if  line1.intersects(line2):
-#     inter = line1.intersection(line2)
-#     if "Point" == inter.type:
-#         inters.append(inter)
-#     elif "MultiPoint" == inter.type:
-#         inters.extend([pt for pt in inter])
-#     elif "MultiLineString" == inter.type:
-#         multiLine = [line for line in inter]
-#         first_coords = multiLine[0].coords[0]
-#         last_coords = multiLine[len(multiLine)-1].coords[1]
-#         inters.append(geometry.Point(first_coords[0], first_coords[1]))
-#         inters.append(geometry.Point(last_coords[0], last_coords[1]))
-#     elif "GeometryCollection" == inter.type:
-#         for geom in inter:
-#             if "Point" == geom.type:
-#                 inters.append(geom)
-#             elif "MultiPoint" == geom.type:
-#                 inters.extend([pt for pt in geom])
-#             elif "MultiLineString" == geom.type:
-#                 multiLine = [line for line in geom]
-#                 first_coords = multiLine[0].coords[0]
-#                 last_coords = multiLine[len(multiLine)-1].coords[1]
-#                 inters.append(geometry.Point(first_coords[0], first_coords[1]))
-#                 inters.append(geometry.Point(last_coords[0], last_coords[1]))
+# 5. get another side wall line(line2)
+# rotated_line1과 주변 모든 wall line의 intersections를 찾음
+all_lines = []
+for line in door1_filtered_walls_geojson['features']:
+    if line['geometry']:
+        all_lines.append(geometry.shape(line['geometry']))
+
+# get all the points from end of lines
+endpts = [(geometry.Point(list(line.coords)[0]), geometry.Point(list(line.coords)[-1])) for line  in all_lines]
+# flatten the resulting list to a simple list of points
+endpts= [pt for sublist in endpts  for pt in sublist] 
+
+# find intersections
+inters = []
+for line2 in  all_lines:
+    if rotated_line1.intersects(line2):
+        inter = rotated_line1.intersection(line2)
+        if "Point" == inter.type:
+            inters.append(inter)
+        elif "MultiPoint" == inter.type:
+            inters.extend([pt for pt in inter])
+        elif "MultiLineString" == inter.type:
+            multiLine = [line for line in inter]
+            first_coords = multiLine[0].coords[0]
+            last_coords = multiLine[len(multiLine)-1].coords[1]
+            inters.append(geometry.Point(first_coords[0], first_coords[1]))
+            inters.append(geometry.Point(last_coords[0], last_coords[1]))
+        elif "GeometryCollection" == inter.type:
+            for geom in inter:
+                if "Point" == geom.type:
+                    inters.append(geom)
+                elif "MultiPoint" == geom.type:
+                    inters.extend([pt for pt in geom])
+                elif "MultiLineString" == geom.type:
+                    multiLine = [line for line in geom]
+                    first_coords = multiLine[0].coords[0]
+                    last_coords = multiLine[len(multiLine)-1].coords[1]
+                    inters.append(geometry.Point(first_coords[0], first_coords[1]))
+                    inters.append(geometry.Point(last_coords[0], last_coords[1]))
 
 # # remove duplicate of intersection points
-# result = endpts.extend([pt for pt in inters  if pt not in endpts])
+# result = endpts.extend([pt for pt in inters if pt not in endpts])
 
-# intersections_geojson = {
-#     "type": "FeatureCollection",
-# 	"crs": {
-# 	    "type": "name",
-#         "properties": { "name": "urn:ogc:def:crs:EPSG::32632" }
-# 	},
-#     "features": []
-# }
+rotated_line1_intersections_geojson = {
+    "type": "FeatureCollection",
+	"crs": {
+	    "type": "name",
+        "properties": { "name": "urn:ogc:def:crs:EPSG::32632" }
+	},
+    "features": []
+}
 # for i, pt in enumerate(result):
 #     points_feature = {
 #         "type": "Feature",
@@ -394,17 +422,59 @@ for line in door1_filtered_walls_geojson['features']:
 #         },
 #         "geometry": geometry.mapping(pt)
 #     }
-#     intersections_geojson["features"].append(points_feature)
+#     rotated_line1_intersections_geojson["features"].append(points_feature)
 
-# with open('option1\\door1_intersections.geojson', 'wt', encoding='utf8') as fp:
-#     json.dump(intersections_geojson, fp, indent=2)
+for pt in inters:
+    points_feature = {
+        "type": "Feature",
+        "properties": {
+            "index": i
+        },
+        "geometry": geometry.mapping(pt)
+    }
+    rotated_line1_intersections_geojson["features"].append(points_feature)
 
-# 4. crop line1 with both wall edges to remain only the line in the room
+with open('option1\\rotated_line1_intersections.geojson', 'wt', encoding='utf8') as fp:
+    json.dump(rotated_line1_intersections_geojson, fp, indent=2)
+
+# door1_point1에서 가장 가까운 점을 찾음
+shortest_distance = 100
+shortest_point = geometry.Point()
+for point in rotated_line1_intersections_geojson['features']:
+    point_shp = geometry.shape(point['geometry'])
+    point_to_point_distance = point_shp.distance(door_point1)
+    if point_to_point_distance < shortest_distance and point_to_point_distance > 1e-3:
+        shortest_distance = point_to_point_distance
+        shortest_point = point_shp
+
+point_feature = {
+    "type": "Feature",
+    "properties": {
+        "name": "line2_shortest_intersection" 
+    },
+    "geometry": geometry.mapping(shortest_point)
+}
+door1_geojson["features"].append(point_feature)
+
+# shortest_point, door_point1 로 rotated_line1을 split해서 rotated_line1_splited 의 여러 라인을 만듦(rotated_lines)
+splited_rotated_line1 = shapely.ops.split(rotated_line1, geometry.MultiPoint([shortest_point, door_point1]))
+
+# if splited_rotated_line1[0].length > splited_rotated_line1[1].length:
+#     rotated_line1 = splited_rotated_line1[0]
+# else:
+#     rotated_line1 = splited_rotated_line1[1]
+
+
+# rotated_line1-1과 접하는 라인을 찾음
+# 해당 점과 접하는 wall line을 찾음
+
+# 6. crop line1 with both wall edges to remain only the line in the room
 # split된 wall lines 중에 door1_point1과 맞닿은 선을 선택(line1 업데이트)
+# 7. Get most close intersection->find other intersection to the opposite direction and get the line(line2)
 
-# 5. Make orthogonal line from the middle of line1(line1_mid_point,templine1)
-# 6. Get most close intersection->find other intersection to the opposite direction and get the line(line2)
-# 7. Find intersection points of line2
+with open('option1\\door1.geojson', 'wt', encoding='utf8') as fp:
+    json.dump(door1_geojson, fp, indent=2)
+
 
 
 
