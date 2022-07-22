@@ -28,16 +28,6 @@ min_length = 0.2
 # get layout / plan - layout page
 # plan = doc.layout('16 - plan 2.OG_1_100')
 
-# Get the geo location information from the DXF file:
-# geo_data = msp.get_geodata()
-
-# if geo_data:
-#     # Get transformation matrix and epsg code:
-#     m, epsg = geo_data.get_crs_transformation()
-# else:
-#     # Identity matrix for DXF files without geo reference data:
-#     m = ezdxf.math.Matrix44()
-
 # initialize empty geojson
 geojson_format = {
     "type": "FeatureCollection",
@@ -110,96 +100,6 @@ for flag_ref in msp.query("INSERT"):
         idx += 1
 
     door_block_id += 1
-
-# # 1st exploding of blocks(except door blocks)
-# for flag_ref in msp.query("INSERT[layer!='AUSBAU - Objekte - Tueren']"):
-#     exploded_e = flag_ref.explode()
-    
-#     # exploded door layer lines(door layer, but not door block, door components)
-#     for e in exploded_e.query("LINE LWPOLYLINE SPLINE POLYLINE[layer=='AUSBAU - Objekte - Tueren']"):
-#         geo_proxy = geo.proxy(e, distance=0, force_line_string=True)
-        
-#         # skip short lines
-#         line = geometry.shape(geo_proxy.__geo_interface__)
-#         if line.length < min_length:
-#             continue
-
-#         each_feature = {
-#             "type": "Feature",
-#             "properties": {
-#                 "index": idx,
-#                 "layer": 'AUSBAU - Objekte - Tueren',
-#                 "category": "door",
-#                 "door_id": door_block_id
-#             },
-#             "geometry": geo_proxy.__geo_interface__
-#         }
-#         geojson_format["features"].append(each_feature)
-#         idx += 1
-
-#     door_block_id += 1
-
-# # explode door block and give door ID
-# for flag_ref in msp.query("INSERT[layer=='AUSBAU - Objekte - Tueren']"):
-#     exploded_door=flag_ref.explode()
-#     each_door_line = []
-
-#     for e in exploded_door.query("LINE LWPOLYLINE SPLINE POLYLINE"):
-#         geo_proxy = geo.proxy(e, distance=0.1, force_line_string=True)
-
-#         # skip short lines
-#         line = geometry.shape(geo_proxy.__geo_interface__)
-#         if line.length < min_length:
-#             continue
-
-#         each_door_line.append(geo_proxy.__geo_interface__['coordinates'])
-
-#     multi_door_line = geometry.MultiLineString(each_door_line)
-
-#     each_feature = {
-#                     "type": "Feature",
-#                     "properties":  {
-#                                         "index": idx,
-#                                         "layer": 'AUSBAU - Objekte - Tueren',
-#                                         "category": "door",
-#                                         "door_id": door_block_id
-#                                     },
-#                     "geometry": geometry.mapping(multi_door_line)
-#                     }
-#     geojson_format["features"].append(each_feature)
-    
-#     door_block_id += 1
-#     idx += 1
-
-
-# # explode all left blocks
-# for flag_ref in msp.query("INSERT"):
-#     exploded_e = flag_ref.explode()
-    
-#     # exploded door layer lines(door layer, but not door block, door components)
-#     for e in exploded_e.query("LINE LWPOLYLINE SPLINE POLYLINE[layer=='AUSBAU - Objekte - Tueren']"):
-#         geo_proxy = geo.proxy(e, distance=0.1, force_line_string=True)
-        
-#         # skip short lines
-#         line = geometry.shape(geo_proxy.__geo_interface__)
-#         if line.length < min_length:
-#             continue
-
-#         each_feature = {
-#             "type": "Feature",
-#             "properties": {
-#                 "index": idx,
-#                 "layer": 'AUSBAU - Objekte - Tueren',
-#                 "category": "door",
-#                 "door_id": str(door_block_id)
-#             },
-#             "geometry": geo_proxy.__geo_interface__
-#         }
-#         geojson_format["features"].append(each_feature)
-#         idx += 1
-
-#     door_block_id += 1
-
 
 for layer in layer_list:
     for e in msp.query("LINE LWPOLYLINE SPLINE POLYLINE[layer=='" + layer + "']"):
@@ -356,7 +256,7 @@ with open('option1\\option1_door_polygon.geojson', 'wt', encoding='utf8') as fp:
 
 
 # index 0 door polygon for test
-index0_polygon_geojson = {
+door1_polygon_geojson = {
     "type": "FeatureCollection",
 	"crs": {
 	    "type": "name",
@@ -371,14 +271,144 @@ index0_polygon_geojson = {
     }]
 }
 
-with open('option1\\index0_door_polygon.geojson', 'wt', encoding='utf8') as fp:
-    json.dump(index0_polygon_geojson, fp, indent=2)
+with open('option1\\door1_polygon.geojson', 'wt', encoding='utf8') as fp:
+    json.dump(door1_polygon_geojson, fp, indent=2)
 
 
 
 
 
+door1_geojson = {
+    "type": "FeatureCollection",
+	"crs": {
+	    "type": "name",
+        "properties": { "name": "urn:ogc:def:crs:EPSG::32632" }
+	},
+    "features": []
+}
+door1_idx = 0
+# 	1. Start from 1 edge of door polygon (door1_point1)
+door1_point1_coord = door_polygon_geojson['features'][1]['geometry']["coordinates"][0][0]
+door_point1 = geometry.Point(door1_point1_coord[0], door1_point1_coord[1])
+each_feature = {
+                "type": "Feature",
+                "properties": {
+                    "index": door1_idx
+                    ,"name": 'door1_point1'
+                },
+                "geometry":geometry.mapping(door_point1)
+            }
+door1_geojson["features"].append(each_feature)
+door1_idx+=1
 
+# 2. Filter all the wall lines which is close from door1_point1
+door1_filtered_walls_geojson = {
+    "type": "FeatureCollection",
+	"crs": {
+	    "type": "name",
+        "properties": { "name": "urn:ogc:def:crs:EPSG::32632" }
+	},
+    "features": []
+}
+door1_filtered_walls_geojson_idx = 0
+for line in epsg32632_geojson['features']:
+    if line['properties']['category']!='door' and line['geometry']:
+        line_shp = geometry.shape(line['geometry'])
+        if door_point1.distance(line_shp) < 5:
+            each_feature = {
+                "type": "Feature",
+                "properties": {
+                    "index": door_polygon_geojson_idx
+                },
+                "geometry": geometry.mapping(line_shp)
+            }
+            door1_filtered_walls_geojson["features"].append(each_feature)
+            door1_filtered_walls_geojson_idx += 1
+
+with open('option1\\door1_filtered_walls.geojson', 'wt', encoding='utf8') as fp:
+    json.dump(door1_filtered_walls_geojson, fp, indent=2)
+
+# 3. get intersection line from the door point1(line1)
+line1 = geometry.LineString()
+for line in door1_filtered_walls_geojson['features']:
+    line_shp = geometry.shape(line['geometry'])
+    if line_shp.distance(door_point1) < 1e-3:
+        line1 = line_shp
+
+# # find intersections + split lines with intersections
+# # get all lines from geojson
+# all_lines = []
+# for lines in door1_filtered_walls_geojson['features']:
+#     if lines['geometry']:
+#         all_lines.append(geometry.shape(lines['geometry']))
+
+# # get all the points from end of lines
+# endpts = [(geometry.Point(list(line.coords)[0]), geometry.Point(list(line.coords)[-1])) for line  in all_lines]
+# # flatten the resulting list to a simple list of points
+# endpts= [pt for sublist in endpts  for pt in sublist] 
+
+# # find intersections
+# inters = []
+# for line1,line2 in  itertools.combinations(all_lines, 2):
+#   if  line1.intersects(line2):
+#     inter = line1.intersection(line2)
+#     if "Point" == inter.type:
+#         inters.append(inter)
+#     elif "MultiPoint" == inter.type:
+#         inters.extend([pt for pt in inter])
+#     elif "MultiLineString" == inter.type:
+#         multiLine = [line for line in inter]
+#         first_coords = multiLine[0].coords[0]
+#         last_coords = multiLine[len(multiLine)-1].coords[1]
+#         inters.append(geometry.Point(first_coords[0], first_coords[1]))
+#         inters.append(geometry.Point(last_coords[0], last_coords[1]))
+#     elif "GeometryCollection" == inter.type:
+#         for geom in inter:
+#             if "Point" == geom.type:
+#                 inters.append(geom)
+#             elif "MultiPoint" == geom.type:
+#                 inters.extend([pt for pt in geom])
+#             elif "MultiLineString" == geom.type:
+#                 multiLine = [line for line in geom]
+#                 first_coords = multiLine[0].coords[0]
+#                 last_coords = multiLine[len(multiLine)-1].coords[1]
+#                 inters.append(geometry.Point(first_coords[0], first_coords[1]))
+#                 inters.append(geometry.Point(last_coords[0], last_coords[1]))
+
+# # remove duplicate of intersection points
+# result = endpts.extend([pt for pt in inters  if pt not in endpts])
+
+# intersections_geojson = {
+#     "type": "FeatureCollection",
+# 	"crs": {
+# 	    "type": "name",
+#         "properties": { "name": "urn:ogc:def:crs:EPSG::32632" }
+# 	},
+#     "features": []
+# }
+# for i, pt in enumerate(result):
+#     points_feature = {
+#         "type": "Feature",
+#         "properties": {
+#             "index": i
+#         },
+#         "geometry": geometry.mapping(pt)
+#     }
+#     intersections_geojson["features"].append(points_feature)
+
+# with open('option1\\door1_intersections.geojson', 'wt', encoding='utf8') as fp:
+#     json.dump(intersections_geojson, fp, indent=2)
+
+# 4. crop line1 with both wall edges to remain only the line in the room
+# split된 wall lines 중에 door1_point1과 맞닿은 선을 선택(line1 업데이트)
+
+# 5. Make orthogonal line from the middle of line1(line1_mid_point,templine1)
+# 6. Get most close intersection->find other intersection to the opposite direction and get the line(line2)
+# 7. Find intersection points of line2
+
+
+
+"""
 door1_test_geojson = {
     "type": "FeatureCollection",
 	"crs": {
@@ -453,95 +483,12 @@ for line in epsg32632_geojson['features']:
             line2 = line_shp
 
 with open('option1\\door1_test.geojson', 'wt', encoding='utf8') as fp:
-    json.dump(door1_test_geojson, fp, indent=2)
+    json.dump(door1_geojson, fp, indent=2)
 
 # 	7. Door point1과 line1endpoint1의 진행 방향 각도를 고려하고
 # 	Line2의 2개의 endpoints 중에 clock wise 방향에 위치한 포인트를 다음 포인트로 지정(line2endpoint1)
 # Line2endpoint1 의 각도 혹은, 기존 포인트와의 coordinate 관계를 따져서 선택    
-
-
-
-
-# # find intersections + split lines with intersections
-# # get all lines from geojson
-# all_lines = []
-# for lines in epsg32632_geojson['features']:
-#     if lines['properties']['door_id']==None and lines['geometry']:
-#         all_lines.append(geometry.shape(lines['geometry']))
-
-# # get all the points from end of lines
-# endpts = [(geometry.Point(list(line.coords)[0]), geometry.Point(list(line.coords)[-1])) for line  in all_lines]
-# # flatten the resulting list to a simple list of points
-# endpts= [pt for sublist in endpts  for pt in sublist] 
-
-# # find intersections
-# inters = []
-# for line1,line2 in  itertools.combinations(all_lines, 2):
-#   if  line1.intersects(line2):
-#     inter = line1.intersection(line2)
-#     if "Point" == inter.type:
-#         inters.append(inter)
-#     elif "MultiPoint" == inter.type:
-#         inters.extend([pt for pt in inter])
-#     elif "MultiLineString" == inter.type:
-#         multiLine = [line for line in inter]
-#         first_coords = multiLine[0].coords[0]
-#         last_coords = multiLine[len(multiLine)-1].coords[1]
-#         inters.append(geometry.Point(first_coords[0], first_coords[1]))
-#         inters.append(geometry.Point(last_coords[0], last_coords[1]))
-#     elif "GeometryCollection" == inter.type:
-#         for geom in inter:
-#             if "Point" == geom.type:
-#                 inters.append(geom)
-#             elif "MultiPoint" == geom.type:
-#                 inters.extend([pt for pt in geom])
-#             elif "MultiLineString" == geom.type:
-#                 multiLine = [line for line in geom]
-#                 first_coords = multiLine[0].coords[0]
-#                 last_coords = multiLine[len(multiLine)-1].coords[1]
-#                 inters.append(geometry.Point(first_coords[0], first_coords[1]))
-#                 inters.append(geometry.Point(last_coords[0], last_coords[1]))
-
-# # remove duplicate of intersection points
-# result = endpts.extend([pt for pt in inters  if pt not in endpts])
-
-# intersections_geojson = {
-#     "type": "FeatureCollection",
-# 	"crs": {
-# 	    "type": "name",
-#         "properties": { "name": "urn:ogc:def:crs:EPSG::32632" }
-# 	},
-#     "features": []
-# }
-# for i, pt in enumerate(result):
-#     points_feature = {
-#         "type": "Feature",
-#         "properties": {
-#             "index": i
-#         },
-#         "geometry": geometry.mapping(pt)
-#     }
-#     intersections_geojson["features"].append(points_feature)
-
-# with open('option1\\option1_intersections.geojson', 'wt', encoding='utf8') as fp:
-#     json.dump(intersections_geojson, fp, indent=2)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+"""
 
 
 
@@ -549,8 +496,6 @@ with open('option1\\door1_test.geojson', 'wt', encoding='utf8') as fp:
 
 
 """
-
-
 # find lines with door points
 # initialize empty geojson
 intersections_geojson = {
@@ -593,9 +538,6 @@ for line in epsg32632_geojson['features']:
 
 with open('option1\\option1_intersections.geojson', 'wt', encoding='utf8') as fp:
     json.dump(intersections_geojson, fp, indent=2)
-
-
-
 """
 
 
