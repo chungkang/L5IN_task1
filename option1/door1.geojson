@@ -61,21 +61,16 @@
         "name": "rotated_line1"
       },
       "geometry": {
-        "type": "GeometryCollection",
-        "geometries": [
-          {
-            "type": "LineString",
-            "coordinates": [
-              [
-                566571.3121987348,
-                5932829.7621037215
-              ],
-              [
-                566597.2434320981,
-                5932837.207914196
-              ]
-            ]
-          }
+        "type": "LineString",
+        "coordinates": [
+          [
+            566576.4984454075,
+            5932831.251265816
+          ],
+          [
+            566586.7162344925,
+            5932834.185168725
+          ]
         ]
       }
     }

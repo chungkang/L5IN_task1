@@ -346,22 +346,22 @@ for line in door1_filtered_walls_geojson['features']:
 # 4. Make orthogonal line from line1(rotated_line1)
 rotated_line1 = shapely.affinity.rotate(line1, 90, origin=door_point1)
 l_coords = list(rotated_line1.coords)
-EXTRAPOL_RATIO = 5
+EXTRAPOL_RATIO = 3
 p1 = l_coords[-2:][0]
 p2 = l_coords[-2:][1]
 a = (p1[0]-EXTRAPOL_RATIO*(p2[0]-p1[0]), p1[1]-EXTRAPOL_RATIO*(p2[1]-p1[1]))
 b = (p1[0]+EXTRAPOL_RATIO*(p2[0]-p1[0]), p1[1]+EXTRAPOL_RATIO*(p2[1]-p1[1]))
 rotated_line1 = geometry.LineString([a,b])
 
-rotated_line1_feature = {
-        "type": "Feature",
-        "properties": {
-            "index": door1_idx
-            ,"name": 'rotated_line1'
-        },
-        "geometry":geometry.mapping(rotated_line1)
-    }
-door1_geojson["features"].append(rotated_line1_feature)
+# rotated_line1_feature = {
+#         "type": "Feature",
+#         "properties": {
+#             "index": door1_idx
+#             ,"name": 'rotated_line1'
+#         },
+#         "geometry":geometry.mapping(rotated_line1)
+#     }
+# door1_geojson["features"].append(rotated_line1_feature)
 
 # 5. get another side wall line(line2)
 # rotated_line1과 주변 모든 wall line의 intersections를 찾음
@@ -457,16 +457,26 @@ point_feature = {
 door1_geojson["features"].append(point_feature)
 
 # shortest_point, door_point1 로 rotated_line1을 split해서 rotated_line1_splited 의 여러 라인을 만듦(rotated_lines)
-splited_rotated_line1 = shapely.ops.split(rotated_line1, geometry.MultiPoint([shortest_point, door_point1]))
+splited_rotated_line1 = shapely.ops.split(rotated_line1, geometry.MultiPoint([shortest_point, door_point1]).buffer(1e-3))
 
-# if splited_rotated_line1[0].length > splited_rotated_line1[1].length:
-#     rotated_line1 = splited_rotated_line1[0]
-# else:
-#     rotated_line1 = splited_rotated_line1[1]
+line_length = 0
+for line in splited_rotated_line1:
+    if line.length > line_length:
+        rotated_line1 = line
+        line_length = line.length
 
+rotated_line1_feature = {
+        "type": "Feature",
+        "properties": {
+            "index": door1_idx
+            ,"name": 'rotated_line1'
+        },
+        "geometry":geometry.mapping(rotated_line1)
+    }
+door1_geojson["features"].append(rotated_line1_feature)
 
-# rotated_line1-1과 접하는 라인을 찾음
-# 해당 점과 접하는 wall line을 찾음
+# rotated_line1-1과 접하는 wall line을 찾음(line2)
+
 
 # 6. crop line1 with both wall edges to remain only the line in the room
 # split된 wall lines 중에 door1_point1과 맞닿은 선을 선택(line1 업데이트)
