@@ -459,6 +459,7 @@ door1_geojson["features"].append(point_feature)
 # shortest_point, door_point1 로 rotated_line1을 split해서 rotated_line1_splited 의 여러 라인을 만듦(rotated_lines)
 splited_rotated_line1 = shapely.ops.split(rotated_line1, geometry.MultiPoint([shortest_point, door_point1]).buffer(1e-3))
 
+# 짧은 라인(벽안에 있는 라인)을 무시하고 room을 가로지르는 line을 추출(rotated_line1)
 line_length = 0
 for line in splited_rotated_line1:
     if line.length > line_length:
@@ -471,16 +472,20 @@ rotated_line1_feature = {
             "index": door1_idx
             ,"name": 'rotated_line1'
         },
-        "geometry":geometry.mapping(rotated_line1)
+        "geometry": geometry.mapping(rotated_line1)
     }
 door1_geojson["features"].append(rotated_line1_feature)
 
-# rotated_line1-1과 접하는 wall line을 찾음(line2)
+# rotated_line1과 wall lines들이 접하는 points를 구함
 
 
-# 6. crop line1 with both wall edges to remain only the line in the room
-# split된 wall lines 중에 door1_point1과 맞닿은 선을 선택(line1 업데이트)
-# 7. Get most close intersection->find other intersection to the opposite direction and get the line(line2)
+# 문의 시작 point에서 가장 가까운 point를 구함
+# 해당 point와 접하는 wall line을 찾음(line2)
+
+# line1에 접하는 2개의 lines를 찾음
+# line2에 접하는 2개의 lines를 찾음
+
+# line1, line2, 그리고 각각의 라인에서 접하는 2개의 선을 모아서 polygon이 닫히는지 확인
 
 with open('option1\\door1.geojson', 'wt', encoding='utf8') as fp:
     json.dump(door1_geojson, fp, indent=2)
