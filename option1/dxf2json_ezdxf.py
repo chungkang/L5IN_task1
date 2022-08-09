@@ -1,3 +1,4 @@
+from venv import create
 import ezdxf
 import ezdxf.addons.geo as geo
 import json
@@ -8,6 +9,9 @@ import alphashape
 from descartes import PolygonPatch
 import numpy as np
 import itertools
+
+import copy
+import module.create_geojson as create_geojson
 
 
 # source file
@@ -29,16 +33,7 @@ min_length = 0.2
 # plan = doc.layout('16 - plan 2.OG_1_100')
 
 # initialize empty geojson
-geojson_format = {
-    "type": "FeatureCollection",
-	"crs": {
-	    "type": "name",
-		"properties": {
-			"name": "+proj=tmerc +lat_0=0 +lon_0=9 +k=1 +x_0=3500000 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs"
-		}
-	},
-    "features": []
-}
+origin_geojson = copy.deepcopy(create_geojson.geojson_custom)
 
 # interested layer list
 layer_list = [
@@ -96,7 +91,7 @@ for flag_ref in msp.query("INSERT"):
             },
             "geometry": geo_proxy.__geo_interface__
         }
-        geojson_format["features"].append(each_feature)
+        origin_geojson["features"].append(each_feature)
         idx += 1
 
     door_block_id += 1
@@ -128,12 +123,12 @@ for layer in layer_list:
             },
             "geometry": geo_proxy.__geo_interface__
         }
-        geojson_format["features"].append(each_feature)
+        origin_geojson["features"].append(each_feature)
         idx += 1
 
 # write custom defined CRS geojson
 with open( 'option1\\option1.geojson', 'wt', encoding='utf8') as fp:
-    json.dump(geojson_format, fp, indent=2)
+    json.dump(origin_geojson, fp, indent=2)
 
 # read created geojson / reprojection to EPSG:32632 / write reprojected geojson
 loaded_geojson = geopandas.read_file('option1\\option1.geojson')
@@ -151,14 +146,8 @@ with open('option1\\option1_EPSG32632.geojson') as f:
 
 # door multipoints to convex_hull polygon
 # + get wall lines(none door layers)
-wall_lines_geojson = {
-    "type": "FeatureCollection",
-	"crs": {
-	    "type": "name",
-        "properties": { "name": "urn:ogc:def:crs:EPSG::32632" }
-	},
-    "features": []
-}
+wall_lines_geojson = copy.deepcopy(create_geojson.geojson_EPSG32632)
+
 wall_line_idx = 0
 
 door_dict = {}
@@ -191,22 +180,8 @@ for lines in epsg32632_geojson['features']:
             wall_lines_geojson["features"].append(wall_line_feature)
             wall_line_idx+=1
 
-door_polygon_geojson = {
-    "type": "FeatureCollection",
-	"crs": {
-	    "type": "name",
-        "properties": { "name": "urn:ogc:def:crs:EPSG::32632" }
-	},
-    "features": []
-}
-door_points_geojson = {
-    "type": "FeatureCollection",
-	"crs": {
-	    "type": "name",
-        "properties": { "name": "urn:ogc:def:crs:EPSG::32632" }
-	},
-    "features": []
-}
+door_polygon_geojson = copy.deepcopy(create_geojson.geojson_EPSG32632)
+door_points_geojson = copy.deepcopy(create_geojson.geojson_EPSG32632)
 
 door_polygon_geojson_idx = 0
 
@@ -276,14 +251,7 @@ with open('option1\\door1_polygon.geojson', 'wt', encoding='utf8') as fp:
 
 
 
-door1_geojson = {
-    "type": "FeatureCollection",
-	"crs": {
-	    "type": "name",
-        "properties": { "name": "urn:ogc:def:crs:EPSG::32632" }
-	},
-    "features": []
-}
+door1_geojson = copy.deepcopy(create_geojson.geojson_EPSG32632)
 door1_idx = 0
 # 	1. Start from 1 edge of door polygon (door1_point1)
 door1_point1_coord = door_polygon_geojson['features'][1]['geometry']["coordinates"][0][0]
@@ -300,14 +268,7 @@ door1_geojson["features"].append(each_feature)
 door1_idx+=1
 
 # 2. Filter all the wall lines which is close from door1_point1
-door1_filtered_walls_geojson = {
-    "type": "FeatureCollection",
-	"crs": {
-	    "type": "name",
-        "properties": { "name": "urn:ogc:def:crs:EPSG::32632" }
-	},
-    "features": []
-}
+door1_filtered_walls_geojson = copy.deepcopy(create_geojson.geojson_EPSG32632)
 door1_filtered_walls_geojson_idx = 0
 for line in epsg32632_geojson['features']:
     if line['properties']['category']!='door' and line['geometry']:
@@ -406,14 +367,7 @@ for line2 in  all_lines:
 # # remove duplicate of intersection points
 # result = endpts.extend([pt for pt in inters if pt not in endpts])
 
-rotated_line1_intersections_geojson = {
-    "type": "FeatureCollection",
-	"crs": {
-	    "type": "name",
-        "properties": { "name": "urn:ogc:def:crs:EPSG::32632" }
-	},
-    "features": []
-}
+rotated_line1_intersections_geojson = copy.deepcopy(create_geojson.geojson_EPSG32632)
 # for i, pt in enumerate(result):
 #     points_feature = {
 #         "type": "Feature",
