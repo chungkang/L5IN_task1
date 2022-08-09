@@ -127,8 +127,7 @@ for layer in layer_list:
         idx += 1
 
 # write custom defined CRS geojson
-with open( 'option1\\option1.geojson', 'wt', encoding='utf8') as fp:
-    json.dump(origin_geojson, fp, indent=2)
+create_geojson.write_geojson('option1\\option1.geojson', origin_geojson)
 
 # read created geojson / reprojection to EPSG:32632 / write reprojected geojson
 loaded_geojson = geopandas.read_file('option1\\option1.geojson')
@@ -221,14 +220,9 @@ for key in door_dict.keys():
     door_points_geojson["features"].append(door_points_feature)
     door_polygon_geojson_idx += 1
 
-
-with open('option1\\option1_door_polygon.geojson', 'wt', encoding='utf8') as fp:
-    json.dump(door_polygon_geojson, fp, indent=2)
-# with open('option1\\option1_door_points.geojson', 'wt', encoding='utf8') as fp:
-#     json.dump(door_points_geojson, fp, indent=2)
-# with open('option1\\option1_wall_lines.geojson', 'wt', encoding='utf8') as fp:
-#     json.dump(wall_lines_geojson, fp, indent=2)
-
+create_geojson.write_geojson('option1\\option1_door_polygon.geojson', door_polygon_geojson)
+# create_geojson.write_geojson('option1\\option1_door_points.geojson', door_points_geojson)
+# create_geojson.write_geojson('option1\\option1_wall_lines.geojson', wall_lines_geojson)
 
 # index 0 door polygon for test
 door1_polygon_geojson = {
@@ -245,9 +239,8 @@ door1_polygon_geojson = {
         "geometry": door_polygon_geojson['features'][1]['geometry']
     }]
 }
-with open('option1\\door1_polygon.geojson', 'wt', encoding='utf8') as fp:
-    json.dump(door1_polygon_geojson, fp, indent=2)
 
+create_geojson.write_geojson('option1\\door1_polygon.geojson', door1_polygon_geojson)
 
 
 
@@ -284,8 +277,7 @@ for line in epsg32632_geojson['features']:
             door1_filtered_walls_geojson["features"].append(each_feature)
             door1_filtered_walls_geojson_idx += 1
 
-with open('option1\\door1_filtered_walls.geojson', 'wt', encoding='utf8') as fp:
-    json.dump(door1_filtered_walls_geojson, fp, indent=2)
+create_geojson.write_geojson('option1\\door1_filtered_walls.geojson', door1_filtered_walls_geojson)
 
 # 3. get intersection line from the door point1(line1)
 line1 = geometry.LineString()
@@ -388,8 +380,7 @@ for pt in inters:
     }
     rotated_line1_intersections_geojson["features"].append(points_feature)
 
-with open('option1\\rotated_line1_intersections.geojson', 'wt', encoding='utf8') as fp:
-    json.dump(rotated_line1_intersections_geojson, fp, indent=2)
+create_geojson.write_geojson('option1\\rotated_line1_intersections.geojson', rotated_line1_intersections_geojson)
 
 # door1_point1에서 가장 가까운 점을 찾음
 shortest_distance = 100
@@ -441,9 +432,7 @@ door1_geojson["features"].append(rotated_line1_feature)
 
 # line1, line2, 그리고 각각의 라인에서 접하는 2개의 선을 모아서 polygon이 닫히는지 확인
 
-with open('option1\\door1.geojson', 'wt', encoding='utf8') as fp:
-    json.dump(door1_geojson, fp, indent=2)
-
+create_geojson.write_geojson('option1\\door1.geojson', door1_geojson)
 
 
 

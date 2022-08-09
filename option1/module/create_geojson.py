@@ -1,3 +1,4 @@
+import json
 
 # custom coordinate system geojson
 geojson_custom = {
@@ -21,3 +22,7 @@ geojson_EPSG32632 = {
     "features": []
 }
 
+# write custom defined CRS geojson
+def write_geojson(path, input_geojson):
+    with open( path, 'wt', encoding='utf8') as fp:
+        json.dump(input_geojson, fp, indent=2)
