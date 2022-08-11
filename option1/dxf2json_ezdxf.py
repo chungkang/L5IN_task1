@@ -374,25 +374,25 @@ for pt in inters:
 
 # door1_point1에서 가장 가까운 점을 찾음
 shortest_distance = 100
-shortest_point = geometry.Point()
+line1_end1 = geometry.Point()
 for point in rotated_line1_intersections_geojson['features']:
     point_shp = geometry.shape(point['geometry'])
     point_to_point_distance = point_shp.distance(door_point1)
     if point_to_point_distance < shortest_distance and point_to_point_distance > 1e-3:
         shortest_distance = point_to_point_distance
-        shortest_point = point_shp
+        line1_end1 = point_shp
 
 point_feature = {
     "type": "Feature",
     "properties": {
         "name": "line2_shortest_intersection" 
     },
-    "geometry": geometry.mapping(shortest_point)
+    "geometry": geometry.mapping(line1_end1)
 }
 door1_geojson["features"].append(point_feature)
 
 # shortest_point, door_point1 로 rotated_line1을 split해서 rotated_line1_splited 의 여러 라인을 만듦(rotated_lines)
-splited_rotated_line1 = shapely.ops.split(rotated_line1, geometry.MultiPoint([shortest_point, door_point1]).buffer(1e-3))
+splited_rotated_line1 = shapely.ops.split(rotated_line1, geometry.MultiPoint([line1_end1, door_point1]).buffer(1e-3))
 
 # 짧은 라인(벽안에 있는 라인)을 무시하고 room을 가로지르는 line을 추출(rotated_line1)
 line_length = 0
@@ -490,10 +490,23 @@ for line in door1_filtered_walls_geojson['features']:
         door1_idx+=1
         line2 = line_shp
 
-# line1에 접하는 2개의 lines를 찾음
-# line2에 접하는 2개의 lines를 찾음
+# line1에 접하는 모든 wall line 간의 intersection points
+# door_point에서 가장 가까운 점(line1_end1)
+# line1_end1에서 선분을 잘라서 line1를 덮어씌움
 
-# line1, line2, 그리고 각각의 라인에서 접하는 2개의 선을 모아서 polygon이 닫히는지 확인
+# line1_end1에서 가장가까운 intersection point를 구함(line1_end2)
+# line1_end1과 line1_end2로 이루어진 선분으로 line1를 덮어씌움
+
+
+# line2에 접하는 모든 wall line 간의 intersection points를 구함
+# shortest_point에서 가장 가까운 점을 구함(line2_end1)
+# line2_end1에서 선분을 잘라서 line2를 덮어씌움
+# line2_end1에서 가장가까운 intersection point를 구함(line2_end2)
+# line2_end1과 line2_end2로 이루어진 선분으로 line2를 덮어씌움
+
+# line1_end1, line1_end2, line2_end1, line2_end2의 4개의 points에서 접하는 모든 선분을 추출
+# 해당 line으로 닫히는 polygon을 구함
+
 
 create_geojson.write_geojson('option1\\door1.geojson', door1_geojson)
 
