@@ -306,16 +306,6 @@ a = (p1[0]-EXTRAPOL_RATIO*(p2[0]-p1[0]), p1[1]-EXTRAPOL_RATIO*(p2[1]-p1[1]))
 b = (p1[0]+EXTRAPOL_RATIO*(p2[0]-p1[0]), p1[1]+EXTRAPOL_RATIO*(p2[1]-p1[1]))
 rotated_line1 = geometry.LineString([a,b])
 
-# rotated_line1_feature = {
-#         "type": "Feature",
-#         "properties": {
-#             "index": door1_idx
-#             ,"name": 'rotated_line1'
-#         },
-#         "geometry":geometry.mapping(rotated_line1)
-#     }
-# door1_geojson["features"].append(rotated_line1_feature)
-
 # 5. get another side wall line(line2)
 # rotated_line1과 주변 모든 wall line의 intersections를 찾음
 all_lines = []
@@ -324,15 +314,15 @@ for line in door1_filtered_walls_geojson['features']:
         all_lines.append(geometry.shape(line['geometry']))
 
 # get all the points from end of lines
-endpts = [(geometry.Point(list(line.coords)[0]), geometry.Point(list(line.coords)[-1])) for line  in all_lines]
+# endpts = [(geometry.Point(list(line.coords)[0]), geometry.Point(list(line.coords)[-1])) for line  in all_lines]
 # flatten the resulting list to a simple list of points
-endpts= [pt for sublist in endpts  for pt in sublist] 
+# endpts= [pt for sublist in endpts  for pt in sublist] 
 
 # find intersections
 inters = []
-for line2 in  all_lines:
-    if rotated_line1.intersects(line2):
-        inter = rotated_line1.intersection(line2)
+for line in  all_lines:
+    if rotated_line1.intersects(line):
+        inter = rotated_line1.intersection(line)
         if "Point" == inter.type:
             inters.append(inter)
         elif "MultiPoint" == inter.type:
@@ -380,7 +370,7 @@ for pt in inters:
     }
     rotated_line1_intersections_geojson["features"].append(points_feature)
 
-create_geojson.write_geojson('option1\\rotated_line1_intersections.geojson', rotated_line1_intersections_geojson)
+# create_geojson.write_geojson('option1\\rotated_line1_intersections.geojson', rotated_line1_intersections_geojson)
 
 # door1_point1에서 가장 가까운 점을 찾음
 shortest_distance = 100
@@ -422,10 +412,83 @@ rotated_line1_feature = {
 door1_geojson["features"].append(rotated_line1_feature)
 
 # rotated_line1과 wall lines들이 접하는 points를 구함
+inters = []
+for line in  all_lines:
+    if rotated_line1.intersects(line):
+        inter = rotated_line1.intersection(line)
+        if "Point" == inter.type:
+            inters.append(inter)
+        elif "MultiPoint" == inter.type:
+            inters.extend([pt for pt in inter])
+        elif "MultiLineString" == inter.type:
+            multiLine = [line for line in inter]
+            first_coords = multiLine[0].coords[0]
+            last_coords = multiLine[len(multiLine)-1].coords[1]
+            inters.append(geometry.Point(first_coords[0], first_coords[1]))
+            inters.append(geometry.Point(last_coords[0], last_coords[1]))
+        elif "GeometryCollection" == inter.type:
+            for geom in inter:
+                if "Point" == geom.type:
+                    inters.append(geom)
+                elif "MultiPoint" == geom.type:
+                    inters.extend([pt for pt in geom])
+                elif "MultiLineString" == geom.type:
+                    multiLine = [line for line in geom]
+                    first_coords = multiLine[0].coords[0]
+                    last_coords = multiLine[len(multiLine)-1].coords[1]
+                    inters.append(geometry.Point(first_coords[0], first_coords[1]))
+                    inters.append(geometry.Point(last_coords[0], last_coords[1]))
 
+rotated_line1_intersections_geojson = copy.deepcopy(create_geojson.geojson_EPSG32632)
+
+for pt in inters:
+    points_feature = {
+        "type": "Feature",
+        "properties": {
+            "index": i
+        },
+        "geometry": geometry.mapping(pt)
+    }
+    rotated_line1_intersections_geojson["features"].append(points_feature)
+
+create_geojson.write_geojson('option1\\rotated_line1_intersections_new.geojson', rotated_line1_intersections_geojson)
 
 # 문의 시작 point에서 가장 가까운 point를 구함
-# 해당 point와 접하는 wall line을 찾음(line2)
+# door1_point1에서 rotated_line1_intersections_geojson 에 있는 point 중에 가장 가까운 점을 구함
+shortest_distance = 100
+shortest_point = geometry.Point()
+for point in rotated_line1_intersections_geojson['features']:
+    point_shp = geometry.shape(point['geometry'])
+    point_to_point_distance = point_shp.distance(door_point1)
+    if point_to_point_distance < shortest_distance and point_to_point_distance > 1e-3:
+        shortest_distance = point_to_point_distance
+        shortest_point = point_shp
+
+point_feature = {
+    "type": "Feature",
+    "properties": {
+        "name": "line2_shortest_intersection" 
+    },
+    "geometry": geometry.mapping(shortest_point)
+}
+door1_geojson["features"].append(point_feature)
+
+# 해당 shortest_point와 접하는 wall line을 찾음(line2)
+line2 = geometry.LineString()
+for line in door1_filtered_walls_geojson['features']:
+    line_shp = geometry.shape(line['geometry'])
+    if line_shp.distance(shortest_point) < 1e-3:
+        each_feature = {
+            "type": "Feature",
+            "properties": {
+                "index": door1_idx
+                ,"name": 'line2'
+            },
+            "geometry":geometry.mapping(line_shp)
+        }
+        door1_geojson["features"].append(each_feature)
+        door1_idx+=1
+        line2 = line_shp
 
 # line1에 접하는 2개의 lines를 찾음
 # line2에 접하는 2개의 lines를 찾음
@@ -433,6 +496,14 @@ door1_geojson["features"].append(rotated_line1_feature)
 # line1, line2, 그리고 각각의 라인에서 접하는 2개의 선을 모아서 polygon이 닫히는지 확인
 
 create_geojson.write_geojson('option1\\door1.geojson', door1_geojson)
+
+
+
+
+
+
+
+
 
 
 

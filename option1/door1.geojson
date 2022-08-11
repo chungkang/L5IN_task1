@@ -73,6 +73,39 @@
           ]
         ]
       }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "line2_shortest_intersection"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          566584.1711348156,
+          5932833.454377037
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 2,
+        "name": "line2"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566583.1605295108,
+            5932836.9739738135
+          ],
+          [
+            566584.2152804415,
+            5932833.3006327385
+          ]
+        ]
+      }
     }
   ]
 }
