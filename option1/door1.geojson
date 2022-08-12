@@ -25,39 +25,6 @@
       "type": "Feature",
       "properties": {
         "index": 1,
-        "name": "line1"
-      },
-      "geometry": {
-        "type": "LineString",
-        "coordinates": [
-          [
-            566586.0167605611,
-            5932836.624823531
-          ],
-          [
-            566586.7613416094,
-            5932834.031700195
-          ]
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "name": "line2_shortest_intersection"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          566586.7292049498,
-          5932834.18889302
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "index": 2,
         "name": "rotated_line1"
       },
       "geometry": {
@@ -77,13 +44,20 @@
     {
       "type": "Feature",
       "properties": {
-        "name": "line2_shortest_intersection"
+        "index": 1,
+        "name": "line1"
       },
       "geometry": {
-        "type": "Point",
+        "type": "LineString",
         "coordinates": [
-          566584.1711348156,
-          5932833.454377037
+          [
+            566586.7613413108,
+            5932834.031701235
+          ],
+          [
+            566586.0167607209,
+            5932836.624822975
+          ]
         ]
       }
     },
@@ -97,12 +71,132 @@
         "type": "LineString",
         "coordinates": [
           [
+            566584.2152800356,
+            5932833.300634152
+          ],
+          [
+            566583.1605295229,
+            5932836.973973772
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 3,
+        "name": "lines for polygon"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566586.0167605611,
+            5932836.624823531
+          ],
+          [
+            566586.7613416094,
+            5932834.031700195
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 4,
+        "name": "lines for polygon"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
             566583.1605295108,
             5932836.9739738135
           ],
           [
             566584.2152804415,
             5932833.3006327385
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 5,
+        "name": "lines for polygon"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566587.8378388381,
+            5932836.582912301
+          ],
+          [
+            566579.0968296411,
+            5932837.313732856
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 6,
+        "name": "lines for polygon"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566584.768178194,
+            5932836.729214757
+          ],
+          [
+            566593.5877869385,
+            5932835.991822831
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 7,
+        "name": "lines for polygon"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566579.0218226558,
+            5932837.320004347
+          ],
+          [
+            566584.7773395276,
+            5932836.838794907
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 8,
+        "name": "lines for polygon"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566593.5877869385,
+            5932835.991822831
+          ],
+          [
+            566583.9851735212,
+            5932833.234562176
           ]
         ]
       }
