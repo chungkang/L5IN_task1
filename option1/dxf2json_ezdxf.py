@@ -228,9 +228,9 @@ create_geojson.write_geojson('option1\\option1_door_polygon.geojson', door_polyg
 # create_geojson.write_geojson('option1\\option1_wall_lines.geojson', wall_lines_geojson)
 
 # test용 door 인덱스 
-# 1-0, 1-1, 33-0,
-sample_door_index = 1
-sample_door_point_index = 1
+# 1-0, 33-0,
+sample_door_index = 33
+sample_door_point_index = 0
 
 # index 0 door polygon for test
 door1_polygon_geojson = {
