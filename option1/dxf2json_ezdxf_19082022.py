@@ -64,7 +64,8 @@ layer_list = [
                 # ,"ROHBAU - Darstellungen - Treppen" 
                 ,"ROHBAU - Darstellungen - Waende" 
                 ,"ROHBAU - Darstellungen - Waende - Mauerwerk" 
-                # ,"ROHBAU - Darstellungen - Ansichtslinien" 
+                # ,"ROHBAU - Darstellungen - Ansichtslinien"
+                ,"wall"
 ]
 
 # door_id
@@ -131,19 +132,19 @@ for layer in layer_list:
         idx += 1
 
 # write custom defined CRS geojson
-create_geojson.write_geojson('option1\\option1.geojson', origin_geojson)
+create_geojson.write_geojson('option1_test\\option1.geojson', origin_geojson)
 
 # read created geojson / reprojection to EPSG:32632 / write reprojected geojson
-loaded_geojson = geopandas.read_file('option1\\option1.geojson')
+loaded_geojson = geopandas.read_file('option1_test\\option1.geojson')
 loaded_geojson = loaded_geojson.to_crs("EPSG:32632")
-loaded_geojson.to_file("option1\\option1_EPSG32632.geojson", driver='GeoJSON')
+loaded_geojson.to_file("option1_test\\option1_EPSG32632.geojson", driver='GeoJSON')
 
 
 
 
 
 # load EPSG32632 geojson
-with open('option1\\option1_EPSG32632.geojson') as f:
+with open('option1_test\\option1_EPSG32632.geojson') as f:
     epsg32632_geojson = json.load(f)
 
 
@@ -186,7 +187,7 @@ for lines in epsg32632_geojson['features']:
 door_polygon_geojson = copy.deepcopy(create_geojson.geojson_EPSG32632)
 door_points_geojson = copy.deepcopy(create_geojson.geojson_EPSG32632)
 
-door_polygon_geojson_idx = 0
+door_polygon_idx = 0
 
 # door_points dictionary를 key 단위로 돌려줌
 for key in door_dict.keys():
@@ -205,32 +206,30 @@ for key in door_dict.keys():
     door_polygon_feature = {
         "type": "Feature",
         "properties": {
-            "index": door_polygon_geojson_idx
+            "index": door_polygon_idx
         },
         "geometry": geometry.mapping(door_polygon)
     }
     door_polygon_geojson["features"].append(door_polygon_feature)
-    door_polygon_geojson_idx += 1
 
     # polygon의 테두리 points를 뽑는다
     door_points = geometry.MultiPoint(door_polygon.exterior.coords)
     door_points_feature = {
         "type": "Feature",
         "properties": {
-            "index": door_polygon_geojson_idx
+            "index": door_polygon_idx
         },
         "geometry": geometry.mapping(door_points)
     }
     door_points_geojson["features"].append(door_points_feature)
-    door_polygon_geojson_idx += 1
+    door_polygon_idx += 1
 
-create_geojson.write_geojson('option1\\option1_door_polygon.geojson', door_polygon_geojson)
-# create_geojson.write_geojson('option1\\option1_door_points.geojson', door_points_geojson)
-# create_geojson.write_geojson('option1\\option1_wall_lines.geojson', wall_lines_geojson)
+create_geojson.write_geojson('option1_test\\option1_door_polygon.geojson', door_polygon_geojson)
+# create_geojson.write_geojson('option1_test\\option1_door_points.geojson', door_points_geojson)
+# create_geojson.write_geojson('option1_test\\option1_wall_lines.geojson', wall_lines_geojson)
 
-# test용 door 인덱스 
-# 1-0, 33-0,
-sample_door_index = 20
+# test용 door 인덱스
+sample_door_index = 70
 sample_door_point_index = 0
 
 # index 0 door polygon for test
@@ -249,7 +248,7 @@ door1_polygon_geojson = {
     }]
 }
 
-create_geojson.write_geojson('option1\\door1_polygon.geojson', door1_polygon_geojson)
+create_geojson.write_geojson('option1_test\\door1_polygon.geojson', door1_polygon_geojson)
 
 
 
@@ -273,7 +272,7 @@ door_point1 = geometry.Point(door1_point1_coord[0], door1_point1_coord[1])
 distance_from_door_point = 10
 # 2. Filter all the wall lines which is close from door1_point1
 filtered_walls_geojson = copy.deepcopy(create_geojson.geojson_EPSG32632)
-filtered_walls_geojson_idx = 0
+filtered_walls_idx = 0
 for line in epsg32632_geojson['features']:
     if line['properties']['category']!='door' and line['geometry']:
         line_shp = geometry.shape(line['geometry'])
@@ -281,12 +280,12 @@ for line in epsg32632_geojson['features']:
             each_feature = {
                 "type": "Feature",
                 "properties": {
-                    "index": door_polygon_geojson_idx
+                    "index": filtered_walls_idx
                 },
                 "geometry": geometry.mapping(line_shp)
             }
             filtered_walls_geojson["features"].append(each_feature)
-            filtered_walls_geojson_idx += 1
+            filtered_walls_idx += 1
 
 temp_filtered_walls_geojson = copy.deepcopy(create_geojson.geojson_EPSG32632)
 # add properties of door juction line to feathre of filtered_walls_geojson
@@ -314,7 +313,7 @@ for line in filtered_walls_geojson["features"]:
 
 filtered_walls_geojson = temp_filtered_walls_geojson
 
-create_geojson.write_geojson('option1\\filtered_walls.geojson', filtered_walls_geojson)
+create_geojson.write_geojson('option1_test\\filtered_walls.geojson', filtered_walls_geojson)
 
 # 3. get intersection line from the door point1(line1)
 line1 = geometry.LineString()
@@ -524,20 +523,22 @@ for pt in updated_line1_inters:
         line1_end2 = pt
         distance_line1_end2 = pt.distance(line1_end1)
 
+# line1을 geojson에 저장
+line1_geojson = copy.deepcopy(create_geojson.geojson_EPSG32632)
+line1_feature = {
+    "type": "Feature",
+    "properties": {
+        "name": 'line1'
+    },
+    "geometry":geometry.mapping(line1)
+}
+line1_geojson["features"].append(line1_feature)
+create_geojson.write_geojson('option1_test\\line1_test.geojson', line1_geojson)
+
 # line1_end1과 line1_end2로 이루어진 선분으로 line1를 덮어씌움
 line1 = geometry.LineString([line1_end1, line1_end2])
 
-# line1을 geojson에 저장
-# line1_feature = {
-#     "type": "Feature",
-#     "properties": {
-#         "index": door1_idx
-#         ,"name": 'line1'
-#     },
-#     "geometry":geometry.mapping(line1)
-# }
-# door1_geojson["features"].append(line1_feature)
-# door1_idx+=1
+
 
 
 
@@ -572,17 +573,7 @@ for line in  filtered_walls_geojson['features']:
                     line2_inters.append(geometry.Point(first_coords[0], first_coords[1]))
                     line2_inters.append(geometry.Point(last_coords[0], last_coords[1]))
 
-# intersections_geojson = copy.deepcopy(create_geojson.geojson_EPSG32632)
-# for pt in line2_inters:
-#     points_feature = {
-#         "type": "Feature",
-#         "properties": {
-#             "index": i
-#         },
-#         "geometry": geometry.mapping(pt)
-#     }
-#     intersections_geojson["features"].append(points_feature)
-# create_geojson.write_geojson('option1\\intersections.geojson', intersections_geojson)
+
 
 # line2_inters중에 line2_intersect_point에서 가장 가까운 점(line2_end1)
 line2_end1 = geometry.Point()
@@ -599,6 +590,17 @@ splited_line2 = shapely.ops.split(line2, line2_end1.buffer(min_point))
 for line in splited_line2:
     if line2_intersect_point.distance(line) < min_point:
         line2 = line
+
+# line2 gejson test
+line2_geojson = copy.deepcopy(create_geojson.geojson_EPSG32632)
+line2_feature = {
+    "type": "Feature",
+    "properties": {
+        "name": 'line2'
+    },
+    "geometry":geometry.mapping(line2)
+}
+line2_geojson["features"].append(line2_feature)
 
 # 업데이트된 line2과 접하는 wall line 간의 intersection points를 다시 구함(updated_line2_inters)
 updated_line2_inters = []
@@ -629,6 +631,18 @@ for line in  filtered_walls_geojson['features']:
                     updated_line2_inters.append(geometry.Point(first_coords[0], first_coords[1]))
                     updated_line2_inters.append(geometry.Point(last_coords[0], last_coords[1]))
 
+# intersections_geojson = copy.deepcopy(create_geojson.geojson_EPSG32632)
+for pt in updated_line2_inters:
+    points_feature = {
+        "type": "Feature",
+        "properties": {
+            "index": i
+        },
+        "geometry": geometry.mapping(pt)
+    }
+    line2_geojson["features"].append(points_feature)
+create_geojson.write_geojson('option1_test\\line2_test.geojson', line2_geojson)
+
 # line2_end1에서 가장가까운 line2_inters를 구함(line2_end2), 
 line2_end2 = geometry.Point()
 distance_line2_end2 = 100
@@ -643,17 +657,7 @@ for pt in updated_line2_inters:
 # line2_end1과 line2_end2로 이루어진 선분으로 line2를 덮어씌움
 line2 = geometry.LineString([line2_end1, line2_end2])
 
-# line2을 geojson에 저장
-# line2_feature = {
-#     "type": "Feature",
-#     "properties": {
-#         "index": door1_idx
-#         ,"name": 'line2'
-#     },
-#     "geometry":geometry.mapping(line2)
-# }
-# door1_geojson["features"].append(line2_feature)
-# door1_idx+=1
+
 
 
 lines_from_4_edges = copy.deepcopy(create_geojson.geojson_EPSG32632)
@@ -713,7 +717,7 @@ for line in  filtered_walls_geojson['features']:
 #         "geometry": geometry.mapping(pt)
 #     }
 #     intersections_geojson["features"].append(points_feature)
-# create_geojson.write_geojson('option1\\intersections.geojson', intersections_geojson)
+# create_geojson.write_geojson('option1_test\\intersections.geojson', intersections_geojson)
 
 
 # 해당 intersect points로 polygon 만듦
@@ -730,6 +734,21 @@ for line in  filtered_walls_geojson['features']:
 
 
 buff_union = shapely.ops.unary_union(lines_4)
+
+buff_geojson = copy.deepcopy(create_geojson.geojson_EPSG32632)
+buff_feature = {
+    "type": "Feature",
+    "properties": {
+        "index": 'test'
+    },
+    "geometry": geometry.mapping(buff_union)
+}
+buff_geojson["features"].append(buff_feature)
+create_geojson.write_geojson('option1_test\\buff_test.geojson', buff_geojson)
+
+if buff_union.geom_type == 'MultiPolygon':
+    print("multi polygon")
+
 all_internal_geoms = [geom for geom in buff_union.interiors]
 
 for geom in all_internal_geoms:
@@ -741,7 +760,7 @@ for geom in all_internal_geoms:
     }
     door1_geojson["features"].append(geom_feature)
 
-create_geojson.write_geojson('option1\\door1.geojson', door1_geojson)
+create_geojson.write_geojson('option1_test\\door1.geojson', door1_geojson)
 
 
 
@@ -782,5 +801,5 @@ create_geojson.write_geojson('option1\\door1.geojson', door1_geojson)
 # }
 # outer_wall_geojson["features"].append(wall_feature)
 
-# with open('option1\\option1_outer_wall.geojson', 'wt', encoding='utf8') as fp:
+# with open('option1_test\\option1_outer_wall.geojson', 'wt', encoding='utf8') as fp:
 #     json.dump(outer_wall_geojson, fp, indent=2)
