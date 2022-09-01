@@ -4958,9 +4958,157 @@
     {
       "type": "Feature",
       "properties": {
+        "door_index": 130,
+        "door_point_index": 3,
+        "index": 112
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              566631.4046344043,
+              5932833.114888384
+            ],
+            [
+              566631.3951229986,
+              5932833.115683685
+            ],
+            [
+              566631.3872894801,
+              5932832.91886133
+            ],
+            [
+              566631.4002730454,
+              5932832.918344565
+            ],
+            [
+              566631.408084066,
+              5932833.114599918
+            ],
+            [
+              566631.4046344043,
+              5932833.114888384
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "door_index": 130,
+        "door_point_index": 3,
+        "index": 113
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              566631.4851720921,
+              5932832.914965462
+            ],
+            [
+              566631.4928351599,
+              5932833.1075129
+            ],
+            [
+              566631.4798740945,
+              5932833.108596724
+            ],
+            [
+              566631.4721884867,
+              5932832.915482228
+            ],
+            [
+              566631.4851720921,
+              5932832.914965462
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "door_index": 130,
+        "door_point_index": 3,
+        "index": 114
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              566631.4438602987,
+              5932833.111608254
+            ],
+            [
+              566631.4100790098,
+              5932833.114433098
+            ],
+            [
+              566631.4022714846,
+              5932832.918265568
+            ],
+            [
+              566631.4701900871,
+              5932832.915562223
+            ],
+            [
+              566631.4778791447,
+              5932833.108763403
+            ],
+            [
+              566631.4438602987,
+              5932833.111608254
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
         "door_index": 131,
         "door_point_index": 0,
-        "index": 112
+        "index": 115
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              566622.2818223359,
+              5932833.965416684
+            ],
+            [
+              566622.043485972,
+              5932833.985343446
+            ],
+            [
+              566622.0386730287,
+              5932833.927570733
+            ],
+            [
+              566622.2770255747,
+              5932833.907708848
+            ],
+            [
+              566622.2818223359,
+              5932833.965416684
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "door_index": 131,
+        "door_point_index": 3,
+        "index": 116
       },
       "geometry": {
         "type": "Polygon",
@@ -4995,7 +5143,7 @@
       "properties": {
         "door_index": 138,
         "door_point_index": 0,
-        "index": 113
+        "index": 117
       },
       "geometry": {
         "type": "Polygon",
@@ -5030,7 +5178,7 @@
       "properties": {
         "door_index": 138,
         "door_point_index": 1,
-        "index": 114
+        "index": 118
       },
       "geometry": {
         "type": "Polygon",
@@ -5065,7 +5213,7 @@
       "properties": {
         "door_index": 138,
         "door_point_index": 2,
-        "index": 115
+        "index": 119
       },
       "geometry": {
         "type": "Polygon",
@@ -5100,7 +5248,7 @@
       "properties": {
         "door_index": 138,
         "door_point_index": 3,
-        "index": 116
+        "index": 120
       },
       "geometry": {
         "type": "Polygon",
@@ -5135,7 +5283,7 @@
       "properties": {
         "door_index": 139,
         "door_point_index": 0,
-        "index": 117
+        "index": 121
       },
       "geometry": {
         "type": "Polygon",
@@ -5170,7 +5318,7 @@
       "properties": {
         "door_index": 139,
         "door_point_index": 1,
-        "index": 118
+        "index": 122
       },
       "geometry": {
         "type": "Polygon",
@@ -5205,7 +5353,7 @@
       "properties": {
         "door_index": 139,
         "door_point_index": 2,
-        "index": 119
+        "index": 123
       },
       "geometry": {
         "type": "Polygon",
@@ -5240,7 +5388,7 @@
       "properties": {
         "door_index": 139,
         "door_point_index": 3,
-        "index": 120
+        "index": 124
       },
       "geometry": {
         "type": "Polygon",
@@ -5275,7 +5423,7 @@
       "properties": {
         "door_index": 141,
         "door_point_index": 0,
-        "index": 121
+        "index": 125
       },
       "geometry": {
         "type": "Polygon",
@@ -5310,7 +5458,7 @@
       "properties": {
         "door_index": 141,
         "door_point_index": 1,
-        "index": 122
+        "index": 126
       },
       "geometry": {
         "type": "Polygon",
@@ -5345,7 +5493,7 @@
       "properties": {
         "door_index": 141,
         "door_point_index": 1,
-        "index": 123
+        "index": 127
       },
       "geometry": {
         "type": "Polygon",
@@ -5380,7 +5528,7 @@
       "properties": {
         "door_index": 141,
         "door_point_index": 2,
-        "index": 124
+        "index": 128
       },
       "geometry": {
         "type": "Polygon",
@@ -5415,7 +5563,7 @@
       "properties": {
         "door_index": 141,
         "door_point_index": 2,
-        "index": 125
+        "index": 129
       },
       "geometry": {
         "type": "Polygon",
@@ -5450,7 +5598,7 @@
       "properties": {
         "door_index": 141,
         "door_point_index": 3,
-        "index": 126
+        "index": 130
       },
       "geometry": {
         "type": "Polygon",
@@ -5485,7 +5633,7 @@
       "properties": {
         "door_index": 177,
         "door_point_index": 0,
-        "index": 127
+        "index": 131
       },
       "geometry": {
         "type": "Polygon",
@@ -5516,7 +5664,7 @@
       "properties": {
         "door_index": 179,
         "door_point_index": 3,
-        "index": 128
+        "index": 132
       },
       "geometry": {
         "type": "Polygon",
@@ -5551,7 +5699,7 @@
       "properties": {
         "door_index": 182,
         "door_point_index": 0,
-        "index": 129
+        "index": 133
       },
       "geometry": {
         "type": "Polygon",
@@ -5586,7 +5734,7 @@
       "properties": {
         "door_index": 182,
         "door_point_index": 0,
-        "index": 130
+        "index": 134
       },
       "geometry": {
         "type": "Polygon",
@@ -5621,7 +5769,7 @@
       "properties": {
         "door_index": 182,
         "door_point_index": 0,
-        "index": 131
+        "index": 135
       },
       "geometry": {
         "type": "Polygon",
@@ -5660,7 +5808,7 @@
       "properties": {
         "door_index": 182,
         "door_point_index": 0,
-        "index": 132
+        "index": 136
       },
       "geometry": {
         "type": "Polygon",
@@ -5695,7 +5843,7 @@
       "properties": {
         "door_index": 182,
         "door_point_index": 0,
-        "index": 133
+        "index": 137
       },
       "geometry": {
         "type": "Polygon",
@@ -5734,7 +5882,7 @@
       "properties": {
         "door_index": 182,
         "door_point_index": 1,
-        "index": 134
+        "index": 138
       },
       "geometry": {
         "type": "Polygon",
@@ -5769,7 +5917,7 @@
       "properties": {
         "door_index": 182,
         "door_point_index": 1,
-        "index": 135
+        "index": 139
       },
       "geometry": {
         "type": "Polygon",
@@ -5804,7 +5952,7 @@
       "properties": {
         "door_index": 182,
         "door_point_index": 1,
-        "index": 136
+        "index": 140
       },
       "geometry": {
         "type": "Polygon",
@@ -5843,7 +5991,7 @@
       "properties": {
         "door_index": 182,
         "door_point_index": 1,
-        "index": 137
+        "index": 141
       },
       "geometry": {
         "type": "Polygon",
@@ -5878,7 +6026,7 @@
       "properties": {
         "door_index": 182,
         "door_point_index": 1,
-        "index": 138
+        "index": 142
       },
       "geometry": {
         "type": "Polygon",
@@ -5917,7 +6065,7 @@
       "properties": {
         "door_index": 203,
         "door_point_index": 0,
-        "index": 139
+        "index": 143
       },
       "geometry": {
         "type": "Polygon",
@@ -5952,7 +6100,7 @@
       "properties": {
         "door_index": 204,
         "door_point_index": 3,
-        "index": 140
+        "index": 144
       },
       "geometry": {
         "type": "Polygon",

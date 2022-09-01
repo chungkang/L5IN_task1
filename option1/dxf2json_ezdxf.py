@@ -46,7 +46,7 @@ layer_list = [
                 ,"AUSBAU - Darstellungen - Daemmung" 
                 ,"AUSBAU - Darstellungen - Daemmung-brennbar_B1" 
                 # ,"AUSBAU - Darstellungen - Doppelbodenschottungen" 
-                ,"AUSBAU - Darstellungen - Fassade" 
+                # ,"AUSBAU - Darstellungen - Fassade" 
                 ,"AUSBAU - Darstellungen - Fassade-Bemassung"
                 ,"AUSBAU - Darstellungen - Fassade-Bemaßung"
                 ,"AUSBAU - Darstellungen - Gelaender" 
@@ -229,9 +229,13 @@ create_geojson.write_geojson('option1\\option1_door_polygon.geojson', door_polyg
 room_geojson = copy.deepcopy(create_geojson.geojson_EPSG32632)
 room_idx = 0
 
+# to check log
+door_index_log = 0
+
 # door 전체를 돌리는 for문
 for door_index in range(len(door_polygon_geojson["features"])):
-# for door_index in range(0,10):
+    door_index_log = door_index
+
     # door 의 꼭지점 0-3 (0번과 2번만 돌림) for문
     for door_point_index in [0,1,2,3]:
         try:
@@ -611,9 +615,9 @@ for door_index in range(len(door_polygon_geojson["features"])):
                 room_idx += 1
 
         except Exception as error:
-            print(error)
+            print("index" + str(door_index_log) + " message:" + str(error))
 
-create_geojson.write_geojson('option1\\room.geojson', room_geojson)
+create_geojson.write_geojson('option1\\rooms.geojson', room_geojson)
 
 
 

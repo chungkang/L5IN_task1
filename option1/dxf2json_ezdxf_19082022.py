@@ -46,7 +46,7 @@ layer_list = [
                 ,"AUSBAU - Darstellungen - Daemmung" 
                 ,"AUSBAU - Darstellungen - Daemmung-brennbar_B1" 
                 # ,"AUSBAU - Darstellungen - Doppelbodenschottungen" 
-                ,"AUSBAU - Darstellungen - Fassade" 
+                # ,"AUSBAU - Darstellungen - Fassade" 
                 ,"AUSBAU - Darstellungen - Fassade-Bemassung"
                 ,"AUSBAU - Darstellungen - Fassade-Bemaßung"
                 ,"AUSBAU - Darstellungen - Gelaender" 
@@ -229,8 +229,8 @@ create_geojson.write_geojson('option1_test\\option1_door_polygon.geojson', door_
 # create_geojson.write_geojson('option1_test\\option1_wall_lines.geojson', wall_lines_geojson)
 
 # test용 door 인덱스
-sample_door_index = 118
-sample_door_point_index = 0
+sample_door_index = 97
+sample_door_point_index = 2
 
 # index 0 door polygon for test
 door1_polygon_geojson = {
@@ -288,7 +288,7 @@ for line in epsg32632_geojson['features']:
             filtered_walls_idx += 1
 
 temp_filtered_walls_geojson = copy.deepcopy(create_geojson.geojson_EPSG32632)
-# add properties of door juction line to feathre of filtered_walls_geojson
+# add properties of door juction line to feature of filtered_walls_geojson
 for line in filtered_walls_geojson["features"]:
     door_juction_yn = 'N'
     for point in door_points_geojson["features"]:
