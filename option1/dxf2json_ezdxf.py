@@ -63,6 +63,7 @@ layer_list = [
                 ,"ROHBAU - Darstellungen - Brandwand" 
                 # ,"ROHBAU - Darstellungen - Treppen" 
                 ,"ROHBAU - Darstellungen - Waende" 
+                ,"ROHBAU - Darstellungen - Decken" 
                 ,"ROHBAU - Darstellungen - Waende - Mauerwerk" 
                 # ,"ROHBAU - Darstellungen - Ansichtslinien"
                 ,"wall"
@@ -238,6 +239,7 @@ for door_index in range(len(door_polygon_geojson["features"])):
 
     # door 의 꼭지점 0-3 (0번과 2번만 돌림) for문
     for door_point_index in [0,1,2,3]:
+    # for door_point_index in [0,2]:
         try:
             # 	1. Start from 1 edge of door polygon (door1_point1)
             door1_point1_coord = door_polygon_geojson['features'][door_index]['geometry']["coordinates"][0][door_point_index]
@@ -582,17 +584,76 @@ for door_index in range(len(door_polygon_geojson["features"])):
             # line2_end1과 line2_end2로 이루어진 선분으로 line2를 덮어씌움
             line2 = geometry.LineString([line2_end1, line2_end2])
 
-            # 초기 라인 2개에 접하는 모든 wall lines를 구함
-            lines_4 = []
+            # # 초기 라인 2개에 접하는 모든 wall lines를 구함
+            # lines_4 = []
+            # buffer_size=min_point
+            # # line1_end1, line1_end2, line2_end1, line2_end2의 4개의 points에서 접하는 모든 선분을 추출
+            # for line in  filtered_walls_geojson['features']:
+            #     line = geometry.shape(line['geometry'])
+            #     if line1_end1.distance(line) < min_point or line1_end2.distance(line) < min_point or line2_end1.distance(line) < min_point or line2_end2.distance(line) < min_point:
+            #         lines_4.append(line.buffer(buffer_size))
+
+
+            # polygon 기준이되는 새로운 endpoints
+            end_points = []
+            # line1의 2개의 ends_point에서 시작
+            for endpoint in [line1_end1, line1_end2]:
+                # line1에서 접하는 선들 중에 door_point1과 접하지 않는 선들을 선택
+                intersection_lines = []
+                for line in  filtered_walls_geojson['features']:
+                    line = geometry.shape(line['geometry'])
+                    if endpoint.distance(line) < min_point and door_point1.distance(line) > min_point:
+                        intersection_lines.append(line)
+                        # line의 양쪽 end points
+                        first = geometry.Point(line.coords[0])
+                        last = geometry.Point(line.coords[-1])
+                        # 해당 선들의 end points중 line2_intersect_point와 가장 가까운 point를 선택
+                        line2_end_point = geometry.Point()
+                        distance_line2 = 100
+                        for candidate_point in [first,last]:
+                            if endpoint.distance(candidate_point) > min_point and line2_intersect_point.distance(candidate_point) < distance_line2:
+                                line2_end_point = candidate_point
+                                distance_line2 = endpoint.distance(candidate_point)
+
+                        end_points.append(line2_end_point)
+                        # line1_end1과 해당 line1_1_end2를 이어주는 선분 추가 - line1_1 => 테스트시 사용
+
+
+            # line2의 2개의 ends_point에서 시작
+            for endpoint in [line2_end1, line2_end2]:
+                # line2에서 접하는 선들 중에 line2_intersect_point과 접하지 않는 선들을 선택
+                intersection_lines = []
+                for line in  filtered_walls_geojson['features']:
+                    line = geometry.shape(line['geometry'])
+                    if endpoint.distance(line) < min_point and line2_intersect_point.distance(line) > min_point:
+                        intersection_lines.append(line)
+                        # line의 양쪽 end points
+                        first,last = line.boundary
+                        # 해당 선들의 end points중 door_point1와 가장 가까운 point를 선택-line2_1_end2
+                        door_end_point = geometry.Point()
+                        distance_door = 100
+                        for candidate_point in [first,last]:
+                            if endpoint.distance(candidate_point) > min_point and door_point1.distance(candidate_point) < distance_door:
+                                door_end_point = candidate_point
+                                distance_door = endpoint.distance(candidate_point)
+
+                        end_points.append(door_end_point)
+                        # line2_end1과 해당 line2_1_end2를 이어주는 선분 추가 - line2_1 => 테스트시 사용
+
+            # line1 + line2 + line1_1_end2,line1_2_end2,line2_1_end2,line2_2_end2에서 접하는 lines 로 buffer union
+            lines_from_all_edges = copy.deepcopy(create_geojson.geojson_EPSG32632)
             buffer_size=min_point
-            # line1_end1, line1_end2, line2_end1, line2_end2의 4개의 points에서 접하는 모든 선분을 추출
+            lines_all = [line1.buffer(buffer_size),line2.buffer(buffer_size)]
+            # line들의 edge points에서 접하는 모든 선분을 추출
             for line in  filtered_walls_geojson['features']:
                 line = geometry.shape(line['geometry'])
-                if line1_end1.distance(line) < min_point or line1_end2.distance(line) < min_point or line2_end1.distance(line) < min_point or line2_end2.distance(line) < min_point:
-                    lines_4.append(line.buffer(buffer_size))
+                for endpoint in end_points:
+                    if endpoint.distance(line) < min_point:
+                        lines_all.append(line.buffer(buffer_size))
 
             # 구해진 모든 wall lines를 통해서 내부 polygon을 구함
-            buff_union = shapely.ops.unary_union(lines_4)
+            # buff_union = shapely.ops.unary_union(lines_4)
+            buff_union = shapely.ops.unary_union(lines_all)
             
             # # exception passing of MultiPolygon - hallway, not closed with 6 wall lines
             # if buff_union.geom_type == 'MultiPolygon':
