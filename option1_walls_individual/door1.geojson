@@ -1,0 +1,187 @@
+{
+  "type": "FeatureCollection",
+  "crs": {
+    "type": "name",
+    "properties": {
+      "name": "urn:ogc:def:crs:EPSG::32632"
+    }
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "index": "room_idx"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566582.5239612397,
+            5932829.998720031
+          ],
+          [
+            566582.3937203569,
+            5932830.403456071
+          ],
+          [
+            566582.2981066181,
+            5932830.3742687525
+          ],
+          [
+            566582.4287443421,
+            5932829.968294207
+          ],
+          [
+            566582.5239612397,
+            5932829.998720031
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": "room_idx"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566523.9586437416,
+            5932812.565156249
+          ],
+          [
+            566599.9061895659,
+            5932835.749434824
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": "room_idx"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566587.6420371901,
+            5932829.745240465
+          ],
+          [
+            566588.7868770708,
+            5932830.111061077
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": "room_idx"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566589.3622268388,
+            5932830.088162241
+          ],
+          [
+            566588.7868770708,
+            5932830.111061077
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": "room_idx"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566588.7868770708,
+            5932830.111061077
+          ],
+          [
+            566588.8239152498,
+            5932831.041640696
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": "room_idx"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566588.8867581027,
+            5932830.1070856685
+          ],
+          [
+            566588.7868770708,
+            5932830.111061077
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": "room_idx"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566587.1659536997,
+            5932829.5931133395
+          ],
+          [
+            566587.6420391893,
+            5932829.745241464
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": "room_idx"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566589.908240346,
+            5932832.82793989
+          ],
+          [
+            566588.4741412154,
+            5932832.39026603
+          ],
+          [
+            566588.5106136209,
+            5932832.270757853
+          ],
+          [
+            566589.9447137511,
+            5932832.708431713
+          ],
+          [
+            566589.908240346,
+            5932832.82793989
+          ]
+        ]
+      }
+    }
+  ]
+}
