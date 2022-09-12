@@ -91,7 +91,7 @@
       "type": "Feature",
       "properties": {
         "index": 4,
-        "door_juction": "Y"
+        "door_juction": "N"
       },
       "geometry": {
         "type": "LineString",
@@ -111,7 +111,7 @@
       "type": "Feature",
       "properties": {
         "index": 5,
-        "door_juction": "Y"
+        "door_juction": "N"
       },
       "geometry": {
         "type": "LineString",
@@ -131,7 +131,7 @@
       "type": "Feature",
       "properties": {
         "index": 6,
-        "door_juction": "Y"
+        "door_juction": "N"
       },
       "geometry": {
         "type": "LineString",
@@ -151,7 +151,7 @@
       "type": "Feature",
       "properties": {
         "index": 7,
-        "door_juction": "Y"
+        "door_juction": "N"
       },
       "geometry": {
         "type": "LineString",

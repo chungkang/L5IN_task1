@@ -31,8 +31,8 @@ msp = doc.modelspace()
 min_length = 0.05
 
 # minimum length as a point
-# min_point = 1e-3
-min_point = 0.05
+min_point = 1e-3
+# min_point = 0.05
 
 # get layout / plan - layout page
 # plan = doc.layout('16 - plan 2.OG_1_100')
