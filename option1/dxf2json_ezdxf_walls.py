@@ -18,8 +18,8 @@ import module.create_geojson as create_geojson
 # source file
 # dxf_name = "rev_HCU_D_102_Grundriss_1OG_moved"
 # dxf_name = "rev_HCU_D_104_Grundriss_2OG_moved"
-# dxf_name = "rev_HCU_D_105_Grundriss_3OG_moved"
-dxf_name = "rev_HCU_D_106_Grundriss_4OG_moved_V2"
+dxf_name = "rev_HCU_D_105_Grundriss_3OG_moved"
+# dxf_name = "rev_HCU_D_106_Grundriss_4OG_moved_V2"
 
 # loading dxf file
 doc = ezdxf.readfile("dxf\\"+ dxf_name + ".dxf")
@@ -27,12 +27,10 @@ doc = ezdxf.readfile("dxf\\"+ dxf_name + ".dxf")
 # get modelspace
 msp = doc.modelspace()
 
-# minimum length of lines(ignore short lines)
-min_length = 0.05
-
-# minimum length as a point
-min_point = 1e-3
+min_length = 0.05 # minimum length of lines(ignore short lines)
+min_point = 0.01 # minimum length as a point
 # min_point = 0.05
+wall_width = 0.36 # wall width
 
 # get layout / plan - layout page
 # plan = doc.layout('16 - plan 2.OG_1_100')
@@ -300,8 +298,8 @@ for door_index in range(len(door_polygon_geojson["features"])):
                 if line_shp.distance(door_point1) < min_point:
                     line1 = line_shp
 
-            # if line1 is empty, skip to next
-            if line1.is_empty:
+            # if line1 is empty or shorter than wall width, skip to next
+            if line1.is_empty or line1.length < wall_width:
                 continue
 
             # 4. Make orthogonal line from line1(rotated_line1)
