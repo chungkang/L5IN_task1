@@ -1,0 +1,3091 @@
+{
+  "type": "FeatureCollection",
+  "crs": {
+    "type": "name",
+    "properties": {
+      "name": "urn:ogc:def:crs:EPSG::32632"
+    }
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 0,
+        "door_juction": "Y"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566640.6880572909,
+            5932864.030165006
+          ],
+          [
+            566625.757170036,
+            5932864.624434203
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 1,
+        "door_juction": "Y"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566630.25178647,
+            5932864.445542788
+          ],
+          [
+            566630.7012825995,
+            5932864.427651947
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 2,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566638.1388673747,
+            5932856.672484258
+          ],
+          [
+            566640.414808634,
+            5932857.062364243
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 3,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566640.4164959586,
+            5932857.0525111845
+          ],
+          [
+            566640.3641748955,
+            5932857.357937966
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 4,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566638.0882346361,
+            5932856.968057979
+          ],
+          [
+            566640.3641748955,
+            5932857.357937966
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 5,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566638.1405556994,
+            5932856.6626312
+          ],
+          [
+            566640.4164959586,
+            5932857.0525111845
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 6,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566638.1405556994,
+            5932856.6626312
+          ],
+          [
+            566638.0882346361,
+            5932856.968057979
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 7,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566640.287459594,
+            5932869.441795487
+          ],
+          [
+            566640.9815398508,
+            5932869.353139966
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 8,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566640.2773276485,
+            5932869.362471229
+          ],
+          [
+            566640.9714079053,
+            5932869.273816707
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 9,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566640.287459594,
+            5932869.441795487
+          ],
+          [
+            566640.9815398508,
+            5932869.353139966
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 10,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566640.2773276485,
+            5932869.362471229
+          ],
+          [
+            566640.9714079053,
+            5932869.273816707
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 11,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566640.9707751586,
+            5932869.268858691
+          ],
+          [
+            566640.9821735973,
+            5932869.358097982
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 12,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566640.2880923406,
+            5932869.446752506
+          ],
+          [
+            566640.9821735973,
+            5932869.358097982
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 13,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566640.2766939019,
+            5932869.357514214
+          ],
+          [
+            566640.9707751586,
+            5932869.268858691
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 14,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566640.2766939019,
+            5932869.357514214
+          ],
+          [
+            566640.2880923406,
+            5932869.446752506
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 15,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566628.4376714064,
+            5932859.269589997
+          ],
+          [
+            566628.5566128105,
+            5932862.257943178
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 16,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566628.45015641,
+            5932859.269093196
+          ],
+          [
+            566628.5690988143,
+            5932862.2574463785
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 17,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566628.500096426,
+            5932859.267105993
+          ],
+          [
+            566628.6190388303,
+            5932862.255458173
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 18,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566628.51258143,
+            5932859.266608193
+          ],
+          [
+            566628.631523834,
+            5932862.254961371
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 19,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566628.6440088381,
+            5932862.2544645695
+          ],
+          [
+            566628.5441278068,
+            5932862.25843998
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 20,
+        "door_juction": "Y"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566628.4251864023,
+            5932859.2700868
+          ],
+          [
+            566628.5441278068,
+            5932862.25843998
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 21,
+        "door_juction": "Y"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566628.5250674336,
+            5932859.26611139
+          ],
+          [
+            566628.6440088381,
+            5932862.2544645695
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 22,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566628.5250674336,
+            5932859.26611139
+          ],
+          [
+            566628.4251864023,
+            5932859.2700868
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 23,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566625.7626348491,
+            5932864.761751254
+          ],
+          [
+            566646.5056683152,
+            5932863.936139631
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 24,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566625.7581626386,
+            5932864.649385218
+          ],
+          [
+            566646.5554543925,
+            5932863.82161446
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 25,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566625.7621380476,
+            5932864.74926625
+          ],
+          [
+            566646.5112001013,
+            5932863.923414723
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 26,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566625.7576658372,
+            5932864.6369002145
+          ],
+          [
+            566646.5609861792,
+            5932863.808889553
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 27,
+        "door_juction": "Y"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566625.7631326499,
+            5932864.774236259
+          ],
+          [
+            566646.5001365286,
+            5932863.948864539
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 28,
+        "door_juction": "Y"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566625.7571690362,
+            5932864.624415211
+          ],
+          [
+            566646.5665179654,
+            5932863.796164644
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 29,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566625.7571690362,
+            5932864.624415211
+          ],
+          [
+            566625.7631326499,
+            5932864.774236259
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 30,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566631.4155497783,
+            5932860.9536351105
+          ],
+          [
+            566630.5415805057,
+            5932860.988421191
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 31,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566631.4145561757,
+            5932860.928665102
+          ],
+          [
+            566630.5156158956,
+            5932860.964444785
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 32,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566631.4135625731,
+            5932860.903695095
+          ],
+          [
+            566630.4896522854,
+            5932860.940468381
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 33,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566631.4175379826,
+            5932861.003576127
+          ],
+          [
+            566630.593508726,
+            5932861.036374002
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 34,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566631.4175379826,
+            5932861.003576127
+          ],
+          [
+            566631.4135625731,
+            5932860.903695095
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 35,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566630.5156158956,
+            5932860.964444785
+          ],
+          [
+            566630.5639205661,
+            5932862.178048151
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 36,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566630.5415805057,
+            5932860.988421191
+          ],
+          [
+            566630.5888905744,
+            5932862.177054547
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 37,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566630.6388305903,
+            5932862.1750663435
+          ],
+          [
+            566630.5389495584,
+            5932862.179041752
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 38,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566630.4896522854,
+            5932860.940468381
+          ],
+          [
+            566630.5389495584,
+            5932862.179041752
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 39,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566630.593508726,
+            5932861.036374002
+          ],
+          [
+            566630.6388305903,
+            5932862.1750663435
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 40,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566634.91381991,
+            5932870.042546092
+          ],
+          [
+            566634.6899894782,
+            5932864.418930438
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 41,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566634.9013778889,
+            5932870.044135456
+          ],
+          [
+            566634.6775044742,
+            5932864.419428239
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 42,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566634.8516108039,
+            5932870.050491912
+          ],
+          [
+            566634.6275634583,
+            5932864.4214154435
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 43,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566634.839169782,
+            5932870.052081274
+          ],
+          [
+            566634.6150784546,
+            5932864.421912245
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 44,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566634.6025934506,
+            5932864.422409046
+          ],
+          [
+            566634.7024744818,
+            5932864.418433637
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 45,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566634.9262609319,
+            5932870.040956728
+          ],
+          [
+            566634.7024744818,
+            5932864.418433637
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 46,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566634.8267277607,
+            5932870.05367064
+          ],
+          [
+            566634.6025934506,
+            5932864.422409046
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 47,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566634.8267277607,
+            5932870.05367064
+          ],
+          [
+            566634.9262609319,
+            5932870.040956728
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 48,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566631.9248919599,
+            5932870.036067684
+          ],
+          [
+            566631.7060465328,
+            5932864.537696913
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 49,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566631.9498039908,
+            5932870.033617665
+          ],
+          [
+            566631.731016541,
+            5932864.536703311
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 50,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566631.8999799284,
+            5932870.038518703
+          ],
+          [
+            566631.6810765251,
+            5932864.538691514
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 51,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566631.8501548666,
+            5932870.043418744
+          ],
+          [
+            566631.6311365091,
+            5932864.54067872
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 52,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566631.8252428352,
+            5932870.045869762
+          ],
+          [
+            566631.6061655015,
+            5932864.541672322
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 53,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566631.8003308042,
+            5932870.048319781
+          ],
+          [
+            566631.5811954933,
+            5932864.542666923
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 54,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566631.5811954933,
+            5932864.542666923
+          ],
+          [
+            566631.731016541,
+            5932864.536703311
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 55,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566631.9498039908,
+            5932870.033617665
+          ],
+          [
+            566631.731016541,
+            5932864.536703311
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 56,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566631.8003308042,
+            5932870.048319781
+          ],
+          [
+            566631.5811954933,
+            5932864.542666923
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 57,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566631.8003308042,
+            5932870.048319781
+          ],
+          [
+            566631.9498039908,
+            5932870.033617665
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 58,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566637.899813035,
+            5932869.6611287175
+          ],
+          [
+            566637.6864164278,
+            5932864.299667164
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 59,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566637.8873710139,
+            5932869.662718084
+          ],
+          [
+            566637.6739314238,
+            5932864.300163965
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 60,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566637.8251629069,
+            5932869.670664903
+          ],
+          [
+            566637.6115064038,
+            5932864.302648969
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 61,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566637.8376049282,
+            5932869.669075541
+          ],
+          [
+            566637.6239914078,
+            5932864.302152168
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 62,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566637.5990204001,
+            5932864.303145771
+          ],
+          [
+            566637.6989014315,
+            5932864.299170362
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 63,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566637.9122540563,
+            5932869.659540356
+          ],
+          [
+            566637.6989014315,
+            5932864.299170362
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 64,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566637.8127208857,
+            5932869.672254267
+          ],
+          [
+            566637.5990204001,
+            5932864.303145771
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 65,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566637.8127208857,
+            5932869.672254267
+          ],
+          [
+            566637.9122540563,
+            5932869.659540356
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 66,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566640.9076714098,
+            5932868.873830764
+          ],
+          [
+            566640.7208041867,
+            5932864.178893492
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 67,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566640.8952293891,
+            5932868.875420128
+          ],
+          [
+            566640.7083181832,
+            5932864.179390294
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 68,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566640.8454623036,
+            5932868.881776585
+          ],
+          [
+            566640.6583781673,
+            5932864.181377498
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 69,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566640.8330212822,
+            5932868.883365949
+          ],
+          [
+            566640.645893163,
+            5932864.181875299
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 70,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566640.6334081595,
+            5932864.182372099
+          ],
+          [
+            566640.7332891908,
+            5932864.17839669
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 71,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566640.9201124316,
+            5932868.872241401
+          ],
+          [
+            566640.7332891908,
+            5932864.17839669
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 72,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566640.8205792609,
+            5932868.884955314
+          ],
+          [
+            566640.6334081595,
+            5932864.182372099
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 73,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566640.8205792609,
+            5932868.884955314
+          ],
+          [
+            566640.9201124316,
+            5932868.872241401
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 74,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566628.941832661,
+            5932870.805379836
+          ],
+          [
+            566628.6971345796,
+            5932864.657457989
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 75,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566628.9293916392,
+            5932870.806969201
+          ],
+          [
+            566628.6846485756,
+            5932864.65795479
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 76,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566628.8671835323,
+            5932870.814915021
+          ],
+          [
+            566628.6222235559,
+            5932864.660438797
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 77,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566628.8796245543,
+            5932870.8133256575
+          ],
+          [
+            566628.6347085596,
+            5932864.6599419955
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 78,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566628.6097385519,
+            5932864.660936597
+          ],
+          [
+            566628.7096195832,
+            5932864.6569601875
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 79,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566628.9542746823,
+            5932870.8037904715
+          ],
+          [
+            566628.7096195832,
+            5932864.6569601875
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 80,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566628.8547415112,
+            5932870.816504384
+          ],
+          [
+            566628.6097385519,
+            5932864.660936597
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 81,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566628.8547415112,
+            5932870.816504384
+          ],
+          [
+            566628.9542746823,
+            5932870.8037904715
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 82,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566626.9999467264,
+            5932859.026697196
+          ],
+          [
+            566626.8433563876,
+            5932855.0924595175
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 83,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566627.01243173,
+            5932859.026200392
+          ],
+          [
+            566626.8559473491,
+            5932855.094616655
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 84,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566626.9500057106,
+            5932859.0286844
+          ],
+          [
+            566626.7929935405,
+            5932855.0838319715
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 85,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566626.9375207064,
+            5932859.0291812
+          ],
+          [
+            566626.780402579,
+            5932855.081674835
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 86,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566627.0249167341,
+            5932859.025702593
+          ],
+          [
+            566626.8685373109,
+            5932855.096772795
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 87,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566626.9250357028,
+            5932859.029679003
+          ],
+          [
+            566626.7678116173,
+            5932855.079518698
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 88,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566626.9250357028,
+            5932859.029679003
+          ],
+          [
+            566627.0249167341,
+            5932859.025702593
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 89,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566630.4324921587,
+            5932859.190191773
+          ],
+          [
+            566630.5021372895,
+            5932860.939971579
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 90,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566630.4449771624,
+            5932859.189694969
+          ],
+          [
+            566630.5146222935,
+            5932860.939474775
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 91,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566630.5645633088,
+            5932860.937486573
+          ],
+          [
+            566630.4896522854,
+            5932860.940468381
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 92,
+        "door_juction": "Y"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566630.4200071546,
+            5932859.190688573
+          ],
+          [
+            566630.4896522854,
+            5932860.940468381
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 93,
+        "door_juction": "Y"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566630.4949181781,
+            5932859.187706765
+          ],
+          [
+            566630.5645633088,
+            5932860.937486573
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 94,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566630.4949181781,
+            5932859.187706765
+          ],
+          [
+            566630.4200071546,
+            5932859.190688573
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 95,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566631.8324449533,
+            5932864.484162335
+          ],
+          [
+            566631.591467383,
+            5932864.4937395025
+          ],
+          [
+            566631.5890863357,
+            5932864.433813484
+          ],
+          [
+            566631.8300749017,
+            5932864.424235315
+          ],
+          [
+            566631.8324449533,
+            5932864.484162335
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 96,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566630.2450301734,
+            5932860.1355214855
+          ],
+          [
+            566630.2798162535,
+            5932861.009479765
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 97,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566630.2580129779,
+            5932860.14750969
+          ],
+          [
+            566630.2918044562,
+            5932860.9964969605
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 98,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566630.2320483683,
+            5932860.123533285
+          ],
+          [
+            566630.2678280504,
+            5932861.022461569
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 99,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566630.3099411983,
+            5932860.195462501
+          ],
+          [
+            566630.3397572675,
+            5932860.944568739
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 100,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566630.4572772407,
+            5932860.127073869
+          ],
+          [
+            566630.2450301734,
+            5932860.1355214855
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 101,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566630.4577740417,
+            5932860.139558871
+          ],
+          [
+            566630.2580129779,
+            5932860.14750969
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 102,
+        "door_juction": "Y"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566630.4567804391,
+            5932860.114588864
+          ],
+          [
+            566630.2320483683,
+            5932860.123533285
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 103,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566630.4597622461,
+            5932860.189498888
+          ],
+          [
+            566630.3099411983,
+            5932860.195462501
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 104,
+        "door_juction": "Y"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566630.4597622461,
+            5932860.189498888
+          ],
+          [
+            566630.4567804391,
+            5932860.114588864
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 105,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566630.2798162535,
+            5932861.009479765
+          ],
+          [
+            566630.4920623209,
+            5932861.001031143
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 106,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566630.2918044562,
+            5932860.9964969605
+          ],
+          [
+            566630.4915655198,
+            5932860.9885461405
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 107,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566630.4895783148,
+            5932860.938606125
+          ],
+          [
+            566630.4925601217,
+            5932861.01351615
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 108,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566630.2678280504,
+            5932861.022461569
+          ],
+          [
+            566630.4925601217,
+            5932861.01351615
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 109,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566630.3397572675,
+            5932860.944568739
+          ],
+          [
+            566630.4895783148,
+            5932860.938606125
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 110,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566626.1669590548,
+            5932862.35305612
+          ],
+          [
+            566619.2751758712,
+            5932862.627363352
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 111,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566626.1812703278,
+            5932862.712627232
+          ],
+          [
+            566618.9898450492,
+            5932862.998860693
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 112,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566626.1812703278,
+            5932862.712627232
+          ],
+          [
+            566626.1669590548,
+            5932862.35305612
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 113,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566628.1788889607,
+            5932862.633118049
+          ],
+          [
+            566631.7768132149,
+            5932862.489913351
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 114,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566628.1645766879,
+            5932862.273546933
+          ],
+          [
+            566631.462858847,
+            5932862.142268468
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 115,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566628.1645766879,
+            5932862.273546933
+          ],
+          [
+            566628.1788889607,
+            5932862.633118049
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 116,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566631.3439184424,
+            5932859.153916286
+          ],
+          [
+            566631.4620651647,
+            5932862.122291461
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 117,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566631.5121971038,
+            5932855.841546766
+          ],
+          [
+            566631.7760195325,
+            5932862.469936348
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 118,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566631.210019023,
+            5932855.789782479
+          ],
+          [
+            566631.3319922144,
+            5932858.854273192
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 119,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566631.5121971038,
+            5932855.841546766
+          ],
+          [
+            566631.210019023,
+            5932855.789782479
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 120,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566639.6671118323,
+            5932857.238528748
+          ],
+          [
+            566639.6249167171,
+            5932857.484841183
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 121,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566638.0805237216,
+            5932857.220278052
+          ],
+          [
+            566639.6249167171,
+            5932857.484841183
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 122,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566638.1227178372,
+            5932856.973965616
+          ],
+          [
+            566639.6671118323,
+            5932857.238528748
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 123,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566638.1227178372,
+            5932856.973965616
+          ],
+          [
+            566638.0805237216,
+            5932857.220278052
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 124,
+        "door_juction": "Y"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566631.3319922144,
+            5932858.854273192
+          ],
+          [
+            566614.1549817682,
+            5932859.537950614
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 125,
+        "door_juction": "Y"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566631.3439184424,
+            5932859.153916286
+          ],
+          [
+            566625.5486134916,
+            5932859.3845799845
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 126,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566625.4694531685,
+            5932864.936005525
+          ],
+          [
+            566625.7074769209,
+            5932870.916204488
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 127,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566625.7571700359,
+            5932864.624436202
+          ],
+          [
+            566626.018047643,
+            5932871.178850388
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 128,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566622.4730262188,
+            5932865.055268802
+          ],
+          [
+            566625.4694531685,
+            5932864.936005525
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 129,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566619.0651469163,
+            5932864.890790619
+          ],
+          [
+            566625.7571700359,
+            5932864.624436202
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 130,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566625.667555896,
+            5932862.372933163
+          ],
+          [
+            566625.367912801,
+            5932862.384859393
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 131,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566625.2489713966,
+            5932859.396506211
+          ],
+          [
+            566625.367912801,
+            5932862.384859393
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 132,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566625.5486134916,
+            5932859.3845799845
+          ],
+          [
+            566625.667555896,
+            5932862.372933163
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 133,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566640.2766939019,
+            5932869.357517214
+          ],
+          [
+            566640.9707741588,
+            5932869.268858691
+          ],
+          [
+            566640.9201124316,
+            5932868.872241401
+          ],
+          [
+            566640.2260321748,
+            5932868.960899923
+          ],
+          [
+            566640.2766939019,
+            5932869.357517214
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 134,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566640.3567858523,
+            5932857.356671472
+          ],
+          [
+            566640.2892748679,
+            5932857.75077077
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 135,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566639.5996008478,
+            5932857.6326260455
+          ],
+          [
+            566640.2892748679,
+            5932857.75077077
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 136,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566639.6671118324,
+            5932857.23852675
+          ],
+          [
+            566640.3567858523,
+            5932857.356671472
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 137,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566639.6671118324,
+            5932857.23852675
+          ],
+          [
+            566639.5996008478,
+            5932857.6326260455
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 138,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566622.6201193581,
+            5932868.750862972
+          ],
+          [
+            566625.6165463078,
+            5932868.631598694
+          ],
+          [
+            566625.4694531685,
+            5932864.936004524
+          ],
+          [
+            566622.4730262188,
+            5932865.055268802
+          ],
+          [
+            566622.6201193581,
+            5932868.750862972
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 139,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566611.364782295,
+            5932852.390185863
+          ],
+          [
+            566648.9950471652,
+            5932858.836454323
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 140,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566631.7704327682,
+            5932862.330105303
+          ],
+          [
+            566631.8560724986,
+            5932864.4817273095
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 141,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566631.6206117204,
+            5932862.336068916
+          ],
+          [
+            566631.7062514508,
+            5932864.487690923
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 142,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566630.5846092872,
+            5932860.1845268775
+          ],
+          [
+            566631.3836565403,
+            5932860.152723604
+          ],
+          [
+            566631.3439024487,
+            5932859.153916287
+          ],
+          [
+            566630.5448541957,
+            5932859.185719561
+          ],
+          [
+            566630.5846092872,
+            5932860.1845268775
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 143,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566630.6637806064,
+            5932862.174073741
+          ],
+          [
+            566631.462843853,
+            5932862.142269466
+          ],
+          [
+            566631.4190993577,
+            5932861.0435801195
+          ],
+          [
+            566630.6200511047,
+            5932861.075394386
+          ],
+          [
+            566630.6637806064,
+            5932862.174073741
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 144,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566631.7772090568,
+            5932870.040114063
+          ],
+          [
+            566631.4708106648,
+            5932862.342029531
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 145,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566622.4348744858,
+            5932871.636548235
+          ],
+          [
+            566644.6651088337,
+            5932868.796961525
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 146,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566648.358954704,
+            5932858.707197046
+          ],
+          [
+            566623.7533109,
+            5932854.492121751
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 147,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566611.1707719298,
+            5932852.40775983
+          ],
+          [
+            566631.2120552086,
+            5932855.840941007
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 148,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566631.5142332889,
+            5932855.8927052915
+          ],
+          [
+            566640.0707852984,
+            5932857.358488746
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 149,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566644.665102836,
+            5932868.796985516
+          ],
+          [
+            566606.8527238403,
+            5932873.62679482
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 150,
+        "door_juction": "N"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566649.0320653521,
+            5932858.816424338
+          ],
+          [
+            566640.4227524555,
+            5932857.341603503
+          ]
+        ]
+      }
+    }
+  ]
+}

@@ -18,8 +18,8 @@ import module.create_geojson as create_geojson
 # source file
 # dxf_name = "rev_HCU_D_102_Grundriss_1OG_moved"
 # dxf_name = "rev_HCU_D_104_Grundriss_2OG_moved"
-dxf_name = "rev_HCU_D_105_Grundriss_3OG_moved"
-# dxf_name = "rev_HCU_D_106_Grundriss_4OG_moved_V2"
+# dxf_name = "rev_HCU_D_105_Grundriss_3OG_moved"
+dxf_name = "rev_HCU_D_106_Grundriss_4OG_moved_V2"
 
 # loading dxf file
 doc = ezdxf.readfile("dxf\\"+ dxf_name + ".dxf")
@@ -230,16 +230,15 @@ room_geojson = copy.deepcopy(create_geojson.geojson_EPSG32632)
 room_idx = 0
 
 # to check log
-door_index_log = 0
+door_index_log = ''
 
 # door 전체를 돌리는 for문
 for door_index in range(len(door_polygon_geojson["features"])):
-    door_index_log = door_index
-
     # door 의 꼭지점 0-3 (0번과 2번만 돌림) for문
     for door_point_index in [0,1,2,3]:
     # for door_point_index in [0,2]:
         try:
+            door_index_log = str(door_index) + '-' + str(door_point_index)
             # 	1. Start from 1 edge of door polygon (door1_point1)
             door1_point1_coord = door_polygon_geojson['features'][door_index]['geometry']["coordinates"][0][door_point_index]
             door_point1 = geometry.Point(door1_point1_coord[0], door1_point1_coord[1])
@@ -298,14 +297,18 @@ for door_index in range(len(door_polygon_geojson["features"])):
                 if line_shp.distance(door_point1) < min_point:
                     line1 = line_shp
 
-            # if line1 is empty or shorter than wall width, skip to next
-            if line1.is_empty or line1.length < wall_width:
+            # if line1 is empty, skip to next
+            if line1.is_empty:
                 continue
+
+            # if line1 shorter than wall width, skip to next
+            # if line1.length < wall_width:
+            #     continue
 
             # 4. Make orthogonal line from line1(rotated_line1)
             rotated_line1 = shapely.affinity.rotate(line1, 90, origin=door_point1)
             l_coords = list(rotated_line1.coords)
-            EXTRAPOL_RATIO = 3
+            EXTRAPOL_RATIO = 50
             p1 = l_coords[-2:][0]
             p2 = l_coords[-2:][1]
             a = (p1[0]-EXTRAPOL_RATIO*(p2[0]-p1[0]), p1[1]-EXTRAPOL_RATIO*(p2[1]-p1[1]))
@@ -350,6 +353,9 @@ for door_index in range(len(door_polygon_geojson["features"])):
                 if point_to_point_distance < shortest_distance and point_to_point_distance > min_point:
                     shortest_distance = point_to_point_distance
                     point_in_wall = point
+
+            if point_in_wall.is_empty:
+                continue
 
             # door_point1을 기준으로 point_in_wall과 대칭하는 점을 만듦(new_point)
             new_point = geometry.Point(door_point1.coords[0][0]*2-point_in_wall.coords[0][0], door_point1.coords[0][1]*2-point_in_wall.coords[0][1])
@@ -492,6 +498,10 @@ for door_index in range(len(door_polygon_geojson["features"])):
                     line1_end2 = pt
                     distance_line1_end2 = pt.distance(line1_end1)
 
+            # endpoint 를 못찾으면 스킵
+            if not line1_end2:
+                continue
+
             # line1_end1과 line1_end2로 이루어진 선분으로 line1를 덮어씌움
             line1 = geometry.LineString([line1_end1, line1_end2])
 
@@ -580,6 +590,10 @@ for door_index in range(len(door_polygon_geojson["features"])):
                     line2_end2 = pt
                     distance_line2_end2 = pt.distance(line2_end1)
 
+            # endpoint 를 못찾으면 스킵
+            if not line2_end2:
+                continue
+
             # line2_end1과 line2_end2로 이루어진 선분으로 line2를 덮어씌움
             line2 = geometry.LineString([line2_end1, line2_end2])
 
@@ -602,8 +616,10 @@ for door_index in range(len(door_polygon_geojson["features"])):
                     room_geojson["features"].append(geom_feature)
                     room_idx += 1
 
+            print("success:index" + door_index_log + " message:" + str(error))
+
         except Exception as error:
-            print("index" + str(door_index_log) + " message:" + str(error))
+            print("failed:index" + door_index_log + " message:" + str(error))
 
 create_geojson.write_geojson('option1_walls\\rooms.geojson', room_geojson)
 
