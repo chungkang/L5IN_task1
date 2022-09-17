@@ -244,7 +244,7 @@ for door_index in range(len(door_polygon_geojson["features"])):
             door_point1 = geometry.Point(door1_point1_coord[0], door1_point1_coord[1])
 
             # filtered walls distance from door point
-            distance_from_door_point = 3
+            distance_from_door_point = 10
             # 2. Filter all the wall lines which is close from door1_point1
             filtered_walls_geojson = copy.deepcopy(create_geojson.geojson_EPSG32632)
             filtered_walls_idx = 0
@@ -616,13 +616,12 @@ for door_index in range(len(door_polygon_geojson["features"])):
                     room_geojson["features"].append(geom_feature)
                     room_idx += 1
 
-            print("success:index" + door_index_log + " message:" + str(error))
+            print("success:index" + door_index_log)
 
         except Exception as error:
             print("failed:index" + door_index_log + " message:" + str(error))
 
 create_geojson.write_geojson('option1_walls\\rooms.geojson', room_geojson)
-
 
 
 
