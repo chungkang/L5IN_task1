@@ -244,7 +244,7 @@ for door_index in range(len(door_polygon_geojson["features"])):
             door_point1 = geometry.Point(door1_point1_coord[0], door1_point1_coord[1])
 
             # filtered walls distance from door point
-            distance_from_door_point = 10
+            distance_from_door_point = 5
             # 2. Filter all the wall lines which is close from door1_point1
             filtered_walls_geojson = copy.deepcopy(create_geojson.geojson_EPSG32632)
             filtered_walls_idx = 0
