@@ -18,8 +18,8 @@ import module.create_geojson as create_geojson
 # source file
 # dxf_name = "rev_HCU_D_102_Grundriss_1OG_moved"
 # dxf_name = "rev_HCU_D_104_Grundriss_2OG_moved"
-# dxf_name = "rev_HCU_D_105_Grundriss_3OG_moved"
-dxf_name = "rev_HCU_D_106_Grundriss_4OG_moved_V2"
+dxf_name = "rev_HCU_D_105_Grundriss_3OG_moved"
+# dxf_name = "rev_HCU_D_106_Grundriss_4OG_moved_V2"
 
 # loading dxf file
 doc = ezdxf.readfile("dxf\\"+ dxf_name + ".dxf")
@@ -244,7 +244,7 @@ for door_index in range(len(door_polygon_geojson["features"])):
             door_point1 = geometry.Point(door1_point1_coord[0], door1_point1_coord[1])
 
             # filtered walls distance from door point
-            distance_from_door_point = 5
+            distance_from_door_point = 7
             # 2. Filter all the wall lines which is close from door1_point1
             filtered_walls_geojson = copy.deepcopy(create_geojson.geojson_EPSG32632)
             filtered_walls_idx = 0
