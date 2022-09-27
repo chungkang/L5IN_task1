@@ -13,12 +13,13 @@ import matplotlib.pyplot as plt
 
 import copy
 import module.create_geojson as create_geojson
+import module.shapely_functions as shapely_functions
 
 
 # source file
 # dxf_name = "rev_HCU_D_102_Grundriss_1OG_moved"
-# dxf_name = "rev_HCU_D_104_Grundriss_2OG_moved"
-dxf_name = "rev_HCU_D_105_Grundriss_3OG_moved"
+dxf_name = "rev_HCU_D_104_Grundriss_2OG_moved"
+# dxf_name = "rev_HCU_D_105_Grundriss_3OG_moved"
 # dxf_name = "rev_HCU_D_106_Grundriss_4OG_moved_V2"
 
 # loading dxf file
@@ -132,26 +133,27 @@ for layer in layer_list:
         idx += 1
 
 # write custom defined CRS geojson
-create_geojson.write_geojson('option1_walls\\option1.geojson', origin_geojson)
+create_geojson.write_geojson('option1_walls\\original.geojson', origin_geojson)
 
 # read created geojson / reprojection to EPSG:32632 / write reprojected geojson
-loaded_geojson = geopandas.read_file('option1_walls\\option1.geojson')
+loaded_geojson = geopandas.read_file('option1_walls\\original.geojson')
 loaded_geojson = loaded_geojson.to_crs("EPSG:32632")
-loaded_geojson.to_file("option1_walls\\option1_EPSG32632.geojson", driver='GeoJSON')
+loaded_geojson.to_file("option1_walls\\original_EPSG32632.geojson", driver='GeoJSON')
 
 
 
 
 
 # load EPSG32632 geojson
-with open('option1_walls\\option1_EPSG32632.geojson') as f:
+with open('option1_walls\\original_EPSG32632.geojson') as f:
     epsg32632_geojson = json.load(f)
 
+
+wall_line_idx = 0
 
 # door multipoints to convex_hull polygon
 # + get wall lines(none door layers)
 wall_lines_geojson = copy.deepcopy(create_geojson.geojson_EPSG32632)
-wall_line_idx = 0
 
 door_dict = {}
 for lines in epsg32632_geojson['features']:
@@ -185,6 +187,7 @@ for lines in epsg32632_geojson['features']:
 
 door_polygon_geojson = copy.deepcopy(create_geojson.geojson_EPSG32632)
 door_points_geojson = copy.deepcopy(create_geojson.geojson_EPSG32632)
+door_lines_geojson = copy.deepcopy(create_geojson.geojson_EPSG32632)
 
 door_polygon_idx = 0
 
@@ -211,7 +214,7 @@ for key in door_dict.keys():
     }
     door_polygon_geojson["features"].append(door_polygon_feature)
 
-    # polygon의 테두리 points를 뽑는다
+    # door polygon의 테두리 points를 뽑는다
     door_points = geometry.MultiPoint(door_polygon.exterior.coords)
     door_points_feature = {
         "type": "Feature",
@@ -221,9 +224,26 @@ for key in door_dict.keys():
         "geometry": geometry.mapping(door_points)
     }
     door_points_geojson["features"].append(door_points_feature)
+
+    # door polygon의 테두리 lines를 뽑는다
+    door_lines = door_polygon.boundary
+
+    door_lines_feature = {
+        "type": "Feature",
+        "properties": {
+            "index": door_polygon_idx
+        },
+        "geometry": geometry.mapping(door_lines)
+    }
+    door_lines_geojson["features"].append(door_lines_feature)
+
     door_polygon_idx += 1
 
-create_geojson.write_geojson('option1_walls\\option1_door_polygon.geojson', door_polygon_geojson)
+
+
+create_geojson.write_geojson('option1_walls\\door_polygon.geojson', door_polygon_geojson)
+create_geojson.write_geojson('option1_walls\\door_points.geojson', door_points_geojson)
+create_geojson.write_geojson('option1_walls\\door_lines.geojson', door_lines_geojson)
 
 # room detection algorithm by door polygon's edge points
 room_geojson = copy.deepcopy(create_geojson.geojson_EPSG32632)
@@ -248,7 +268,7 @@ for door_index in range(len(door_polygon_geojson["features"])):
             # 2. Filter all the wall lines which is close from door1_point1
             filtered_walls_geojson = copy.deepcopy(create_geojson.geojson_EPSG32632)
             filtered_walls_idx = 0
-            for line in epsg32632_geojson['features']:
+            for line in wall_lines_geojson['features']:
                 if line['properties']['category']!='door' and line['geometry']:
                     line_shp = geometry.shape(line['geometry'])
                     if door_point1.distance(line_shp) < distance_from_door_point:
