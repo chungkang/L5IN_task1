@@ -55,6 +55,7 @@ layer_list = [
                 ,"AUSBAU - Darstellungen - Trennwaende"
                 ,"AUSBAU - Darstellungen - Trockenbau" 
                 ,"AUSBAU - Darstellungen - Waende - Mauerwerk"
+                ,"AUSBAU - Darstellungen - Trennwaende"
                 # ,"AUSBAU - Objekte - Aufzuege" 
                 # ,"AUSBAU - Objekte - Tueren"
                 ,"DARSTELLUNGEN - Aufsichtslinien"
@@ -396,36 +397,9 @@ for door_index in range(len(door_lines_geojson["features"])):
             rotated_line1 = geometry.LineString([a,b])
 
             # rotated_line1과 주변 wall lines(door_juction)의 intersections를 찾음
-            rotated_line1_inters = []
-            for line in  filtered_walls_geojson['features']:
-                if line["properties"]["door_juction"] == "Y":
-                    line = geometry.shape(line['geometry'])
-                    if rotated_line1.intersects(line):
-                        inter = rotated_line1.intersection(line)
-                        if "Point" == inter.type:
-                            rotated_line1_inters.append(inter)
-                        elif "MultiPoint" == inter.type:
-                            rotated_line1_inters.extend([pt for pt in inter])
-                        elif "MultiLineString" == inter.type:
-                            multiLine = [line for line in inter]
-                            first_coords = multiLine[0].coords[0]
-                            last_coords = multiLine[len(multiLine)-1].coords[1]
-                            rotated_line1_inters.append(geometry.Point(first_coords[0], first_coords[1]))
-                            rotated_line1_inters.append(geometry.Point(last_coords[0], last_coords[1]))
-                        elif "GeometryCollection" == inter.type:
-                            for geom in inter:
-                                if "Point" == geom.type:
-                                    rotated_line1_inters.append(geom)
-                                elif "MultiPoint" == geom.type:
-                                    rotated_line1_inters.extend([pt for pt in geom])
-                                elif "MultiLineString" == geom.type:
-                                    multiLine = [line for line in geom]
-                                    first_coords = multiLine[0].coords[0]
-                                    last_coords = multiLine[len(multiLine)-1].coords[1]
-                                    rotated_line1_inters.append(geometry.Point(first_coords[0], first_coords[1]))
-                                    rotated_line1_inters.append(geometry.Point(last_coords[0], last_coords[1]))
+            rotated_line1_inters = shapely_functions.find_intersections_baseline_to_all_door_junction(rotated_line1,filtered_walls_geojson['features'])
 
-            # door1_point에서 가장 가까운 점을 찾음
+            # door_point에서 가장 가까운 점을 찾음
             shortest_distance = 100
             point_in_wall = geometry.Point()
             for point in rotated_line1_inters:
@@ -449,35 +423,9 @@ for door_index in range(len(door_lines_geojson["features"])):
             rotated_line1 = geometry.LineString([(door_point.coords[0][0], door_point.coords[0][1]), line_b])
 
             # 업데이트된 rotated_line1과 wall lines들이 접하는 points를 업데이트(rotated_line1_inters 업데이트)
-            rotated_line1_inters = []
-            for line in  filtered_walls_geojson['features']:
-                line = geometry.shape(line['geometry'])
-                if rotated_line1.intersects(line):
-                    inter = rotated_line1.intersection(line)
-                    if "Point" == inter.type:
-                        rotated_line1_inters.append(inter)
-                    elif "MultiPoint" == inter.type:
-                        rotated_line1_inters.extend([pt for pt in inter])
-                    elif "MultiLineString" == inter.type:
-                        multiLine = [line for line in inter]
-                        first_coords = multiLine[0].coords[0]
-                        last_coords = multiLine[len(multiLine)-1].coords[1]
-                        rotated_line1_inters.append(geometry.Point(first_coords[0], first_coords[1]))
-                        rotated_line1_inters.append(geometry.Point(last_coords[0], last_coords[1]))
-                    elif "GeometryCollection" == inter.type:
-                        for geom in inter:
-                            if "Point" == geom.type:
-                                rotated_line1_inters.append(geom)
-                            elif "MultiPoint" == geom.type:
-                                rotated_line1_inters.extend([pt for pt in geom])
-                            elif "MultiLineString" == geom.type:
-                                multiLine = [line for line in geom]
-                                first_coords = multiLine[0].coords[0]
-                                last_coords = multiLine[len(multiLine)-1].coords[1]
-                                rotated_line1_inters.append(geometry.Point(first_coords[0], first_coords[1]))
-                                rotated_line1_inters.append(geometry.Point(last_coords[0], last_coords[1]))
+            rotated_line1_inters = shapely_functions.find_intersections_baseline_to_all(rotated_line1,filtered_walls_geojson['features'])
 
-            # door1_point1에서 rotated_line1_inters 에 있는 point 중에 가장 가까운 점을 구함(반대편 벽에 접하는 line2_intersect_point)
+            # door_point1에서 rotated_line1_inters 에 있는 point 중에 가장 가까운 점을 구함(반대편 벽에 접하는 line2_intersect_point)
             shortest_distance = 100
             line2_intersect_point = geometry.Point()
             for point in rotated_line1_inters:
@@ -493,7 +441,7 @@ for door_index in range(len(door_lines_geojson["features"])):
                 if line_shp.distance(line2_intersect_point) < min_point:
                     line2 = line_shp
 
-            # door_line으로 함수를 만듦
+            # door 쪽의 벽을 감지하는 로직
             door_end1_x = door_line.bounds[0]
             door_end1_y = door_line.bounds[1]
             door_end2_x = door_line.bounds[2]
@@ -548,34 +496,9 @@ for door_index in range(len(door_lines_geojson["features"])):
                     }
                     result_geojson["features"].append(line_feature)
             
+            # 문 반대편의 벽을 감지하는 로직
             # line2에 접하는 모든 wall line 간의 intersection points(line2_inters)
-            line2_inters = []
-            for line in  filtered_walls_geojson['features']:
-                line = geometry.shape(line['geometry'])
-                if line.intersects(line2):
-                    inter = line.intersection(line2)
-                    if "Point" == inter.type:
-                        line2_inters.append(inter)
-                    elif "MultiPoint" == inter.type:
-                        line2_inters.extend([pt for pt in inter])
-                    elif "MultiLineString" == inter.type:
-                        multiLine = [line for line in inter]
-                        first_coords = multiLine[0].coords[0]
-                        last_coords = multiLine[len(multiLine)-1].coords[1]
-                        line2_inters.append(geometry.Point(first_coords[0], first_coords[1]))
-                        line2_inters.append(geometry.Point(last_coords[0], last_coords[1]))
-                    elif "GeometryCollection" == inter.type:
-                        for geom in inter:
-                            if "Point" == geom.type:
-                                line2_inters.append(geom)
-                            elif "MultiPoint" == geom.type:
-                                line2_inters.extend([pt for pt in geom])
-                            elif "MultiLineString" == geom.type:
-                                multiLine = [line for line in geom]
-                                first_coords = multiLine[0].coords[0]
-                                last_coords = multiLine[len(multiLine)-1].coords[1]
-                                line2_inters.append(geometry.Point(first_coords[0], first_coords[1]))
-                                line2_inters.append(geometry.Point(last_coords[0], last_coords[1]))
+            line2_inters = shapely_functions.find_intersections_baseline_to_all(line2,filtered_walls_geojson['features'])
 
             # line2_inters중에 line2_intersect_point에서 가장 가까운 점(line2_end1)
             line2_end1 = geometry.Point()
@@ -594,33 +517,7 @@ for door_index in range(len(door_lines_geojson["features"])):
                     line2 = line
 
             # 업데이트된 line2과 접하는 wall line 간의 intersection points를 다시 구함(updated_line2_inters)
-            updated_line2_inters = []
-            for line in  filtered_walls_geojson['features']:
-                line = geometry.shape(line['geometry'])
-                if line2.intersects(line):
-                    inter = line2.intersection(line)
-                    if "Point" == inter.type:
-                        updated_line2_inters.append(inter)
-                    elif "MultiPoint" == inter.type:
-                        updated_line2_inters.extend([pt for pt in inter])
-                    elif "MultiLineString" == inter.type:
-                        multiLine = [line for line in inter]
-                        first_coords = multiLine[0].coords[0]
-                        last_coords = multiLine[len(multiLine)-1].coords[1]
-                        updated_line2_inters.append(geometry.Point(first_coords[0], first_coords[1]))
-                        updated_line2_inters.append(geometry.Point(last_coords[0], last_coords[1]))
-                    elif "GeometryCollection" == inter.type:
-                        for geom in inter:
-                            if "Point" == geom.type:
-                                updated_line2_inters.append(geom)
-                            elif "MultiPoint" == geom.type:
-                                updated_line2_inters.extend([pt for pt in geom])
-                            elif "MultiLineString" == geom.type:
-                                multiLine = [line for line in geom]
-                                first_coords = multiLine[0].coords[0]
-                                last_coords = multiLine[len(multiLine)-1].coords[1]
-                                updated_line2_inters.append(geometry.Point(first_coords[0], first_coords[1]))
-                                updated_line2_inters.append(geometry.Point(last_coords[0], last_coords[1]))
+            updated_line2_inters = shapely_functions.find_intersections_baseline_to_all(line2,filtered_walls_geojson['features'])
 
             # line2_end1에서 가장가까운 line2_inters를 구함(line2_end2), 
             line2_end2 = geometry.Point()
@@ -670,6 +567,21 @@ for door_index in range(len(door_lines_geojson["features"])):
             }
             result_geojson["features"].append(geom_feature)
             door_idx += 1
+
+
+
+            # door_point와 line2_intersect_point의 중간점을 기준으로 90도 직교, 45, 135 3개의 선분에서 접하는 벽을 더 추가
+
+            # 중간점을 기준으로 선을 그린다
+            # 해당 선과 교차하는 points를 찾는다
+            # 중간점에서 가장가까운 point와 반대편 endpoint를 잇는 선으로 업데이트 한다
+            # 해당 선과 교차하는 points를 찾는다
+            # 첫번쨰 교차 point 이외에 중간점에서 가장 가까운 point를 찾는다
+            # 2개의 point에서 각각 겹치는 wall line을 찾는다 - door 파트 어떻게 할지 처리 필요
+            # 각각의 wall lines의 양쪽 끝 endpoint를 찾는다
+            # 각각의 end point에서 교차하는 wall line을 찾는다
+
+
 
             print("success:index" + door_index_log)
 
