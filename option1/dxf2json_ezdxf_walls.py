@@ -18,10 +18,10 @@ import module.shapely_functions as shapely_functions
 
 
 # source file
-dxf_name = "rev_HCU_D_102_Grundriss_1OG_moved"
+# dxf_name = "rev_HCU_D_102_Grundriss_1OG_moved"
 # dxf_name = "rev_HCU_D_104_Grundriss_2OG_moved"
 # dxf_name = "rev_HCU_D_105_Grundriss_3OG_moved"
-# dxf_name = "rev_HCU_D_106_Grundriss_4OG_moved_V2"
+dxf_name = "rev_HCU_D_106_Grundriss_4OG_moved_V2"
 
 # loading dxf file
 doc = ezdxf.readfile("dxf\\"+ dxf_name + ".dxf")
@@ -32,7 +32,7 @@ msp = doc.modelspace()
 min_length = 0.05 # minimum length of lines(ignore short lines)
 min_point = 0.01 # minimum length as a point
 wall_width = 0.36 # wall width
-wall_fintering_distance = 10 # wall fintering distance
+wall_fintering_distance = 7 # wall fintering distance
 
 # get layout / plan - layout page
 # plan = doc.layout('16 - plan 2.OG_1_100')
@@ -571,17 +571,67 @@ for door_index in range(len(door_lines_geojson["features"])):
 
 
             # door_point와 line2_intersect_point의 중간점을 기준으로 90도 직교, 45, 135 3개의 선분에서 접하는 벽을 더 추가
+            x, y = (door_point.bounds[0]+line2_intersect_point.bounds[0])/2.0, (door_point.bounds[1]+line2_intersect_point.bounds[1])/2.0
+            middle_room_point = geometry.Point(x, y)
 
-            # 중간점을 기준으로 선을 그린다
+            # 중간점을 기준으로 선을 그린다 - 90도 직교
+            rotated_line1_90 = shapely.affinity.rotate(rotated_line1, 90, origin=middle_room_point)
+
             # 해당 선과 교차하는 points를 찾는다
+            rotated_line1_90_inters = shapely_functions.find_intersections_baseline_to_all(rotated_line1_90,filtered_walls_geojson['features'])
+
             # 중간점에서 가장가까운 point와 반대편 endpoint를 잇는 선으로 업데이트 한다
-            # 해당 선과 교차하는 points를 찾는다
-            # 첫번쨰 교차 point 이외에 중간점에서 가장 가까운 point를 찾는다
+            shortest_distance = 100
+            intersect_point_90_1 = geometry.Point()
+            for point in rotated_line1_90_inters:
+                if point.distance(middle_room_point) < shortest_distance:
+                    shortest_distance = point_to_point_distance
+                    intersect_point_90_1 = point
+
+            # -----------intersect_point_90_1-----
+            splited_rotated_line1_90 = shapely.ops.split(rotated_line1_90, intersect_point_90_1.buffer(min_point))
+                    
+            # 중간점을 포함하는 선분을 잘라서 선분 update
+            for line in splited_rotated_line1_90:
+                if middle_room_point.distance(line) < min_point:
+                    rotated_line1_90 = line
+
+            # 해당 선과 교차하는 points를 다시 구함
+            rotated_line1_90_inters = shapely_functions.find_intersections_baseline_to_all(rotated_line1_90,filtered_walls_geojson['features'])
+
+            # 첫번째 교차 point 이외에 중간점에서 가장 가까운 point를 찾는다
+            intersect_point_90_2 = geometry.Point()
+            distance_90_1 = 100
+            for pt in updated_line2_inters:
+                # line2_end1과 중복되는 포인트는 무시
+                if pt.distance(intersect_point_90_1) < min_point:
+                    continue
+                if pt.distance(intersect_point_90_1) < distance_90_1:
+                    intersect_point_90_2 = pt
+                    distance_90_1 = pt.distance(intersect_point_90_1)
+
+            # 덮어씌우기
+            splited_rotated_line1_90 = geometry.LineString([intersect_point_90_1, intersect_point_90_2])
+
+            # line1_90에 접하는 2개의 wall line을 구함
+            buffer_size=min_point
+            for line in  filtered_walls_geojson['features']:
+                line = geometry.shape(line['geometry'])
+                if intersect_point_90_1.distance(line) < min_point or intersect_point_90_2.distance(line) < min_point:
+                    geom_feature = {
+                        "type": "Feature",
+                        "properties": {
+                            "door_index": door_index
+                            ,"index": door_idx
+                        },
+                        "geometry":geometry.mapping(line)
+                    }
+                    result_geojson["features"].append(geom_feature)
+                    door_idx += 1
+
             # 2개의 point에서 각각 겹치는 wall line을 찾는다 - door 파트 어떻게 할지 처리 필요
             # 각각의 wall lines의 양쪽 끝 endpoint를 찾는다
             # 각각의 end point에서 교차하는 wall line을 찾는다
-
-
 
             print("success:index" + door_index_log)
 
