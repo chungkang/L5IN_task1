@@ -18,10 +18,10 @@ import module.shapely_functions as shapely_functions
 
 
 # source file
-dxf_name = "rev_HCU_D_102_Grundriss_1OG_moved"
+# dxf_name = "rev_HCU_D_102_Grundriss_1OG_moved"
 # dxf_name = "rev_HCU_D_104_Grundriss_2OG_moved"
 # dxf_name = "rev_HCU_D_105_Grundriss_3OG_moved"
-# dxf_name = "rev_HCU_D_106_Grundriss_4OG_moved_V2"
+dxf_name = "rev_HCU_D_106_Grundriss_4OG_moved_V2"
 
 # loading dxf file
 doc = ezdxf.readfile("dxf\\"+ dxf_name + ".dxf")
@@ -31,8 +31,8 @@ msp = doc.modelspace()
 
 min_length = 0.05 # minimum length of lines(ignore short lines)
 min_point = 0.01 # minimum length as a point
-wall_width = 0.36 # wall width
-wall_fintering_distance = 10 # wall fintering distance
+wall_width = 0.41 # wall width
+wall_fintering_distance = 7 # wall fintering distance
 
 # get layout / plan - layout page
 # plan = doc.layout('16 - plan 2.OG_1_100')
@@ -249,10 +249,12 @@ create_geojson.write_geojson('option1_walls\\door_lines.geojson', door_lines_geo
 
 # room detection algorithm by door polygon's edge points
 result_geojson = copy.deepcopy(create_geojson.geojson_EPSG32632)
-door_idx = 0
+
+# room index
+room_index_geojson = copy.deepcopy(create_geojson.geojson_EPSG32632)
 
 # to check log
-door_index_log = ''
+room_index = ''
 
 # door 전체를 돌리는 for문
 for door_index in range(len(door_lines_geojson["features"])):
@@ -273,22 +275,23 @@ for door_index in range(len(door_lines_geojson["features"])):
         if door_line.length > wall_width: 
             using_door_lines.append(door_line)
         
-        # add door lines to final result
-        each_feature = {
-                            "type": "Feature",
-                            "properties": {
-                                "door_index": door_index
-                                ,"index": door_idx
-                            },
-                            "geometry": geometry.mapping(door_line)
-                        }
-        result_geojson["features"].append(each_feature)
+        # # add door lines to final result
+        # each_feature = {
+        #                     "type": "Feature",
+        #                     "properties": {
+        #                         "door_index": door_index
+        #                         ,"id": str(door_index) + '-'
+        #                     },
+        #                     "geometry": geometry.mapping(door_line)
+        #                 }
+        # result_geojson["features"].append(each_feature)
 
     door_line_index = 0
     # interate 2 longer lines of a door
     for door_line in using_door_lines:
         # try:
-            door_index_log = str(door_index)
+            room_index = str(door_index) + '-' + str(door_line_index)
+            door_line_index += 1
 
             # 1. start from door_point
             # add door_point as a midle point of the door_line
@@ -489,8 +492,7 @@ for door_index in range(len(door_lines_geojson["features"])):
                         "type": "Feature",
                         "properties": {
                             "door_index": door_index
-                            ,"index": door_idx
-                            ,"feature": "line1"
+                            ,"id": room_index
                         },
                         "geometry":geometry.mapping(line)
                     }
@@ -506,13 +508,11 @@ for door_index in range(len(door_lines_geojson["features"])):
                         "type": "Feature",
                         "properties": {
                             "door_index": door_index
-                            ,"index": door_idx
-                            ,"feature": "line2"
+                            ,"id": room_index
                         },
                         "geometry":geometry.mapping(line)
                     }
                     result_geojson["features"].append(line_feature)
-                    door_idx += 1
 
             # 결과가 없으면 스킵
             else:
@@ -523,12 +523,11 @@ for door_index in range(len(door_lines_geojson["features"])):
                 "type": "Feature",
                 "properties": {
                     "door_index": door_index
-                    ,"index": door_idx
+                    ,"id": room_index
                 },
                 "geometry":geometry.mapping(door_line)
             }
             result_geojson["features"].append(geom_feature)
-            door_idx += 1
 
             if not line2_intersect_point:
                 continue
@@ -537,8 +536,23 @@ for door_index in range(len(door_lines_geojson["features"])):
             x, y = (door_point.bounds[0]+line2_intersect_point.bounds[0])/2.0, (door_point.bounds[1]+line2_intersect_point.bounds[1])/2.0
             middle_room_point = geometry.Point(x, y)
 
+            # save room index
+            geom_feature = {
+                "type": "Feature",
+                "properties": {
+                    "door_index": door_index
+                    ,"id": room_index
+                },
+                "geometry":geometry.mapping(middle_room_point)
+            }
+            room_index_geojson["features"].append(geom_feature)
+
             # 중간점을 기준으로 선을 그린다 - 90도 직교
             rotated_line1_90 = shapely.affinity.rotate(rotated_line1, 90, origin=middle_room_point)
+
+            # 90도 직교선에서 탐지되는 2개의 walls를 찾는 로직
+            # line과 해당 라인에 포함된 point와 filtered_walls_geojson으로 접하는 walls를 감지하는 로직 => return [result_yn, result_lines]
+            line2_intersects_lines = shapely_functions.get_lines_from_point_and_line(rotated_line1_90, middle_room_point, filtered_walls_geojson['features'])
 
             # 해당 선과 교차하는 points를 찾는다
             rotated_line1_90_inters = shapely_functions.find_intersections_baseline_to_all(rotated_line1_90,filtered_walls_geojson['features'])
@@ -583,28 +597,55 @@ for door_index in range(len(door_lines_geojson["features"])):
             buffer_size=min_point
             for line in  filtered_walls_geojson['features']:
                 line = geometry.shape(line['geometry'])
-                if intersect_point_90_1.distance(line) < min_point or intersect_point_90_2.distance(line) < min_point:
-                    geom_feature = {
-                        "type": "Feature",
-                        "properties": {
-                            "door_index": door_index
-                            ,"index": door_idx
-                        },
-                        "geometry":geometry.mapping(line)
-                    }
-                    result_geojson["features"].append(geom_feature)
-                    door_idx += 1
+                if intersect_point_90_1.distance(line) < min_point:
+                    # line과 해당 라인에 포함된 point와 filtered_walls_geojson으로 접하는 walls를 감지하는 로직 => return [result_yn, result_lines]
+                    rotated_line_90_1_intersects_lines = shapely_functions.get_lines_from_point_and_line(line, intersect_point_90_1, filtered_walls_geojson['features'])
 
-            # 2개의 point에서 각각 겹치는 wall line을 찾는다 - door 파트 어떻게 할지 처리 필요
-            # 각각의 wall lines의 양쪽 끝 endpoint를 찾는다
-            # 각각의 end point에서 교차하는 wall line을 찾는다
+                    if rotated_line_90_1_intersects_lines[0]:
+                        # rotated_line_90_1_intersects_lines[1] 에는 line와 접하는 wall lines 들이 들어있음
+                        for line in rotated_line_90_1_intersects_lines[1]:
+                            line_feature = {
+                                "type": "Feature",
+                                "properties": {
+                                    "door_index": door_index
+                                    ,"id": room_index
+                                },
+                                "geometry":geometry.mapping(line)
+                            }
+                            result_geojson["features"].append(line_feature)
 
-            print("success:index" + door_index_log)
+                    # 결과가 없으면 스킵
+                    else:
+                        continue
+
+                elif intersect_point_90_2.distance(line) < min_point:
+                    # line과 해당 라인에 포함된 point와 filtered_walls_geojson으로 접하는 walls를 감지하는 로직 => return [result_yn, result_lines]
+                    rotated_line_90_2_intersects_lines = shapely_functions.get_lines_from_point_and_line(line, intersect_point_90_2, filtered_walls_geojson['features'])
+
+                    if rotated_line_90_2_intersects_lines[0]:
+                        # rotated_line_90_2_intersects_lines[1] 에는 line와 접하는 wall lines 들이 들어있음
+                        for line in rotated_line_90_2_intersects_lines[1]:
+                            line_feature = {
+                                "type": "Feature",
+                                "properties": {
+                                    "door_index": door_index
+                                    ,"id": room_index
+                                },
+                                "geometry":geometry.mapping(line)
+                            }
+                            result_geojson["features"].append(line_feature)
+
+                    # 결과가 없으면 스킵
+                    else:
+                        continue
+
+            print("success:index" + room_index)
 
         # except Exception as error:
-        #     print("failed:index" + door_index_log + " message:" + str(error))
+        #     print("failed:index" + room_index + " message:" + str(error))
 
 create_geojson.write_geojson('option1_walls\\result.geojson', result_geojson)
+create_geojson.write_geojson('option1_walls\\room_index.geojson', room_index_geojson)
 
 
 
