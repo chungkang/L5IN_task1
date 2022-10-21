@@ -29,10 +29,10 @@ doc = ezdxf.readfile("dxf\\"+ dxf_name + ".dxf")
 # get modelspace
 msp = doc.modelspace()
 
-min_length = 0.05 # minimum length of lines(ignore short lines)
+min_length = 0.04 # minimum length of lines(ignore short lines)
 min_point = 0.01 # minimum length as a point
 wall_width = 0.41 # wall width
-wall_fintering_distance = 7 # wall fintering distance
+wall_fintering_distance = 5 # wall fintering distance
 
 # get layout / plan - layout page
 # plan = doc.layout('16 - plan 2.OG_1_100')
@@ -56,6 +56,7 @@ layer_list = [
                 ,"AUSBAU - Darstellungen - Trockenbau" 
                 ,"AUSBAU - Darstellungen - Waende - Mauerwerk"
                 ,"AUSBAU - Darstellungen - Trennwaende"
+                ,"AUSBAU - Darstellungen - Waende - Mauerwerk"
                 # ,"AUSBAU - Objekte - Aufzuege" 
                 # ,"AUSBAU - Objekte - Tueren"
                 ,"DARSTELLUNGEN - Aufsichtslinien"
@@ -68,6 +69,7 @@ layer_list = [
                 ,"ROHBAU - Darstellungen - Decken" 
                 ,"ROHBAU - Darstellungen - Waende - Mauerwerk" 
                 # ,"ROHBAU - Darstellungen - Ansichtslinien"
+                ,"ROHBAU - Darstellungen - Unterzug - Deckenversprung - Oeffnung"
                 ,"wall"
 ]
 
@@ -244,8 +246,8 @@ for key in door_dict.keys():
 
 
 create_geojson.write_geojson('option1_walls\\door_polygon.geojson', door_polygon_geojson)
-create_geojson.write_geojson('option1_walls\\door_points.geojson', door_points_geojson)
-create_geojson.write_geojson('option1_walls\\door_lines.geojson', door_lines_geojson)
+# create_geojson.write_geojson('option1_walls\\door_points.geojson', door_points_geojson)
+# create_geojson.write_geojson('option1_walls\\door_lines.geojson', door_lines_geojson)
 
 # room detection algorithm by door polygon's edge points
 result_geojson = copy.deepcopy(create_geojson.geojson_EPSG32632)
@@ -307,7 +309,8 @@ for door_index in range(len(door_lines_geojson["features"])):
             filtered_walls_idx = 0
 
             for line in wall_lines_geojson['features']:
-                if line['properties']['category']!='door' and line['geometry']:
+                # if line['properties']['category']!='door' and line['geometry']:
+                if line['geometry']:
                     line_shp = geometry.shape(line['geometry'])
                     if door_point.distance(line_shp) < distance_from_door_point:
                         # split rounded polylines - 4 lines
@@ -483,8 +486,8 @@ for door_index in range(len(door_lines_geojson["features"])):
                     line_x2 = line_end1_x
                     line_y2 = line_end1_y
                 
-                start_edge_check1 = 0.001 > abs(abs(line_y1) - abs(door_gap_y / door_gap_x * line_x1 + door_a))
-                start_edge_check2 = 0.001 > abs(abs(line_y2) - abs(door_gap_y / door_gap_x * line_x2 + door_a))
+                start_edge_check1 = 0.0001 > abs(abs(line_y1) - abs(door_gap_y / door_gap_x * line_x1 + door_a))
+                start_edge_check2 = 0.0001 > abs(abs(line_y2) - abs(door_gap_y / door_gap_x * line_x2 + door_a))
 
                 # filtering 된 wall lines 중에 door_line 함수에 있는 wall lines 들을 저장
                 if start_edge_check1 and start_edge_check2:

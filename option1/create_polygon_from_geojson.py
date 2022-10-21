@@ -9,7 +9,7 @@ from shapely import geometry
 import module.create_geojson as create_geojson
 import copy
 
-with open('geojson_result\\11102022\\result.geojson') as f:
+with open('geojson_result\\17102022\\4OG_result.geojson') as f:
     geojson_result = json.load(f)
 
 # initialize empty geojson
@@ -20,7 +20,7 @@ lines_all = []
 # line들의 edge points에서 접하는 모든 선분을 추출
 for line in  geojson_result['features']:
     line = geometry.shape(line['geometry'])
-    lines_all.append(line.buffer(0.03))
+    lines_all.append(line.buffer(0.01))
 
 # 구해진 모든 wall lines를 통해서 내부 polygon을 구함
 buffer_polygon = shapely.ops.unary_union(lines_all)
@@ -51,7 +51,7 @@ else:
             }
             polygon_geojson["features"].append(geom_feature)
 
-create_geojson.write_geojson('geojson_result\\11102022\\all_polygon.geojson', polygon_geojson)
+create_geojson.write_geojson('geojson_result\\17102022\\4OG_all_polygon.geojson', polygon_geojson)
 
 with open('geojson_result\\11102022\\room_index.geojson') as f:
     room_index = json.load(f)
@@ -75,5 +75,5 @@ for point in  room_index['features']:
             }
             filtered_polygon_geojson["features"].append(polygon_feature)
 
-create_geojson.write_geojson('geojson_result\\11102022\\filtered_polygon.geojson', filtered_polygon_geojson)
+create_geojson.write_geojson('geojson_result\\17102022\\4OG_filtered_polygon.geojson', filtered_polygon_geojson)
 
