@@ -111,8 +111,10 @@ with open(directory_path + 'filtered_room_polygon.geojson') as f:
 
 for each_room in filtered_room_polygon_geojson['features']:
     room_polygon = geometry.shape(each_room['geometry'])
-    wall_polygon.difference(room_polygon)
 
+    # polygon substraction
+    # https://stackoverflow.com/questions/61930060/how-to-use-shapely-for-subtracting-two-polygons
+    wall_polygon = wall_polygon.difference(room_polygon)
 
 wall_polygon_geojson = copy.deepcopy(create_geojson.geojson_EPSG32632)
 
