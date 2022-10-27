@@ -2797,13 +2797,69 @@
       "type": "Feature",
       "properties": {
         "door_index": 169,
+        "id": "169-0"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          566639.8595561804,
+          5932826.231338528
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "door_index": 169,
         "id": "169-1"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          566627.8447415506,
-          5932834.78272227
+          566639.977601256,
+          5932829.197238745
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "door_index": 170,
+        "id": "170-0"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          566636.902066774,
+          5932826.34905041
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "door_index": 170,
+        "id": "170-1"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          566637.095439475,
+          5932831.207666216
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "door_index": 171,
+        "id": "171-0"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          566635.0642588343,
+          5932826.422197752
         ]
       }
     },
@@ -2816,6 +2872,90 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
+          566635.176556947,
+          5932829.243738688
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "door_index": 172,
+        "id": "172-1"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          566627.8447415506,
+          5932834.78272227
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "door_index": 173,
+        "id": "173-0"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          566632.1077836072,
+          5932826.539868958
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "door_index": 173,
+        "id": "173-1"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          566632.273743778,
+          5932830.709696263
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "door_index": 174,
+        "id": "174-0"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          566630.2699736657,
+          5932826.61301614
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "door_index": 174,
+        "id": "174-1"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          566630.4375354465,
+          5932830.822969753
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "door_index": 176,
+        "id": "176-1"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
           566623.0633380169,
           5932835.182502018
         ]
@@ -2824,8 +2964,8 @@
     {
       "type": "Feature",
       "properties": {
-        "door_index": 176,
-        "id": "176-0"
+        "door_index": 181,
+        "id": "181-0"
       },
       "geometry": {
         "type": "Point",
@@ -2838,8 +2978,8 @@
     {
       "type": "Feature",
       "properties": {
-        "door_index": 177,
-        "id": "177-0"
+        "door_index": 182,
+        "id": "182-0"
       },
       "geometry": {
         "type": "Point",
@@ -2852,8 +2992,8 @@
     {
       "type": "Feature",
       "properties": {
-        "door_index": 180,
-        "id": "180-0"
+        "door_index": 185,
+        "id": "185-0"
       },
       "geometry": {
         "type": "Point",
@@ -2866,8 +3006,8 @@
     {
       "type": "Feature",
       "properties": {
-        "door_index": 182,
-        "id": "182-0"
+        "door_index": 187,
+        "id": "187-0"
       },
       "geometry": {
         "type": "Point",
@@ -2880,8 +3020,8 @@
     {
       "type": "Feature",
       "properties": {
-        "door_index": 186,
-        "id": "186-0"
+        "door_index": 191,
+        "id": "191-0"
       },
       "geometry": {
         "type": "Point",
@@ -2894,8 +3034,8 @@
     {
       "type": "Feature",
       "properties": {
-        "door_index": 188,
-        "id": "188-0"
+        "door_index": 193,
+        "id": "193-0"
       },
       "geometry": {
         "type": "Point",
@@ -2908,8 +3048,8 @@
     {
       "type": "Feature",
       "properties": {
-        "door_index": 189,
-        "id": "189-0"
+        "door_index": 194,
+        "id": "194-0"
       },
       "geometry": {
         "type": "Point",
@@ -2922,8 +3062,8 @@
     {
       "type": "Feature",
       "properties": {
-        "door_index": 190,
-        "id": "190-0"
+        "door_index": 195,
+        "id": "195-0"
       },
       "geometry": {
         "type": "Point",
@@ -2936,8 +3076,8 @@
     {
       "type": "Feature",
       "properties": {
-        "door_index": 191,
-        "id": "191-0"
+        "door_index": 196,
+        "id": "196-0"
       },
       "geometry": {
         "type": "Point",
@@ -2950,8 +3090,8 @@
     {
       "type": "Feature",
       "properties": {
-        "door_index": 191,
-        "id": "191-1"
+        "door_index": 196,
+        "id": "196-1"
       },
       "geometry": {
         "type": "Point",
@@ -2964,8 +3104,8 @@
     {
       "type": "Feature",
       "properties": {
-        "door_index": 192,
-        "id": "192-0"
+        "door_index": 197,
+        "id": "197-0"
       },
       "geometry": {
         "type": "Point",
@@ -2978,8 +3118,8 @@
     {
       "type": "Feature",
       "properties": {
-        "door_index": 192,
-        "id": "192-1"
+        "door_index": 197,
+        "id": "197-1"
       },
       "geometry": {
         "type": "Point",
@@ -2992,8 +3132,8 @@
     {
       "type": "Feature",
       "properties": {
-        "door_index": 193,
-        "id": "193-0"
+        "door_index": 198,
+        "id": "198-0"
       },
       "geometry": {
         "type": "Point",
@@ -3006,8 +3146,8 @@
     {
       "type": "Feature",
       "properties": {
-        "door_index": 196,
-        "id": "196-0"
+        "door_index": 201,
+        "id": "201-0"
       },
       "geometry": {
         "type": "Point",
@@ -3020,8 +3160,8 @@
     {
       "type": "Feature",
       "properties": {
-        "door_index": 196,
-        "id": "196-1"
+        "door_index": 201,
+        "id": "201-1"
       },
       "geometry": {
         "type": "Point",
@@ -3034,8 +3174,8 @@
     {
       "type": "Feature",
       "properties": {
-        "door_index": 197,
-        "id": "197-0"
+        "door_index": 202,
+        "id": "202-0"
       },
       "geometry": {
         "type": "Point",
@@ -3048,8 +3188,8 @@
     {
       "type": "Feature",
       "properties": {
-        "door_index": 197,
-        "id": "197-1"
+        "door_index": 202,
+        "id": "202-1"
       },
       "geometry": {
         "type": "Point",
@@ -3062,8 +3202,8 @@
     {
       "type": "Feature",
       "properties": {
-        "door_index": 198,
-        "id": "198-0"
+        "door_index": 203,
+        "id": "203-0"
       },
       "geometry": {
         "type": "Point",

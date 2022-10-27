@@ -21,7 +21,7 @@ import module.shapely_functions as shapely_functions # load functions for shapel
 dxf_name =config.dxf_name
 doc = ezdxf.readfile("dxf\\"+ dxf_name + ".dxf")
 
-# get modelspace 
+# get modelspace
 msp = doc.modelspace()
 
 min_length = config.min_length # minimum length of lines(ignore short lines)
