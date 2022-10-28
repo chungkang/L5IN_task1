@@ -270,7 +270,7 @@ for door_index in range(len(door_lines_geojson["features"])):
                             wall_line_coords_1 = line['geometry']["coordinates"][1]
                             wall_line_coords_2 = line['geometry']["coordinates"][2]
                             wall_line_coords_3 = line['geometry']["coordinates"][3]
-                            middle_points = geometry.MultiPoint([wall_line_coords_1,wall_line_coords_2,wall_line_coords_3]) 
+                            middle_points = geometry.MultiPoint([wall_line_coords_1,wall_line_coords_2,wall_line_coords_3])
 
                             lines = shapely.ops.split(geometry.LineString(list(line['geometry']["coordinates"])), middle_points)
                             for line in lines:
@@ -352,7 +352,7 @@ for door_index in range(len(door_lines_geojson["features"])):
             p1 = l_coords[-2:][0]
             p2 = l_coords[-2:][1]
             a = (p1[0]-EXTRAPOL_RATIO*(p2[0]-p1[0]), p1[1]-EXTRAPOL_RATIO*(p2[1]-p1[1]))
-            b = (p1[0]+EXTRAPOL_RATIO*(p2[0]-p1[0]), p1[1]+EXTRAPOL_RATIO*(p2[1]-p1[1]))
+            b = (p2[0]+EXTRAPOL_RATIO*(p2[0]-p1[0]), p2[1]+EXTRAPOL_RATIO*(p2[1]-p1[1]))
             orgin_rotated_line1 = geometry.LineString([a,b])
 
             # rotated_line1과 주변 wall lines(door_juction)의 intersections를 찾음
@@ -495,9 +495,16 @@ for door_index in range(len(door_lines_geojson["features"])):
             rotated_line1_135 = shapely.affinity.rotate(orgin_rotated_line1, 135, origin=middle_room_point)
             rotated_line1_225 = shapely.affinity.rotate(orgin_rotated_line1, 225, origin=middle_room_point)
 
+
+
+
+
+
+
+
             # 90도 직교선에서 탐지되는 2개의 walls를 찾는 로직
             # line과 해당 라인에 포함된 point와 filtered_walls_geojson으로 접하는 walls를 감지하는 로직 => return [result_yn, result_lines]
-            line2_intersects_lines = shapely_functions.get_lines_from_point_and_line(rotated_line1_90, middle_room_point, filtered_walls_geojson['features'])
+            # line2_intersects_lines = shapely_functions.get_lines_from_point_and_line(rotated_line1_90, middle_room_point, filtered_walls_geojson['features'])
 
             # 해당 선과 교차하는 points를 찾는다
             rotated_line1_90_inters = shapely_functions.find_intersections_baseline_to_all(rotated_line1_90,filtered_walls_geojson['features'])
@@ -583,6 +590,206 @@ for door_index in range(len(door_lines_geojson["features"])):
                     # 결과가 없으면 스킵
                     else:
                         continue
+
+
+
+
+
+
+
+
+
+
+
+
+            # 135도 직교선에서 탐지되는 2개의 walls를 찾는 로직
+            # 해당 선과 교차하는 points를 찾는다
+            rotated_line1_135_inters = shapely_functions.find_intersections_baseline_to_all(rotated_line1_135,filtered_walls_geojson['features'])
+
+            # 중간점에서 가장가까운 point와 반대편 endpoint를 잇는 선으로 업데이트 한다
+            shortest_distance = 100
+            intersect_point_135_1 = geometry.Point()
+            for point in rotated_line1_135_inters:
+                if point.distance(middle_room_point) < shortest_distance:
+                    shortest_distance = point_to_point_distance
+                    intersect_point_135_1 = point
+
+            # -----------intersect_point_135_1-----
+            splited_rotated_line1_135 = shapely.ops.split(rotated_line1_135, intersect_point_135_1.buffer(min_point))
+                    
+            # 중간점을 포함하는 선분을 잘라서 선분 update
+            for line in splited_rotated_line1_135:
+                if middle_room_point.distance(line) < min_point:
+                    rotated_line1_135 = line
+
+            # 해당 선과 교차하는 points를 다시 구함
+            rotated_line1_135_inters = shapely_functions.find_intersections_baseline_to_all(rotated_line1_135,filtered_walls_geojson['features'])
+
+            # 첫번째 교차 point 이외에 중간점에서 가장 가까운 point를 찾는다
+            intersect_point_135_2 = geometry.Point()
+            distance_135_1 = 100
+            for pt in rotated_line1_135_inters:
+                # line2_end1과 중복되는 포인트는 무시
+                if pt.distance(intersect_point_135_1) < min_point:
+                    continue
+                if pt.distance(intersect_point_135_1) < distance_135_1:
+                    intersect_point_135_2 = pt
+                    distance_135_1 = pt.distance(intersect_point_135_1)
+
+            if not intersect_point_135_2:
+                continue
+
+            # 덮어씌우기
+            splited_rotated_line1_135 = geometry.LineString([intersect_point_135_1, intersect_point_135_2])
+
+            # line1_135에 접하는 2개의 wall line을 구함
+            buffer_size=min_point
+            for line in  filtered_walls_geojson['features']:
+                line = geometry.shape(line['geometry'])
+                if intersect_point_135_1.distance(line) < min_point:
+                    # line과 해당 라인에 포함된 point와 filtered_walls_geojson으로 접하는 walls를 감지하는 로직 => return [result_yn, result_lines]
+                    rotated_line_135_1_intersects_lines = shapely_functions.get_lines_from_point_and_line(line, intersect_point_135_1, filtered_walls_geojson['features'])
+
+                    if rotated_line_135_1_intersects_lines[0]:
+                        # rotated_line_135_1_intersects_lines[1] 에는 line와 접하는 wall lines 들이 들어있음
+                        for line in rotated_line_135_1_intersects_lines[1]:
+                            line_feature = {
+                                "type": "Feature",
+                                "properties": {
+                                    "door_index": door_index
+                                    ,"id": room_index
+                                },
+                                "geometry":geometry.mapping(line)
+                            }
+                            result_geojson["features"].append(line_feature)
+
+                    # 결과가 없으면 스킵
+                    else:
+                        continue
+
+                elif intersect_point_135_2.distance(line) < min_point:
+                    # line과 해당 라인에 포함된 point와 filtered_walls_geojson으로 접하는 walls를 감지하는 로직 => return [result_yn, result_lines]
+                    rotated_line_135_2_intersects_lines = shapely_functions.get_lines_from_point_and_line(line, intersect_point_135_2, filtered_walls_geojson['features'])
+
+                    if rotated_line_135_2_intersects_lines[0]:
+                        # rotated_line_135_2_intersects_lines[1] 에는 line와 접하는 wall lines 들이 들어있음
+                        for line in rotated_line_135_2_intersects_lines[1]:
+                            line_feature = {
+                                "type": "Feature",
+                                "properties": {
+                                    "door_index": door_index
+                                    ,"id": room_index
+                                },
+                                "geometry":geometry.mapping(line)
+                            }
+                            result_geojson["features"].append(line_feature)
+
+                    # 결과가 없으면 스킵
+                    else:
+                        continue
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            # 225도 직교선에서 탐지되는 2개의 walls를 찾는 로직
+            # 해당 선과 교차하는 points를 찾는다
+            rotated_line1_225_inters = shapely_functions.find_intersections_baseline_to_all(rotated_line1_225,filtered_walls_geojson['features'])
+
+            # 중간점에서 가장가까운 point와 반대편 endpoint를 잇는 선으로 업데이트 한다
+            shortest_distance = 100
+            intersect_point_225_1 = geometry.Point()
+            for point in rotated_line1_225_inters:
+                if point.distance(middle_room_point) < shortest_distance:
+                    shortest_distance = point_to_point_distance
+                    intersect_point_225_1 = point
+
+            # -----------intersect_point_225_1-----
+            splited_rotated_line1_225 = shapely.ops.split(rotated_line1_225, intersect_point_225_1.buffer(min_point))
+                    
+            # 중간점을 포함하는 선분을 잘라서 선분 update
+            for line in splited_rotated_line1_225:
+                if middle_room_point.distance(line) < min_point:
+                    rotated_line1_225 = line
+
+            # 해당 선과 교차하는 points를 다시 구함
+            rotated_line1_225_inters = shapely_functions.find_intersections_baseline_to_all(rotated_line1_225,filtered_walls_geojson['features'])
+
+            # 첫번째 교차 point 이외에 중간점에서 가장 가까운 point를 찾는다
+            intersect_point_225_2 = geometry.Point()
+            distance_225_1 = 100
+            for pt in rotated_line1_225_inters:
+                # line2_end1과 중복되는 포인트는 무시
+                if pt.distance(intersect_point_225_1) < min_point:
+                    continue
+                if pt.distance(intersect_point_225_1) < distance_225_1:
+                    intersect_point_225_2 = pt
+                    distance_225_1 = pt.distance(intersect_point_225_1)
+
+            if not intersect_point_225_2:
+                continue
+
+            # 덮어씌우기
+            splited_rotated_line1_225 = geometry.LineString([intersect_point_225_1, intersect_point_225_2])
+
+            # line1_225에 접하는 2개의 wall line을 구함
+            buffer_size=min_point
+            for line in  filtered_walls_geojson['features']:
+                line = geometry.shape(line['geometry'])
+                if intersect_point_225_1.distance(line) < min_point:
+                    # line과 해당 라인에 포함된 point와 filtered_walls_geojson으로 접하는 walls를 감지하는 로직 => return [result_yn, result_lines]
+                    rotated_line_225_1_intersects_lines = shapely_functions.get_lines_from_point_and_line(line, intersect_point_225_1, filtered_walls_geojson['features'])
+
+                    if rotated_line_225_1_intersects_lines[0]:
+                        # rotated_line_225_1_intersects_lines[1] 에는 line와 접하는 wall lines 들이 들어있음
+                        for line in rotated_line_225_1_intersects_lines[1]:
+                            line_feature = {
+                                "type": "Feature",
+                                "properties": {
+                                    "door_index": door_index
+                                    ,"id": room_index
+                                },
+                                "geometry":geometry.mapping(line)
+                            }
+                            result_geojson["features"].append(line_feature)
+
+                    # 결과가 없으면 스킵
+                    else:
+                        continue
+
+                elif intersect_point_225_2.distance(line) < min_point:
+                    # line과 해당 라인에 포함된 point와 filtered_walls_geojson으로 접하는 walls를 감지하는 로직 => return [result_yn, result_lines]
+                    rotated_line_225_2_intersects_lines = shapely_functions.get_lines_from_point_and_line(line, intersect_point_225_2, filtered_walls_geojson['features'])
+
+                    if rotated_line_225_2_intersects_lines[0]:
+                        # rotated_line_135_2_intersects_lines[1] 에는 line와 접하는 wall lines 들이 들어있음
+                        for line in rotated_line_225_2_intersects_lines[1]:
+                            line_feature = {
+                                "type": "Feature",
+                                "properties": {
+                                    "door_index": door_index
+                                    ,"id": room_index
+                                },
+                                "geometry":geometry.mapping(line)
+                            }
+                            result_geojson["features"].append(line_feature)
+
+                    # 결과가 없으면 스킵
+                    else:
+                        continue
+
+
+
+
 
             print("success:index" + room_index)
 

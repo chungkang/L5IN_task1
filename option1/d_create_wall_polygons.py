@@ -24,7 +24,7 @@ doc = ezdxf.readfile("dxf\\"+ dxf_name + ".dxf")
 # get modelspace 
 msp = doc.modelspace()
 
-directory_path = config.directory_path # directory path of saving result
+directory_path = config.directory_path_result # directory path of saving result
 
 # initialize empty geojson
 origin_geojson = copy.deepcopy(create_geojson.geojson_custom)

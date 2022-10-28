@@ -44,4 +44,4 @@ layer_list = [
 ]
 
 directory_path = 'option1_walls\\'
-directory_path_result = 'geojson_result\\25102022\\'
+directory_path_result = 'geojson_result\\28102022\\4detection_lines\\'
