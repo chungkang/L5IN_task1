@@ -13,7 +13,7 @@ import a_config as config
 
 directory_path = config.directory_path_result
 
-with open(directory_path + 'result.geojson') as f:
+with open(directory_path + 'original_EPSG32632.geojson') as f:
     geojson_result = json.load(f)
 
 # initialize empty geojson

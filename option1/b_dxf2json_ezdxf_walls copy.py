@@ -6,11 +6,7 @@ import json
 import geopandas
 from shapely import geometry
 import shapely
-import alphashape
 from descartes import PolygonPatch
-import numpy as np
-import itertools
-import matplotlib.pyplot as plt
 import copy
 
 import a_config as config # load configuration parameters for the logics
