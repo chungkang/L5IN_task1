@@ -12,6 +12,7 @@ import copy
 import a_config as config
 
 directory_path = config.directory_path_result
+min_point = config.min_point # minimum length as a point
 
 with open(directory_path + 'original_EPSG32632.geojson') as f:
     geojson_result = json.load(f)
@@ -24,7 +25,7 @@ lines_all = []
 # line들의 edge points에서 접하는 모든 선분을 추출
 for line in  geojson_result['features']:
     line = geometry.shape(line['geometry'])
-    lines_all.append(line.buffer(0.01))
+    lines_all.append(line.buffer(min_point))
 
 # 구해진 모든 wall lines를 통해서 내부 polygon을 구함
 buffer_polygon = shapely.ops.unary_union(lines_all)

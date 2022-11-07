@@ -9,45 +9,7 @@ import a_config as config # load configuration parameters for the logics
 import module.create_geojson as create_geojson # load functions for creating geojson
 
 directory_path = config.directory_path_result
-
-# with open(directory_path + 'original_EPSG32632.geojson') as f:
-#     epsg32632_geojson = json.load(f)
-
-# # outer wall detection - concave hull, alpha shape
-# # initialize empty geojson
-# outer_wall_geojson = copy.deepcopy(create_geojson.geojson_EPSG32632)
-
-# wall_points = []
-# for lines in epsg32632_geojson['features']:
-#     if lines['geometry']:
-#         shapely_lines = lines['geometry']['coordinates']
-#         for each_line in shapely_lines:
-#             if type(each_line[0]) == float:
-#                 wall_points.append(tuple(each_line))
-#             else:
-#                 for point in each_line:
-#                     wall_points.append(tuple(point))                
-
-# non_dup_wall_points = []
-# [non_dup_wall_points.append(x) for x in wall_points if x not in non_dup_wall_points]
-
-# wall_alpha_shape = alphashape.alphashape(non_dup_wall_points, 0.112)
-
-# wall_feature = {
-#     "type": "Feature",
-#     "properties": {
-#     },
-#     "geometry": geometry.mapping(wall_alpha_shape)
-# }
-# outer_wall_geojson["features"].append(wall_feature)
-
-# create_geojson.write_geojson(directory_path + 'outer_wall.geojson', outer_wall_geojson)
-
-
-# outer_wall.geojson - filtered_room_polygon.geojson
-# wall_polygon = wall_alpha_shape
-
-
+min_point = config.min_point # minimum length as a point
 
 with open(directory_path + 'outer_wall_manual2.geojson') as f:
     outer_wall_geojson = json.load(f)
@@ -64,6 +26,22 @@ for each_room in filtered_room_polygon_geojson['features']:
     # polygon substraction
     # https://stackoverflow.com/questions/61930060/how-to-use-shapely-for-subtracting-two-polygons
     wall_polygon = wall_polygon.difference(room_polygon)
+
+
+with open(directory_path + 'door_polygon.geojson') as f:
+    door_polygon_geojson = json.load(f)
+
+door_polygon_list = []
+for each_door in door_polygon_geojson['features']:
+    door_polygon = geometry.shape(each_door['geometry'])
+    door_buffer = door_polygon.buffer(min_point*1.1)
+    door_polygon_list.append(door_buffer)
+    
+door_multi_polygon = geometry.MultiPolygon(door_polygon_list)
+
+wall_polygon = wall_polygon.difference(door_multi_polygon)
+
+# 계단 polygon 빼기
 
 wall_polygon_geojson = copy.deepcopy(create_geojson.geojson_EPSG32632)
 

@@ -6,9 +6,8 @@
 dxf_name = "rev_HCU_D_106_Grundriss_4OG_moved_V2"
 
 min_length = 0.04 # minimum length of lines(ignore short lines)
-min_point = 0.01 # minimum length as a point
+min_point = 0.02 # minimum length as a point
 wall_width = 0.41 # wall width
-wall_filtering_distance = 1 # wall fintering distance
 
 # interested layer list
 layer_list = [
@@ -30,7 +29,7 @@ layer_list = [
                 # ,"AUSBAU - Objekte - Aufzuege"
                 ,"AUSBAU - Objekte - Tueren"
                 ,"DARSTELLUNGEN - Aufsichtslinien"
-                # ,"DARSTELLUNGEN - Brandwand"
+                ,"DARSTELLUNGEN - Brandwand"
                 ,"DARSTELLUNGEN - Bauteil - feuerbestaendig"
                 # ,"ROHBAU - Darstellungen - Unterzug - Deckenversprung - Oeffnung"
                 ,"keine" 
@@ -41,7 +40,7 @@ layer_list = [
                 ,"ROHBAU - Darstellungen - Waende - Mauerwerk" 
                 # ,"ROHBAU - Darstellungen - Ansichtslinien"
                 ,"ROHBAU - Darstellungen - Unterzug - Deckenversprung - Oeffnung"
-                # ,"ROHBAU - Darstellungen - Stuetzen"
+                ,"ROHBAU - Darstellungen - Stuetzen"
                 ,"wall"
 ]
 
