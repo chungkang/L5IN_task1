@@ -9,46 +9,4 @@ input data: the architectural plans of the HCU building(dxf, dwg...)
 
 ![image](https://user-images.githubusercontent.com/36185863/146599240-a79d8ea8-4d7b-4b04-a0b9-8810acc17ca4.png)
 
-
-# Step 1
-AutoCAD 파일을 열어서 사용할 레이어만 남기도 나머지를 삭제하는 LISP 코드 명령어 작성
-
-사용하는 레이어
-
-AUSBAU - Bezeichnung - Parkplatz
-
-AUSBAU - Darstellungen - Dämmung
-
-AUSBAU - Darstellungen - Dämmung-brennbar_B1
-
-AUSBAU - Darstellungen - Doppelbodenschottungen
-
-AUSBAU - Darstellungen - Fassade
-
-AUSBAU - Darstellungen - Fassade-Bemaßung
-
-AUSBAU - Darstellungen - Geländer
-
-AUSBAU - Darstellungen - Stahlbau
-
-AUSBAU - Darstellungen - Trockenbau
-
-AUSBAU - Darstellungen - Akustik
-
-
-AUSBAU - Objekte - Aufzüge
-
-AUSBAU - Objekte - Türen
-
-
-DARSTELLUNGEN - Aufsichtslinien
-
-
-ROHBAU - Darstellungen - Brandwand
-
-ROHBAU - Darstellungen - Treppen
-
-ROHBAU - Darstellungen - Wände
-
-ROHBAU - Darstellungen - Wände - Mauerwerk
-
+![image](https://github.com/chungkang/L5IN_task1/blob/main/flow_chart.drawio.png)
