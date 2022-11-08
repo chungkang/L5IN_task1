@@ -107,6 +107,8 @@ loaded_geojson.to_file(directory_path + 'original_EPSG32632.geojson', driver='Ge
 with open(directory_path + 'original_EPSG32632.geojson') as f:
     epsg32632_geojson = json.load(f)
 
+epsg32632_geojson = loaded_geojson
+
 wall_line_idx = 0
 
 # door multipoints to convex_hull polygon

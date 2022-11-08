@@ -20,13 +20,14 @@ wall_polygon = geometry.shape(outer_wall_geojson['features'][0]['geometry'])
 with open(directory_path + 'filtered_room_polygon.geojson') as f:
     filtered_room_polygon_geojson = json.load(f)
 
+room_polygon_list = []
 for each_room in filtered_room_polygon_geojson['features']:
     room_polygon = geometry.shape(each_room['geometry'])
+    room_polygon_list.append(room_polygon)
 
-    # polygon substraction
-    # https://stackoverflow.com/questions/61930060/how-to-use-shapely-for-subtracting-two-polygons
-    wall_polygon = wall_polygon.difference(room_polygon)
-
+# polygon substraction
+# https://stackoverflow.com/questions/61930060/how-to-use-shapely-for-subtracting-two-polygons
+wall_polygon = wall_polygon.difference(geometry.MultiPolygon(room_polygon_list))
 
 with open(directory_path + 'door_polygon.geojson') as f:
     door_polygon_geojson = json.load(f)
@@ -37,9 +38,7 @@ for each_door in door_polygon_geojson['features']:
     door_buffer = door_polygon.buffer(min_point*1.1)
     door_polygon_list.append(door_buffer)
     
-door_multi_polygon = geometry.MultiPolygon(door_polygon_list)
-
-wall_polygon = wall_polygon.difference(door_multi_polygon)
+wall_polygon = wall_polygon.difference(geometry.MultiPolygon(door_polygon_list))
 
 # 계단 polygon 빼기
 
