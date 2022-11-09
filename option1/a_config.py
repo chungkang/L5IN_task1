@@ -6,8 +6,8 @@
 dxf_name = "rev_HCU_D_106_Grundriss_4OG_moved_V2"
 
 min_length = 0.04 # minimum length of lines(ignore short lines)
-min_point = 0.02 # minimum length as a point
-wall_width = 0.41 # wall width
+min_point = 0.01 # minimum length as a point
+wall_width = 0.41 # wall widthg
 
 # interested layer list
 layer_list = [
