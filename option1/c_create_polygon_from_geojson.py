@@ -1,11 +1,6 @@
-import geopandas as gpd
-import geojson
 import json
-from shapely.geometry import LineString
 import shapely
-from shapely.geometry import *
-from shapely.ops import unary_union
-from shapely import geometry
+from shapely import geometry, ops
 import module.create_geojson as create_geojson
 import copy
 
@@ -61,23 +56,33 @@ create_geojson.write_geojson(directory_path + 'all_room_polygon.geojson', polygo
 with open(directory_path + 'room_index.geojson') as f:
     room_index = json.load(f)
 
-# initialize empty geojson
-filtered_polygon_geojson = copy.deepcopy(create_geojson.geojson_EPSG32632)
-
+room_polygon_list = []
 # room index로 for 문 돌리기
 for point in  room_index['features']:
     geometry_point = geometry.Point(point['geometry']['coordinates'])
-
     for polygon in polygon_geojson['features']:
         geometry_polygon = geometry.shape(polygon['geometry'])
         if geometry_polygon.contains(geometry_point):
-            polygon_feature = {
-                "type": "Feature",
-                "properties": {
-                    "id": point['properties']['id']
-                },
-                "geometry":geometry.mapping(geometry_polygon)
-            }
-            filtered_polygon_geojson["features"].append(polygon_feature)
+            room_polygon_list.append(geometry_polygon)
 
-create_geojson.write_geojson(directory_path + 'filtered_room_polygon.geojson', filtered_polygon_geojson)
+room_multi_polygon = geometry.MultiPolygon(room_polygon_list)
+
+final_room_multi_polygon = room_multi_polygon.intersection(room_multi_polygon)
+
+# initialize empty geojson
+final_room_polygon_geojson = copy.deepcopy(create_geojson.geojson_EPSG32632)
+
+room_idx = 0
+# extract polygons out of multipolygon
+for polygon in final_room_multi_polygon:
+    geom_feature = {
+        "type": "Feature",
+        "properties": {
+        "id": room_idx
+        },
+        "geometry":geometry.mapping(polygon)
+    }
+    final_room_polygon_geojson["features"].append(geom_feature)
+    room_idx += 1
+
+create_geojson.write_geojson(directory_path + 'final_room_polygon.geojson', final_room_polygon_geojson)

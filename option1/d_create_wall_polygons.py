@@ -17,11 +17,11 @@ with open(directory_path + 'outer_wall_manual.geojson') as f:
 wall_polygon = geometry.shape(outer_wall_geojson['features'][0]['geometry'])
 
 # load EPSG32632 geojson
-with open(directory_path + 'filtered_room_polygon.geojson') as f:
-    filtered_room_polygon_geojson = json.load(f)
+with open(directory_path + 'final_room_polygon.geojson') as f:
+    final_room_polygon = json.load(f)
 
 room_polygon_list = []
-for each_room in filtered_room_polygon_geojson['features']:
+for each_room in final_room_polygon['features']:
     room_polygon = geometry.shape(each_room['geometry'])
     room_polygon_list.append(room_polygon)
 
