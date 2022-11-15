@@ -5,7 +5,8 @@
 # dxf_name = "rev_HCU_D_105_Grundriss_3OG_moved"
 dxf_name = "rev_HCU_D_106_Grundriss_4OG_moved_V2"
 
-min_length = 0.04 # minimum length of lines(ignore short lines)
+dxf_CRS = "+proj=tmerc +lat_0=0 +lon_0=9 +k=1 +x_0=3500000 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs"
+
 min_point = 0.01 # minimum length as a point
 wall_width = 0.41 # wall widthg
 
@@ -34,12 +35,12 @@ layer_list = [
                 # ,"ROHBAU - Darstellungen - Unterzug - Deckenversprung - Oeffnung"
                 ,"keine" 
                 ,"ROHBAU - Darstellungen - Brandwand" 
-                # ,"ROHBAU - Darstellungen - Treppen" 
+                ,"ROHBAU - Darstellungen - Treppen" 
                 ,"ROHBAU - Darstellungen - Waende" 
                 ,"ROHBAU - Darstellungen - Decken" 
                 ,"ROHBAU - Darstellungen - Waende - Mauerwerk" 
                 # ,"ROHBAU - Darstellungen - Ansichtslinien"
-                ,"ROHBAU - Darstellungen - Unterzug - Deckenversprung - Oeffnung"
+                # ,"ROHBAU - Darstellungen - Unterzug - Deckenversprung - Oeffnung"
                 ,"ROHBAU - Darstellungen - Stuetzen"
                 ,"wall"
 ]

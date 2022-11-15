@@ -20,7 +20,6 @@ doc = ezdxf.readfile("dxf\\"+ dxf_name + ".dxf")
 # get modelspace
 msp = doc.modelspace()
 
-min_length = config.min_length # minimum length of lines(ignore short lines)
 min_point = config.min_point # minimum length as a point
 wall_width = config.wall_width # wall width
 directory_path = config.directory_path # directory path of saving result
@@ -34,8 +33,8 @@ origin_geojson = copy.deepcopy(create_geojson.geojson_custom)
 # interested layer list
 layer_list = config.layer_list
 
-# door_id
-door_block_id = 0
+# block_id
+block_id = 0
 # entity index 
 idx = 0
 
@@ -46,11 +45,6 @@ for flag_ref in msp.query("INSERT"):
     # exploded door layer lines(door layer, but not door block, door components)
     for e in exploded_e.query("LINE LWPOLYLINE SPLINE POLYLINE[layer=='AUSBAU - Objekte - Tueren']"):
         geo_proxy = geo.proxy(e, distance=0.1, force_line_string=True)
-        
-        # skip short lines
-        line = geometry.shape(geo_proxy.__geo_interface__)
-        if line.length < min_length:
-            continue
 
         each_feature = {
             "type": "Feature",
@@ -58,30 +52,41 @@ for flag_ref in msp.query("INSERT"):
                 "index": idx,
                 "layer": 'AUSBAU - Objekte - Tueren',
                 "category": "door",
-                "door_id": str(door_block_id)
+                "block_id": str(block_id)
             },
             "geometry": geo_proxy.__geo_interface__
         }
         origin_geojson["features"].append(each_feature)
         idx += 1
 
-    door_block_id += 1
+    # exploded stair layer lines
+    for e in exploded_e.query("LINE LWPOLYLINE SPLINE POLYLINE[layer=='ROHBAU - Darstellungen - Treppen']"):
+        geo_proxy = geo.proxy(e, distance=0.1, force_line_string=True)
+
+        each_feature = {
+            "type": "Feature",
+            "properties": {
+                "index": idx,
+                "layer": 'ROHBAU - Darstellungen - Treppen',
+                "category": "stair",
+                "block_id": str(block_id)
+            },
+            "geometry": geo_proxy.__geo_interface__
+        }
+        origin_geojson["features"].append(each_feature)
+        idx += 1
+
+    block_id += 1
+
 
 for layer in layer_list:
     for e in msp.query("LINE LWPOLYLINE SPLINE POLYLINE[layer=='" + layer + "']"):
         # Convert DXF entity into a GeoProxy object:
         geo_proxy = geo.proxy(e, distance=0.1, force_line_string=True)
         
-        # skip short lines
-        line = geometry.shape(geo_proxy.__geo_interface__)
-        if line.length < min_length:
-            continue
-        
         category = "wall"
         if "waende" in layer or "Waende" in layer or "trockenbau" in layer or "Trockenbau" in layer:
             category = "wall"
-        # elif "treppen" in layer or "Treppen" in layer:
-        #     category = "stair"
 
         each_feature = {
             "type": "Feature",
@@ -114,12 +119,15 @@ wall_line_idx = 0
 wall_lines_geojson = copy.deepcopy(create_geojson.geojson_EPSG32632)
 
 door_dict = {}
+stair_dict = {}
+
 for lines in epsg32632_geojson['features']:
     door_points = []
-    
+    stair_points = []
+
     # door lines
     if lines['properties']['category']=='door':
-        if lines['properties']['door_id']!=None and lines['geometry']:
+        if lines['properties']['block_id']!=None and lines['geometry']:
             shapely_lines = lines['geometry']['coordinates']
             for each_line in shapely_lines:
                 if type(each_line[0]) == float:
@@ -128,10 +136,27 @@ for lines in epsg32632_geojson['features']:
                     for point in each_line:
                         door_points.append(point)
 
-            if lines['properties']['door_id'] in door_dict:
-                door_dict[lines['properties']['door_id']].append(door_points)
+            if lines['properties']['block_id'] in door_dict:
+                door_dict[lines['properties']['block_id']].append(door_points)
             else:
-                door_dict[lines['properties']['door_id']] = door_points
+                door_dict[lines['properties']['block_id']] = door_points
+
+    # stair lines
+    elif lines['properties']['category']=='stair':
+        if lines['properties']['block_id']!=None and lines['geometry']:
+            shapely_lines = lines['geometry']['coordinates']
+            for each_line in shapely_lines:
+                if type(each_line[0]) == float:
+                    stair_points.append(each_line)
+                else:
+                    for point in each_line:
+                        stair_points.append(point)
+
+            if lines['properties']['block_id'] in stair_dict:
+                stair_dict[lines['properties']['block_id']].append(stair_points)
+            else:
+                stair_dict[lines['properties']['block_id']] = stair_points
+
     # wall lines
     else:
         if lines['geometry']:
@@ -144,11 +169,11 @@ for lines in epsg32632_geojson['features']:
             wall_line_idx+=1
 
 door_polygon_geojson = copy.deepcopy(create_geojson.geojson_EPSG32632)
+door_polygon_buffer_geojson = copy.deepcopy(create_geojson.geojson_EPSG32632)
 door_points_geojson = copy.deepcopy(create_geojson.geojson_EPSG32632)
 door_lines_geojson = copy.deepcopy(create_geojson.geojson_EPSG32632)
 
 door_polygon_idx = 0
-
 # door_points dictionary를 key 단위로 돌려줌
 for key in door_dict.keys():
     door_array = []
@@ -171,6 +196,15 @@ for key in door_dict.keys():
         "geometry": geometry.mapping(door_polygon)
     }
     door_polygon_geojson["features"].append(door_polygon_feature)
+
+    door_polygon_buffer_feature = {
+        "type": "Feature",
+        "properties": {
+            "index": door_polygon_idx
+        },
+        "geometry": geometry.mapping(door_polygon.buffer(min_point*1.1, 0))
+    }
+    door_polygon_buffer_geojson["features"].append(door_polygon_buffer_feature)
 
     # door polygon의 테두리 points를 뽑는다
     door_points = geometry.MultiPoint(door_polygon.exterior.coords)
@@ -198,8 +232,41 @@ for key in door_dict.keys():
     door_polygon_idx += 1
 
 create_geojson.write_geojson(directory_path + 'door_polygon.geojson', door_polygon_geojson)
+create_geojson.write_geojson(directory_path + 'door_polygon_buffer.geojson', door_polygon_buffer_geojson)
 # create_geojson.write_geojson(directory_path + 'door_points.geojson', door_points_geojson)
 # create_geojson.write_geojson(directory_path + 'door_lines.geojson', door_lines_geojson)
+
+
+stair_polygon_geojson = copy.deepcopy(create_geojson.geojson_EPSG32632)
+stair_polygon_idx = 0
+
+# stair_points dictionary를 key 단위로 돌려줌
+for key in stair_dict.keys():
+    stair_array = []
+    for i in stair_dict[key]:
+        if type(i[0]) == float:
+                stair_array.append(tuple(i))
+        else:
+            for point in i:
+                stair_array.append(tuple(point))
+    stair_polygon = geometry.MultiPoint(stair_array).convex_hull.simplify(0.1, preserve_topology=True)
+
+    # filter small polygon
+    if(stair_polygon.area<0.03): continue
+
+    stair_polygon_feature = {
+        "type": "Feature",
+        "properties": {
+            "index": stair_polygon_idx
+        },
+        "geometry": geometry.mapping(stair_polygon)
+    }
+    stair_polygon_geojson["features"].append(stair_polygon_feature)
+
+    stair_polygon_idx += 1
+
+create_geojson.write_geojson(directory_path + 'stair_polygon.geojson', stair_polygon_geojson)
+
 
 # room index
 room_index_geojson = copy.deepcopy(create_geojson.geojson_EPSG32632)

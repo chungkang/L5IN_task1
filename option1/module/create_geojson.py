@@ -1,4 +1,5 @@
 import json
+import a_config as config # load configuration parameters for the logics
 
 # custom coordinate system geojson
 geojson_custom = {
@@ -6,7 +7,7 @@ geojson_custom = {
 	"crs": {
 	    "type": "name",
 		"properties": {
-			"name": "+proj=tmerc +lat_0=0 +lon_0=9 +k=1 +x_0=3500000 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs"
+			"name": config.dxf_CRS
 		}
 	},
     "features": []
