@@ -2,12 +2,12 @@
 # source file
 # dxf_name = "rev_HCU_D_102_Grundriss_1OG_moved"
 # dxf_name = "rev_HCU_D_104_Grundriss_2OG_moved"
-# dxf_name = "rev_HCU_D_105_Grundriss_3OG_moved"
-dxf_name = "rev_HCU_D_106_Grundriss_4OG_moved_V2"
+dxf_name = "rev_HCU_D_105_Grundriss_3OG_moved"
+# dxf_name = "rev_HCU_D_106_Grundriss_4OG_moved_V2"
 
 dxf_CRS = "+proj=tmerc +lat_0=0 +lon_0=9 +k=1 +x_0=3500000 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs"
 
-min_point = 0.01 # minimum length as a point
+min_point = 0.015 # minimum length as a point
 wall_width = 0.41 # wall widthg
 
 # interested layer list
