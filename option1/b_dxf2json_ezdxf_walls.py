@@ -202,7 +202,7 @@ for key in door_dict.keys():
         "properties": {
             "index": door_polygon_idx
         },
-        "geometry": geometry.mapping(door_polygon.buffer(min_point*1.1, 0))
+        "geometry": geometry.mapping(door_polygon.buffer(min_point*1.2, 0))
     }
     door_polygon_buffer_geojson["features"].append(door_polygon_buffer_feature)
 
