@@ -1,0 +1,145 @@
+{
+  "type": "FeatureCollection",
+  "crs": {
+    "type": "name",
+    "properties": {
+      "name": "urn:ogc:def:crs:EPSG::32632"
+    }
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 0,
+        "name": "door1_point1"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          566550.5418971848,
+          5932860.424852707
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 1,
+        "name": "rotated_line1"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566550.5418971848,
+            5932860.424852707
+          ],
+          [
+            566550.0908444255,
+            5932852.9626564225
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 1,
+        "name": "lines for polygon"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566548.573527848,
+            5932860.537802511
+          ],
+          [
+            566551.9770598903,
+            5932860.341764957
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 1,
+        "name": "lines for polygon"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566548.4986708028,
+            5932860.542113785
+          ],
+          [
+            566548.2745864721,
+            5932854.912123683
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 1,
+        "name": "lines for polygon"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566548.573527848,
+            5932860.537802511
+          ],
+          [
+            566548.3494974956,
+            5932854.909142876
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 1,
+        "name": "lines for polygon"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566551.9770598903,
+            5932860.341764957
+          ],
+          [
+            566551.7534493704,
+            5932854.723652102
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "index": 1,
+        "name": "lines for polygon"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            566577.1329495076,
+            5932853.763507313
+          ],
+          [
+            566542.7449302198,
+            5932855.13221461
+          ]
+        ]
+      }
+    }
+  ]
+}
