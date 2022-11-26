@@ -10,5 +10,35 @@
 ## Workflow
 ![image](https://github.com/chungkang/L5IN_task1/blob/main/flow_chart.drawio.png)
 
+### Detailed Workflow
+#### Pre processing: modify autoCAD floorplan(dxf)
+explode block in block for door block, manual editing of door part, save as dxf format
+
+#### Main logic
+##### Step a: Settings
+get dxf file name, CRS, mininum point buffer, wall width, extract interested layer name, door layer name, stair layer name, input directory path, output directory path
+
+##### Step b.: Extract all wall lines and room index
+read dxf file as Shapely instant
+save all lines as geojson format with CRS
+convert CRS to EPSG:32632
+extract door polygon, door line, door point from door block
+extract inner and outer part of door line
+loop with door line - each door line represents room index
+assgin room index point to indicate closed room
+
+##### Step c: Create closed polygon for room
+input  original_epsg32632.geojson / room_index.geojson
+create room polygon with closed lines
+filter room polygon with room index point
+
+##### Pre-processing with QGIS
+input   original_epsg32632.geojson
+draw outer wall line as a single polygon
+
+##### Step d: Extract wall polygon
+input  outer_wall_manual.geojson / filtered_room_polygon.geojson / door_polygon.geojson / stair_polygon.geojson
+Subtract door, stair from outer wall polygon
+
 ## Libraries
 Ezdxf, Geopandas, Shapely, json, geojson, openCV
