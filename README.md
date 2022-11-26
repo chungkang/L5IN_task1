@@ -18,6 +18,11 @@ explode block in block for door block, manual editing of door part, save as dxf 
 ##### Step a: Settings
 get dxf file name, CRS, mininum point buffer, wall width, extract interested layer name, door layer name, stair layer name, input directory path, output directory path
 
+![image](https://user-images.githubusercontent.com/36185863/204096269-664ea0c4-6ae7-463b-8686-c47a45282914.png)
+![image](https://user-images.githubusercontent.com/36185863/204096274-895c4b48-b96c-467b-a418-e21b7514aa58.png)
+remove opening part of door block
+
+
 ##### Step b.: Extract all wall lines and room index
 read dxf file as Shapely instant
 save all lines as geojson format with CRS
