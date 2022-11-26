@@ -29,25 +29,13 @@ if buffer_polygon.geom_type == 'MultiPolygon':
         all_internal_geoms = [geom for geom in polygon.interiors]
         for geom in all_internal_geoms:
             # if geom.contains(geometry_point):
-                geom_feature = {
-                    "type": "Feature",
-                    "properties": {
-                        # "id": line['properties']['id']
-                    },
-                    "geometry":geometry.mapping(geometry.Polygon(geom))
-                }
+                geom_feature = create_geojson.create_geojson_feature("", "", "", "", geometry.mapping(geometry.Polygon(geom)))
                 polygon_geojson["features"].append(geom_feature)
 else:
     all_internal_geoms = [geom for geom in buffer_polygon.interiors]
     for geom in all_internal_geoms:
         # if geom.contains(geometry_point):
-            geom_feature = {
-                "type": "Feature",
-                "properties": {
-                    # "id": line['properties']['id']
-                },
-                "geometry":geometry.mapping(geometry.Polygon(geom))
-            }
+            geom_feature = create_geojson.create_geojson_feature("", "", "", "", geometry.mapping(geometry.Polygon(geom)))
             polygon_geojson["features"].append(geom_feature)
 
 create_geojson.write_geojson(directory_path + 'all_room_polygon.geojson', polygon_geojson)
@@ -74,13 +62,7 @@ final_room_polygon_geojson = copy.deepcopy(create_geojson.geojson_EPSG32632)
 room_idx = 0
 # extract polygons out of multipolygon
 for polygon in final_room_multi_polygon:
-    geom_feature = {
-        "type": "Feature",
-        "properties": {
-        "id": room_idx
-        },
-        "geometry":geometry.mapping(polygon)
-    }
+    geom_feature = create_geojson.create_geojson_feature(room_idx, "", "", "", geometry.mapping(polygon))
     final_room_polygon_geojson["features"].append(geom_feature)
     room_idx += 1
 

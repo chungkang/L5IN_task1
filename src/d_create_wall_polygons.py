@@ -55,13 +55,7 @@ wall_polygon = wall_polygon.difference(geometry.MultiPolygon(stair_polygon_list)
 
 # wall polygon
 wall_polygon_geojson = copy.deepcopy(create_geojson.geojson_EPSG32632)
-
-wall_polygon_feature = {
-    "type": "Feature",
-    "properties": {
-    },
-    "geometry": geometry.mapping(wall_polygon)
-}
+wall_polygon_feature = create_geojson.create_geojson_feature("", "", "", "", geometry.mapping(wall_polygon))
 wall_polygon_geojson["features"].append(wall_polygon_feature)
 
 create_geojson.write_geojson(directory_path + 'wall_polygon.geojson', wall_polygon_geojson)
