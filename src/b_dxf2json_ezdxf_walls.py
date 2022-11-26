@@ -1,6 +1,6 @@
-from tabnanny import check
-from venv import create
+import sys
 import ezdxf
+from ezdxf import recover
 import ezdxf.addons.geo as geo
 import json
 import geopandas
@@ -15,7 +15,21 @@ import module.shapely_functions as shapely_functions # load functions for shapel
 
 # loading dxf file
 dxf_name =config.dxf_name
-doc = ezdxf.readfile("dxf\\"+ dxf_name + ".dxf")
+
+# Umlaut ae, ue, oe doesn't work with ezdxf.readfile()=>use recover module https://ezdxf.mozman.at/docs/drawing/recover.html
+try:
+    doc, auditor = recover.readfile("dxf\\"+ dxf_name)
+except IOError:
+    print(f'Not a DXF file or a generic I/O error.')
+    sys.exit(1)
+except ezdxf.DXFStructureError:
+    print(f'Invalid or corrupted DXF file.')
+    sys.exit(2)
+
+# DXF file can still have unrecoverable errors, but this is maybe just
+# a problem when saving the recovered DXF file.
+if auditor.has_errors:
+    auditor.print_error_report()
 
 # get modelspace
 msp = doc.modelspace()
@@ -43,14 +57,14 @@ for flag_ref in msp.query("INSERT"):
     exploded_e = flag_ref.explode()
     
     # exploded door layer lines(door layer, but not door block, door components)
-    for e in exploded_e.query("LINE LWPOLYLINE SPLINE POLYLINE[layer=='AUSBAU - Objekte - Tueren']"):
+    for e in exploded_e.query("LINE LWPOLYLINE SPLINE POLYLINE[layer=='" + config.door_layer_name + "']"):
         geo_proxy = geo.proxy(e, distance=0.1, force_line_string=True)
 
         each_feature = {
             "type": "Feature",
             "properties": {
                 "index": idx,
-                "layer": 'AUSBAU - Objekte - Tueren',
+                "layer": config.door_layer_name,
                 "category": "door",
                 "block_id": str(block_id)
             },
@@ -60,14 +74,14 @@ for flag_ref in msp.query("INSERT"):
         idx += 1
 
     # exploded stair layer lines
-    for e in exploded_e.query("LINE LWPOLYLINE SPLINE POLYLINE[layer=='ROHBAU - Darstellungen - Treppen']"):
+    for e in exploded_e.query("LINE LWPOLYLINE SPLINE POLYLINE[layer=='" + config.stair_layer_name + "']"):
         geo_proxy = geo.proxy(e, distance=0.1, force_line_string=True)
 
         each_feature = {
             "type": "Feature",
             "properties": {
                 "index": idx,
-                "layer": 'ROHBAU - Darstellungen - Treppen',
+                "layer": config.stair_layer_name,
                 "category": "stair",
                 "block_id": str(block_id)
             },
@@ -84,8 +98,11 @@ for layer in layer_list:
         # Convert DXF entity into a GeoProxy object:
         geo_proxy = geo.proxy(e, distance=0.1, force_line_string=True)
         
-        category = "wall"
-        if "waende" in layer or "Waende" in layer or "trockenbau" in layer or "Trockenbau" in layer:
+        if "Türen" in layer:
+            category = "door"
+        elif "Treppen" in layer:
+            category = "stair"
+        else:
             category = "wall"
 
         each_feature = {
