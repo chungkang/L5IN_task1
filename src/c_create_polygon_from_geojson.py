@@ -8,7 +8,7 @@ import a_config as config
 directory_path = config.directory_path_result
 min_point = config.min_point # minimum length as a point
 
-with open(directory_path + 'original_EPSG32632.geojson') as f:
+with open(directory_path + 'converted_CRS.geojson') as f:
     geojson_result = json.load(f)
 
 # initialize empty geojson

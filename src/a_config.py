@@ -11,6 +11,7 @@ dxf_name = "HCU_D_102_Grundriss_1OG_moved.dxf"
 # dxf_name = "HCU_D_106_Grundriss_4OG.dxf"
 
 dxf_CRS = "+proj=tmerc +lat_0=0 +lon_0=9 +k=1 +x_0=3500000 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs"
+target_CRS = 'EPSG:32632'
 
 min_point = 0.015 # minimum length as a point
 wall_width = 0.41 # wall widthg
@@ -35,7 +36,7 @@ layer_list = [
                 ,"AUSBAU - Objekte - Türen"
                 ,"AUßENANLAGEN - Darstellungen - Geländer"
                 ,"AUßENANLAGEN - Darstellungen - Treppen"
-                ,"DARSTELLUNGEN - Bauteil - feuerbeständig"
+                # ,"DARSTELLUNGEN - Bauteil - feuerbeständig"
                 ,"DARSTELLUNGEN - Brandwand"
                 ,"Keine"
                 ,"ROHBAU - Darstellungen - Brandwand"

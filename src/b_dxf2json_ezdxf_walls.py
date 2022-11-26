@@ -8,6 +8,7 @@ from shapely import geometry
 import shapely
 from descartes import PolygonPatch
 import copy
+import re
 
 import a_config as config # load configuration parameters for the logics
 import module.create_geojson as create_geojson # load functions for creating geojson
@@ -118,27 +119,27 @@ for layer in layer_list:
         idx += 1
 
 # write custom defined CRS geojson
-create_geojson.write_geojson(directory_path + 'original.geojson', origin_geojson)
+create_geojson.write_geojson(directory_path + 'original_CRS.geojson', origin_geojson)
 
 # read created geojson / reprojection to EPSG:32632 / write reprojected geojson
-loaded_geojson = geopandas.read_file(directory_path + 'original.geojson')
-loaded_geojson = loaded_geojson.to_crs('EPSG:32632')
-loaded_geojson.to_file(directory_path + 'original_EPSG32632.geojson', driver='GeoJSON')
+loaded_geojson = geopandas.read_file(directory_path + 'original_CRS.geojson')
+loaded_geojson = loaded_geojson.to_crs(config.target_CRS)
+loaded_geojson.to_file(directory_path + 'converted_CRS.geojson', driver='GeoJSON')
 
 # load EPSG32632 geojson
-with open(directory_path + 'original_EPSG32632.geojson') as f:
-    epsg32632_geojson = json.load(f)
+with open(directory_path + 'converted_CRS.geojson') as f:
+    converted_geojson = json.load(f)
 
 wall_line_idx = 0
 
 # door multipoints to convex_hull polygon
 # + get wall lines(none door layers)
-wall_lines_geojson = copy.deepcopy(create_geojson.geojson_EPSG32632)
+wall_lines_geojson = copy.deepcopy(create_geojson.geojson_target)
 
 door_dict = {}
 stair_dict = {}
 
-for lines in epsg32632_geojson['features']:
+for lines in converted_geojson['features']:
     door_points = []
     stair_points = []
 
@@ -185,10 +186,10 @@ for lines in epsg32632_geojson['features']:
             wall_lines_geojson["features"].append(wall_line_feature)
             wall_line_idx+=1
 
-door_polygon_geojson = copy.deepcopy(create_geojson.geojson_EPSG32632)
-door_polygon_buffer_geojson = copy.deepcopy(create_geojson.geojson_EPSG32632)
-door_points_geojson = copy.deepcopy(create_geojson.geojson_EPSG32632)
-door_lines_geojson = copy.deepcopy(create_geojson.geojson_EPSG32632)
+door_polygon_geojson = copy.deepcopy(create_geojson.geojson_target)
+door_polygon_buffer_geojson = copy.deepcopy(create_geojson.geojson_target)
+door_points_geojson = copy.deepcopy(create_geojson.geojson_target)
+door_lines_geojson = copy.deepcopy(create_geojson.geojson_target)
 
 # door_polygon_buffer_list = []
 
@@ -257,7 +258,7 @@ create_geojson.write_geojson(directory_path + 'door_polygon_buffer.geojson', doo
 # create_geojson.write_geojson(directory_path + 'door_lines.geojson', door_lines_geojson)
 
 
-stair_polygon_geojson = copy.deepcopy(create_geojson.geojson_EPSG32632)
+stair_polygon_geojson = copy.deepcopy(create_geojson.geojson_target)
 stair_polygon_idx = 0
 
 # stair_points dictionary를 key 단위로 돌려줌
@@ -289,7 +290,7 @@ create_geojson.write_geojson(directory_path + 'stair_polygon.geojson', stair_pol
 
 
 # room index
-room_index_geojson = copy.deepcopy(create_geojson.geojson_EPSG32632)
+room_index_geojson = copy.deepcopy(create_geojson.geojson_target)
 
 # to check log
 room_index = ''

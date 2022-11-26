@@ -6,24 +6,35 @@ geojson_custom = {
     "type": "FeatureCollection",
 	"crs": {
 	    "type": "name",
-		"properties": {
-			"name": config.dxf_CRS
-		}
+		"properties": { "name": config.dxf_CRS }
 	},
     "features": []
 }
 
-# EPSG 32632 geojson
-geojson_EPSG32632 = {
+# target CRS geojson
+geojson_target = {
     "type": "FeatureCollection",
 	"crs": {
 	    "type": "name",
-        "properties": { "name": "urn:ogc:def:crs:EPSG::32632" }
+        "properties": { "name": "urn:ogc:def:crs:" + config.target_CRS }
 	},
     "features": []
 }
+
+# def create_geojson_feature(index, layer, category, block_id, geometry):
+# 	each_feature = {
+# 						"type": "Feature",
+# 						"properties": {
+# 							"index": str(index),
+# 							"layer": str(layer),
+# 							"category": category,
+# 							"block_id": block_id
+# 						},
+# 						"geometry": geometry
+# 					}
+# 	return each_feature
 
 # write custom defined CRS geojson
 def write_geojson(path, input_geojson):
     with open( path, 'wt', encoding='utf8') as fp:
-        json.dump(input_geojson, fp, indent=2)
+        json.dump(input_geojson, fp, ensure_ascii=False)
