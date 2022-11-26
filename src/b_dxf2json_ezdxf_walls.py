@@ -60,34 +60,14 @@ for flag_ref in msp.query("INSERT"):
     # exploded door layer lines(door layer, but not door block, door components)
     for e in exploded_e.query("LINE LWPOLYLINE SPLINE POLYLINE[layer=='" + config.door_layer_name + "']"):
         geo_proxy = geo.proxy(e, distance=0.1, force_line_string=True)
-
-        each_feature = {
-            "type": "Feature",
-            "properties": {
-                "index": idx,
-                "layer": config.door_layer_name,
-                "category": "door",
-                "block_id": str(block_id)
-            },
-            "geometry": geo_proxy.__geo_interface__
-        }
+        each_feature = create_geojson.create_geojson_feature(idx, config.door_layer_name, "door", str(block_id), geo_proxy.__geo_interface__)
         origin_geojson["features"].append(each_feature)
         idx += 1
 
     # exploded stair layer lines
     for e in exploded_e.query("LINE LWPOLYLINE SPLINE POLYLINE[layer=='" + config.stair_layer_name + "']"):
         geo_proxy = geo.proxy(e, distance=0.1, force_line_string=True)
-
-        each_feature = {
-            "type": "Feature",
-            "properties": {
-                "index": idx,
-                "layer": config.stair_layer_name,
-                "category": "stair",
-                "block_id": str(block_id)
-            },
-            "geometry": geo_proxy.__geo_interface__
-        }
+        each_feature = create_geojson.create_geojson_feature(idx, config.stair_layer_name, "stair", str(block_id), geo_proxy.__geo_interface__)
         origin_geojson["features"].append(each_feature)
         idx += 1
 
@@ -106,15 +86,7 @@ for layer in layer_list:
         else:
             category = "wall"
 
-        each_feature = {
-            "type": "Feature",
-            "properties": {
-                "index": idx,
-                "layer": layer,
-                "category": category
-            },
-            "geometry": geo_proxy.__geo_interface__
-        }
+        each_feature = create_geojson.create_geojson_feature(idx, layer, category, "", geo_proxy.__geo_interface__)
         origin_geojson["features"].append(each_feature)
         idx += 1
 
@@ -208,46 +180,21 @@ for key in door_dict.keys():
     # filter small polygon
     if(door_polygon.area<0.03): continue
 
-    door_polygon_feature = {
-        "type": "Feature",
-        "properties": {
-            "index": door_polygon_idx
-        },
-        "geometry": geometry.mapping(door_polygon)
-    }
+    door_polygon_feature = create_geojson.create_geojson_feature(door_polygon_idx, "", "", "", geometry.mapping(door_polygon))
     door_polygon_geojson["features"].append(door_polygon_feature)
 
     # door_polygon_buffer_list.append(door_polygon.buffer(min_point*1.2, 0))
-    door_polygon_buffer_feature = {
-        "type": "Feature",
-        "properties": {
-            "index": door_polygon_idx
-        },
-        "geometry": geometry.mapping(door_polygon.buffer(min_point*1.2, 0))
-    }
+    door_polygon_buffer_feature = create_geojson.create_geojson_feature(door_polygon_idx, "", "", "", geometry.mapping(door_polygon.buffer(min_point*1.2, 0)))
     door_polygon_buffer_geojson["features"].append(door_polygon_buffer_feature)
 
     # door polygon의 테두리 points를 뽑는다
     door_points = geometry.MultiPoint(door_polygon.exterior.coords)
-    door_points_feature = {
-        "type": "Feature",
-        "properties": {
-            "index": door_polygon_idx
-        },
-        "geometry": geometry.mapping(door_points)
-    }
+    door_points_feature = create_geojson.create_geojson_feature(door_polygon_idx, "", "", "", geometry.mapping(door_points))
     door_points_geojson["features"].append(door_points_feature)
 
     # door polygon의 테두리 lines를 뽑는다
     door_lines = door_polygon.boundary
-
-    door_lines_feature = {
-        "type": "Feature",
-        "properties": {
-            "index": door_polygon_idx
-        },
-        "geometry": geometry.mapping(door_lines)
-    }
+    door_lines_feature = create_geojson.create_geojson_feature(door_polygon_idx, "", "", "", geometry.mapping(door_lines))
     door_lines_geojson["features"].append(door_lines_feature)
 
     door_polygon_idx += 1
@@ -274,14 +221,7 @@ for key in stair_dict.keys():
 
     # filter small polygon
     if(stair_polygon.area<0.03): continue
-
-    stair_polygon_feature = {
-        "type": "Feature",
-        "properties": {
-            "index": stair_polygon_idx
-        },
-        "geometry": geometry.mapping(stair_polygon)
-    }
+    stair_polygon_feature = create_geojson.create_geojson_feature(stair_polygon_idx, "", "", "", geometry.mapping(door_lines))
     stair_polygon_geojson["features"].append(stair_polygon_feature)
 
     stair_polygon_idx += 1
@@ -353,16 +293,7 @@ for door_index in range(len(door_lines_geojson["features"])):
 
         # door_point을 기준으로 point_in_wall과 대칭하는 점을 만듦(new_point)
         new_point = geometry.Point(door_point.coords[0][0]*2-point_in_wall.coords[0][0], door_point.coords[0][1]*2-point_in_wall.coords[0][1])
-
-        # save room index
-        geom_feature = {
-            "type": "Feature",
-            "properties": {
-                "door_index": door_index
-                ,"id": room_index
-            },
-            "geometry":geometry.mapping(new_point)
-        }
+        geom_feature = create_geojson.create_geojson_feature(door_index, "", "", room_index, geometry.mapping(new_point))
         room_index_geojson["features"].append(geom_feature)
 
         print("success:index" + room_index)

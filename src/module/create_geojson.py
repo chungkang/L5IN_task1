@@ -21,19 +21,6 @@ geojson_target = {
     "features": []
 }
 
-# def create_geojson_feature(index, layer, category, block_id, geometry):
-# 	each_feature = {
-# 						"type": "Feature",
-# 						"properties": {
-# 							"index": str(index),
-# 							"layer": str(layer),
-# 							"category": category,
-# 							"block_id": block_id
-# 						},
-# 						"geometry": geometry
-# 					}
-# 	return each_feature
-
 # write custom defined CRS geojson
 def write_geojson(path, input_geojson):
     with open( path, 'wt', encoding='utf8') as fp:
