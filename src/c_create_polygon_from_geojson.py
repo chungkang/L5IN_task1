@@ -12,7 +12,7 @@ with open(directory_path + 'converted_CRS.geojson') as f:
     geojson_result = json.load(f)
 
 # initialize empty geojson
-polygon_geojson = copy.deepcopy(create_geojson.geojson_EPSG32632)
+polygon_geojson = copy.deepcopy(create_geojson.geojson_target)
 
 lines_all = []
 # room index에 해당하는 geojson_result의 polygon을 찾기
@@ -57,7 +57,7 @@ room_multi_polygon = geometry.MultiPolygon(room_polygon_list)
 final_room_multi_polygon = room_multi_polygon.intersection(room_multi_polygon)
 
 # initialize empty geojson
-final_room_polygon_geojson = copy.deepcopy(create_geojson.geojson_EPSG32632)
+final_room_polygon_geojson = copy.deepcopy(create_geojson.geojson_target)
 
 room_idx = 0
 # extract polygons out of multipolygon

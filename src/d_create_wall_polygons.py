@@ -54,7 +54,7 @@ for each_door in stair_polygon_geojson['features']:
 wall_polygon = wall_polygon.difference(geometry.MultiPolygon(stair_polygon_list))
 
 # wall polygon
-wall_polygon_geojson = copy.deepcopy(create_geojson.geojson_EPSG32632)
+wall_polygon_geojson = copy.deepcopy(create_geojson.geojson_target)
 wall_polygon_feature = create_geojson.create_geojson_feature("", "", "", "", geometry.mapping(wall_polygon))
 wall_polygon_geojson["features"].append(wall_polygon_feature)
 
