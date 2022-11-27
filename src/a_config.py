@@ -6,9 +6,9 @@
 # dxf_name = "modified_v1\\rev_HCU_D_106_Grundriss_4OG_moved_V2.dxf"
 
 # dxf_name = "HCU_D_102_Grundriss_1OG_moved.dxf"
-# dxf_name = "HCU_D_104_Grundriss_2OG_moved.dxf"
+dxf_name = "HCU_D_104_Grundriss_2OG_moved.dxf"
 # dxf_name = "HCU_D_105_Grundriss_3OG_moved.dxf"
-dxf_name = "HCU_D_106_Grundriss_4OG.dxf"
+# dxf_name = "HCU_D_106_Grundriss_4OG.dxf"
 
 dxf_CRS = "+proj=tmerc +lat_0=0 +lon_0=9 +k=1 +x_0=3500000 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs"
 target_CRS = 'EPSG:32632'
