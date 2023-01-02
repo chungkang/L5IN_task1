@@ -6,7 +6,6 @@ import json
 import geopandas
 from shapely import geometry
 import shapely
-from descartes import PolygonPatch
 import copy
 
 import a_config as config # load configuration parameters for the logics

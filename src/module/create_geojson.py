@@ -16,7 +16,7 @@ geojson_target = {
     "type": "FeatureCollection",
 	"crs": {
 	    "type": "name",
-        "properties": { "name": "urn:ogc:def:crs:" + config.target_CRS }
+        "properties": { "name": "urn:ogc:def:crs: " + config.target_CRS }
 	},
     "features": []
 }
