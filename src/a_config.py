@@ -3,10 +3,10 @@
 # dxf_name = "modified_v1\\rev_HCU_D_102_Grundriss_1OG_moved.dxf"
 # dxf_name = "modified_v1\\rev_HCU_D_104_Grundriss_2OG_moved.dxf"
 # dxf_name = "modified_v1\\rev_HCU_D_105_Grundriss_3OG_moved.dxf"
-# dxf_name = "modified_v1\\rev_HCU_D_106_Grundriss_4OG_moved_V2.dxf"
+dxf_name = "modified_v1\\rev_HCU_D_106_Grundriss_4OG_moved_V2.dxf"
 
 # dxf_name = "HCU_D_102_Grundriss_1OG_moved.dxf"
-dxf_name = "HCU_D_104_Grundriss_2OG_moved.dxf"
+# dxf_name = "HCU_D_104_Grundriss_2OG_moved.dxf"
 # dxf_name = "HCU_D_105_Grundriss_3OG_moved.dxf"
 # dxf_name = "HCU_D_106_Grundriss_4OG.dxf"
 
@@ -38,7 +38,7 @@ layer_list = [
                 ,"AUßENANLAGEN - Darstellungen - Treppen"
                 # ,"DARSTELLUNGEN - Bauteil - feuerbeständig"
                 # ,"DARSTELLUNGEN - Brandwand"
-                # ,"Keine"
+                ,"Keine"
                 ,"ROHBAU - Darstellungen - Brandwand"
                 # ,"ROHBAU - Darstellungen - Stützen"
                 ,"ROHBAU - Darstellungen - Treppen"

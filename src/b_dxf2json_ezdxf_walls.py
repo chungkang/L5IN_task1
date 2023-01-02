@@ -8,7 +8,6 @@ from shapely import geometry
 import shapely
 from descartes import PolygonPatch
 import copy
-import re
 
 import a_config as config # load configuration parameters for the logics
 import module.create_geojson as create_geojson # load functions for creating geojson
@@ -221,7 +220,7 @@ for key in stair_dict.keys():
 
     # filter small polygon
     if(stair_polygon.area<0.03): continue
-    stair_polygon_feature = create_geojson.create_geojson_feature(stair_polygon_idx, "", "", "", geometry.mapping(door_lines))
+    stair_polygon_feature = create_geojson.create_geojson_feature(stair_polygon_idx, "", "", "", geometry.mapping(stair_polygon))
     stair_polygon_geojson["features"].append(stair_polygon_feature)
 
     stair_polygon_idx += 1
