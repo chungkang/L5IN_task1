@@ -13,7 +13,7 @@ def find_intersections_baseline_to_all(baseline, all_lines):
             if "Point" == inter.type:
                 result_list.append(inter)
             elif "MultiPoint" == inter.type:
-                result_list.extend([pt for pt in inter])
+                result_list.extend(list(inter.geoms))
             elif "MultiLineString" == inter.type:
                 multiLine = [line for line in inter]
                 first_coords = multiLine[0].coords[0]
@@ -25,7 +25,7 @@ def find_intersections_baseline_to_all(baseline, all_lines):
                     if "Point" == geom.type:
                         result_list.append(geom)
                     elif "MultiPoint" == geom.type:
-                        result_list.extend([pt for pt in geom])
+                        result_list.extend(list(geom.geoms))
                     elif "MultiLineString" == geom.type:
                         multiLine = [line for line in geom]
                         first_coords = multiLine[0].coords[0]
@@ -39,10 +39,10 @@ def find_intersections_baseline_to_all(baseline, all_lines):
 def get_lines_from_point_and_line(line, point, filtered_lines):
     result_yn = False
     
-    # line과 filtered_lines의 모든 교점을 구함
+    # find all intersection points between line and filtered_lines
     line_inters = find_intersections_baseline_to_all(line, filtered_lines)
 
-    # line_inters 중에서 point와 가장 가까운 점을 구함 -> 한쪽 끝의 end point
+    # find the closest point from line_inters and point -> another side's end point
     line_end1 = geometry.Point()
     distance_line_end1 = 100
     for pt in line_inters:
@@ -50,17 +50,17 @@ def get_lines_from_point_and_line(line, point, filtered_lines):
             line_end1 = pt
             distance_line_end1 = pt.distance(point)
 
-    # line의 한쪽 end point를 기준으로 업데이트
+    # update based on one end point of the line
     splited_line = shapely.ops.split(line, line_end1.buffer(min_point))
     
     for line in splited_line:
         if point.distance(line) < min_point:
             line = line
 
-    # 업데이트된 line과 filtred_lines의 모든 교점을 구함
+    # find all the intersections between updated line and filtered lines
     updated_line_inters = find_intersections_baseline_to_all(line, filtered_lines)
 
-    # updated_line_inters 중에서 line_end1 과 겹치는 것을 제외하고, 가장 가까운 반대편 end point를 구함
+    # find most close apposite end point which is not equl to line_end1 inupdated_line_inters
     line_end2 = geometry.Point()
     distance_line_end2 = 100
     for pt in updated_line_inters:
@@ -72,14 +72,14 @@ def get_lines_from_point_and_line(line, point, filtered_lines):
 
     result_lines = []
 
-    # endpoint 를 못찾으면 스킵
+    # if there is no endpoint, skip
     if line_end2:
         result_yn = True
 
-        # line_end1과 line_end2로 이루어진 선분으로 line을 업데이트
+        # update line with line_end1 and line_end2
         line = geometry.LineString([line_end1, line_end2])
 
-        # line_end1과 line_end2에 접하는 모든 선분을 추출
+        # get all lines which is near line_end1 and line_end2
         for line in  filtered_lines:
             line = geometry.shape(line['geometry'])
             if line_end1.distance(line) < min_point or line_end2.distance(line) < min_point:
