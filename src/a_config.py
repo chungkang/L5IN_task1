@@ -6,7 +6,7 @@ dxf_name = "dxf\\HCU_D_106_Grundriss_4OG.dxf"
 dxf_CRS = "+proj=tmerc +lat_0=0 +lon_0=9 +k=1 +x_0=3500000 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs"
 target_CRS = "EPSG:32632"
 
-min_point = 0.015 # minimum length as a point
+min_point = 0.02 # minimum length as a point
 wall_width = 0.41 # wall width
 
 # interested layer list

@@ -1,3 +1,6 @@
+# polygon substraction
+# https://stackoverflow.com/questions/61930060/how-to-use-shapely-for-subtracting-two-polygons
+
 import json
 from shapely import geometry
 import copy
@@ -6,36 +9,37 @@ import module.create_geojson as create_geojson # load functions for creating geo
 
 DIRECTORY_PATH = config.directory_path_result
 
+# open outer wall created manually with QGIS
 with open(DIRECTORY_PATH + 'outer_wall_manual.geojson') as f:
     outer_wall_geojson = json.load(f)
 
-wall_polygon = geometry.shape(outer_wall_geojson['features'][0]['geometry'])
-
-# load EPSG32632 geojson
+# open room polygon
 with open(DIRECTORY_PATH + 'final_room_polygon.geojson') as f:
     final_room_polygon = json.load(f)
+
+# open door polygon with buffer
+with open(DIRECTORY_PATH + 'door_polygon_buffer.geojson') as f:
+    door_polygon_buffer_geojson = json.load(f)
+
+
+wall_polygon = geometry.shape(outer_wall_geojson['features'][0]['geometry'])
 
 room_polygon_list = []
 for each_room in final_room_polygon['features']:
     room_polygon = geometry.shape(each_room['geometry'])
     room_polygon_list.append(room_polygon)
+# subtract room from outer wall
+wall_polygon = wall_polygon.difference(geometry.MultiPolygon(room_polygon_list))
 
-# polygon substraction
-# https://stackoverflow.com/questions/61930060/how-to-use-shapely-for-subtracting-two-polygons
-wall_polygon = wall_polygon.difference(geometry.MultiPolygon([room_polygon_list]))
-with open(DIRECTORY_PATH + 'door_polygon_buffer.geojson') as f:
-    door_polygon_buffer_geojson = json.load(f)
-
-# subtract door from outer wall
 door_polygon_list = []
 # for each_door in door_polygon_buffer_geojson['features']:
 for each_door in door_polygon_buffer_geojson['features']:
     door_polygon = geometry.shape(each_door['geometry'])
     door_polygon_list.append(door_polygon)
-    
-wall_polygon = wall_polygon.difference(geometry.MultiPolygon([door_polygon_list]))
+# subtract door from outer wall
+wall_polygon = wall_polygon.difference(geometry.MultiPolygon(door_polygon_list))
 
-# wall polygon
+# save wall polygon 
 wall_polygon_geojson = copy.deepcopy(create_geojson.geojson_custom)
 wall_polygon_feature = create_geojson.create_geojson_feature("", "", "", "", geometry.mapping(wall_polygon))
 wall_polygon_geojson["features"].append(wall_polygon_feature)

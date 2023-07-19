@@ -63,7 +63,7 @@ room_idx = 0
 # Multipolygon, Polygon 
 if final_room_multi_polygon.geom_type == 'MultiPolygon':
     for polygon in final_room_multi_polygon.geoms:
-        geom_feature = create_geojson.create_geojson_feature(room_idx, "", "", "", geometry.mapping(final_room_multi_polygon))
+        geom_feature = create_geojson.create_geojson_feature(room_idx, "", "", "", geometry.mapping(polygon))
         final_room_polygon_geojson["features"].append(geom_feature)
         room_idx += 1
 else:
