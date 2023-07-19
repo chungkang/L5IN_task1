@@ -3,16 +3,16 @@ from shapely import geometry
 from shapely.ops import split
 from shapely.affinity import rotate
 import copy
-import a_config as config
+import a_setting as setting
 import module.create_geojson as create_geojson
 import module.shapely_functions as shapely_functions
 
-MIN_POINT = config.min_point # minimum length as a point
-WALL_WIDTH = config.wall_width # wall width
-DIRECTORY_PATH = config.directory_path # directory path of saving result
+MIN_POINT = setting.min_point
+WALL_WIDTH = setting.wall_width
+DIRECTORY_PATH = setting.directory_path
 
 # read created geojson
-with open(config.directory_path + 'door_lines.geojson', "r") as file:
+with open(DIRECTORY_PATH + 'door_lines.geojson', "r") as file:
     # Read the contents of the file
     door_lines_geojson = json.load(file)
 

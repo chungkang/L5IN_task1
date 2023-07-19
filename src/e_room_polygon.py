@@ -2,13 +2,12 @@ import json
 from shapely import geometry, ops
 import module.create_geojson as create_geojson
 import copy
+import a_setting as setting
 
-import a_config as config
+DIRECTORY_PATH = setting.directory_path_result
+MIN_POINT = setting.min_point
 
-directory_path = config.directory_path_result
-min_point = config.min_point # minimum length as a point
-
-with open(directory_path + 'original_CRS.geojson') as f:
+with open(DIRECTORY_PATH + 'original_CRS.geojson') as f:
     geojson_result = json.load(f)
 
 # initialize empty geojson
@@ -19,7 +18,7 @@ lines_all = []
 # extract all lines which has intersection with edge points
 for line in  geojson_result['features']:
     line = geometry.shape(line['geometry'])
-    lines_all.append(line.buffer(min_point))
+    lines_all.append(line.buffer(MIN_POINT))
 
 # get all inner polygon(room) from wall lines
 buffer_polygon = ops.unary_union(lines_all)
@@ -36,9 +35,9 @@ else:
         geom_feature = create_geojson.create_geojson_feature("", "", "", "", geometry.mapping(geometry.Polygon(geom)))
         polygon_geojson["features"].append(geom_feature)
 
-create_geojson.write_geojson(directory_path + 'all_room_polygon.geojson', polygon_geojson)
+create_geojson.write_geojson(DIRECTORY_PATH + 'all_room_polygon.geojson', polygon_geojson)
 
-with open(directory_path + 'room_index.geojson') as f:
+with open(DIRECTORY_PATH + 'room_index.geojson') as f:
     room_index = json.load(f)
 
 room_polygon_list = []
@@ -71,4 +70,4 @@ else:
     final_room_polygon_geojson["features"].append(geom_feature)
     room_idx += 1
 
-create_geojson.write_geojson(directory_path + 'final_room_polygon.geojson', final_room_polygon_geojson)
+create_geojson.write_geojson(DIRECTORY_PATH + 'final_room_polygon.geojson', final_room_polygon_geojson)

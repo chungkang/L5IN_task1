@@ -1,5 +1,6 @@
 
 # source file
+directory_path = 'geojson_output\\'
 dxf_name = "dxf\\HCU_D_106_Grundriss_4OG.dxf"
 
 # set custom CRS
@@ -28,20 +29,12 @@ layer_list = [
                 ,"AUSBAU - Objekte - Aufzüge"
                 ,"AUSBAU - Objekte - Türen"
                 ,"AUßENANLAGEN - Darstellungen - Geländer"
-                # ,"DARSTELLUNGEN - Bauteil - feuerbeständig"
-                # ,"DARSTELLUNGEN - Brandwand"
                 ,"Keine"
                 ,"ROHBAU - Darstellungen - Brandwand"
                 ,"ROHBAU - Darstellungen - Decken"
-                # ,"ROHBAU - Darstellungen - Stützen"
-                # ,"ROHBAU - Darstellungen - Unterzug - Deckenversprung - Öffnung"
                 ,"ROHBAU - Darstellungen - Wände"
                 ,"ROHBAU - Darstellungen - Wände - Mauerwerk"
                 ,"wall"
 ]
 
-door_layer_name = "AUSBAU - Objekte - Türen"
-
-directory_path = 'geojson_output\\'
-# directory_path_result = 'geojson_result\\28102022\\4detection_lines\\'
-directory_path_result = 'geojson_output\\'
+door_layer = "AUSBAU - Objekte - Türen"

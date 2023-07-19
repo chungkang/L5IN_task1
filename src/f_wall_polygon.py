@@ -1,13 +1,12 @@
 # polygon substraction
 # https://stackoverflow.com/questions/61930060/how-to-use-shapely-for-subtracting-two-polygons
-
 import json
 from shapely import geometry
 import copy
-import a_config as config # load configuration parameters for the logics
+import a_setting as setting
 import module.create_geojson as create_geojson # load functions for creating geojson
 
-DIRECTORY_PATH = config.directory_path_result
+DIRECTORY_PATH = setting.directory_path_result
 
 # open outer wall created manually with QGIS
 with open(DIRECTORY_PATH + 'outer_wall_manual.geojson') as f:

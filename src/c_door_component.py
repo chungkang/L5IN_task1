@@ -2,14 +2,14 @@ from shapely import geometry
 import copy
 import geopandas
 import json
-import a_config as config # load configuration parameters for the logics
+import a_setting as setting
 import module.create_geojson as create_geojson # load functions for creating geojson
 
-MIN_POINT = config.min_point # minimum length as a point
-DIRECTORY_PATH = config.directory_path
+MIN_POINT = setting.min_point
+DIRECTORY_PATH = setting.directory_path
 
 # read created geojson
-with open(config.directory_path + 'original_CRS.geojson', "r") as file:
+with open(DIRECTORY_PATH + 'original_CRS.geojson', "r") as file:
     # Read the contents of the file
     loaded_geojson = json.load(file)
 
