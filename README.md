@@ -1,29 +1,47 @@
 # L5IN_task1: dxf to geojson
- The main aim of Task1 is converting autoCAD file(dxf) to geojson file. In converting method automate cleaning method should be concerned. That means only the interested lines, such as wall and door should be extracted. To solve this problem 'ezdxf' library for Python is chosen. 'exdxf' is a Python package to create and modify dxf drawings. With this library all the elements from dxf file can be converted to python instance. According to other researches, the other researches were processed with pre-cleaned and pre-organized autoCAD file with autoCAD software manually.
+ The main aim is converting AutoCAD file(dxf) to geojson file and classify features. The aim is to generate a workflow that needs minimum manipulation of the DXF files. Nevertheless, some pre-adjustments are indispensable because of the complexity of CAD files and the lack of python libraries that can handle DXF files.
 
-## Input autoCAD 2D floorplan
-![image](https://user-images.githubusercontent.com/36185863/146599197-d2d3bb14-1dc3-4afa-a9ba-904a4fff6cf7.png)
+# The 2D floor plan generation from CAD plan. Above is the original CAD plan. Below is the zoomed view, from left to right; pre-processed plan, extracted features, and the final product - 2D floor plan
+![image](https://github.com/chungkang/L5IN_task1/assets/36185863/1efa5a0c-4193-4ebe-8d50-c0e32cd01bb9)
 
-## Output geojson 2D floorplan
-![image](https://user-images.githubusercontent.com/36185863/146599240-a79d8ea8-4d7b-4b04-a0b9-8810acc17ca4.png)
-
-## Workflow
+# Workflow
 ![image](https://github.com/chungkang/L5IN_task1/blob/main/flow_chart.drawio.png)
 
-### Detailed Workflow
-#### Pre processing: modify autoCAD floorplan(dxf)
-explode block in block for door block, manual editing of door part, save as dxf format
+## Pre processing: modify autoCAD floorplan(dxf)
+- Delete uninterested layers with LAYDEL command with AutoCAD
+- Delete arcs from the door blocks
+- Explode blocks nested in another block feature
+- Create door block which is not constructed as a door block
+- Delete small objects
+  => Assume that all doors are blocks
 
-#### Main logic
-##### Step a: Settings
-get dxf file name, CRS, mininum point buffer, wall width, extract interested layer name, door layer name, stair layer name, input directory path, output directory path
+![image](https://github.com/chungkang/L5IN_task1/assets/36185863/3818d631-f58c-4fcc-a03f-2702cd1899e7)
+Original dxf file
 
-![image](https://user-images.githubusercontent.com/36185863/204096269-664ea0c4-6ae7-463b-8686-c47a45282914.png)
-![image](https://user-images.githubusercontent.com/36185863/204096274-895c4b48-b96c-467b-a418-e21b7514aa58.png)
-remove opening part of door block
+![image](https://github.com/chungkang/L5IN_task1/assets/36185863/0e188574-caa7-4a14-8c2e-a9ac26eb0364)
+Interested Layers
+
+![image](https://github.com/chungkang/L5IN_task1/assets/36185863/09e4880b-281b-4378-85d7-ebd7ea8ccd86)
+Cleaned dxf file
+
+## Step a. setting
+directory_path: directory path
+dxf_name: dxf file name
+min_point: minimum length as a point for geometry
+wall_width: assumption of wall width
+layer_list: interested layers
+door_layer: door layer
+
+## Step b. dxf to geojson
+- Read dxf file with ezdxf library
+- Extract interested layers based on "layer_list"
+- Categorized wall and door based on "door_layer_name"
+- Write a geojson file
+
+## Step c. door component
 
 
-##### Step b.: Extract all wall lines and room index
+Extract all wall lines and room index
 read dxf file as Shapely instant
 save all lines as geojson format with CRS
 convert CRS to EPSG:32632
@@ -45,5 +63,6 @@ draw outer wall line as a single polygon
 input  outer_wall_manual.geojson / filtered_room_polygon.geojson / door_polygon.geojson / stair_polygon.geojson
 Subtract door, stair from outer wall polygon
 
-## Libraries
-Ezdxf, Geopandas, Shapely, json, geojson, openCV
+## Library
+ezdxf https://github.com/mozman/ezdxf/tree/stable
+Geopandas, Shapely, json, geojson, openCV
