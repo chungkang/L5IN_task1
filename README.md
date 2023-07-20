@@ -1,4 +1,4 @@
-# L5IN_task1: DXF to GeoJSON
+# L5IN Task1: DXF to GeoJSON
 
 The main aim of this project is to convert AutoCAD files (DXF) to GeoJSON format and classify features. The goal is to create a workflow that requires minimal manipulation of the DXF files. However, some pre-adjustments are indispensable due to the complexity of CAD files and the limited availability of Python libraries that can handle DXF files.
 
@@ -8,11 +8,12 @@ The main aim of this project is to convert AutoCAD files (DXF) to GeoJSON format
 ![Flowchart](https://github.com/chungkang/L5IN_task1/blob/main/flow_chart.drawio.png)
 
 ## Preprocessing: Modifying AutoCAD Floorplan (DXF)
-- Use the LAYDEL command in AutoCAD to delete unneeded layers.
+- Use the LAYDEL command in AutoCAD to delete unneeded layers (not mandatory).
 - Remove arcs from the door blocks.
 - Explode blocks nested within another block feature.
 - Create door blocks that are not constructed as door blocks.
 - Delete small objects.
+- Connect the missing closed part of the wall with Polyline and assign the wall layer.
   => It is assumed that all doors are represented as blocks.
 
 |![Original DXF file](https://github.com/chungkang/L5IN_task1/assets/36185863/3818d631-f58c-4fcc-a03f-2702cd1899e7)|![Interested Layers](https://github.com/chungkang/L5IN_task1/assets/36185863/0e188574-caa7-4a14-8c2e-a9ac26eb0364)|![Cleaned DXF file](https://github.com/chungkang/L5IN_task1/assets/36185863/09e4880b-281b-4378-85d7-ebd7ea8ccd86)|
@@ -75,12 +76,15 @@ This step is for converting closed lines to polygons.
 
 ## Processing with QGIS
 This step is for drawing the outermost wall of the building with QGIS.
+(For simple shaped buildings such as rectangular buildings, they can be managed with Convexhull with Python code.)
 
 - Read the GeoJSON created by Step b using QGIS.
 - Use the snap function in QGIS to draw the outermost wall.
 
 ## Step f: Wall Polygon
-This step is for extracting the wall polygon from the outermost wall polygon, door polygon, and room polygon.
+This step is for extracting the wall polygon from the outermost wall polygon,
+
+ door polygon, and room polygon.
 
 - Read the GeoJSON files from Step c (door_polygon_buffer.geojson), Step e (final_room_polygon.geojson), and the processed file from QGIS (outer_wall_manual.geojson).
 - Utilize the Shapely library for geometric operations.
@@ -98,4 +102,11 @@ These three GeoJSON files provide valuable information about the building's layo
 
 ## Library
 - ezdxf: [https://github.com/mozman/ezdxf/tree/stable](https://github.com/mozman/ezdxf/tree/stable)
-- Geopandas, Shapely, json, geojson, openCV
+- Geopandas, Shapely, json, geojson, OpenCV
+
+## How to Execute the Code
+1. Modify the DXF file with AutoCAD.
+2. Set the needed parameters in "src/a_setting.py."
+3. Run the code one by one in order: "src/b_dxf2geojson.py", "src/c_door_component.py", "d_room_index.py", "e_room_polygon.py"
+4. Create the outermost wall GeoJSON file manually with QGIS as "src/outer_wall_manual.geojson". ("src/outer_wall_manual.geojson" should have the same CRS as other GeoJSON files.)
+5. Run the code "src/f_wall_polygon.py"
