@@ -1,106 +1,101 @@
-# L5IN_task1: dxf to geojson
- The main aim is converting AutoCAD file(dxf) to geojson file and classify features. The aim is to generate a workflow that needs minimum manipulation of the DXF files. Nevertheless, some pre-adjustments are indispensable because of the complexity of CAD files and the lack of python libraries that can handle DXF files.
+# L5IN_task1: DXF to GeoJSON
 
+The main aim of this project is to convert AutoCAD files (DXF) to GeoJSON format and classify features. The goal is to create a workflow that requires minimal manipulation of the DXF files. However, some pre-adjustments are indispensable due to the complexity of CAD files and the limited availability of Python libraries that can handle DXF files.
 
-![image](https://github.com/chungkang/L5IN_task1/assets/36185863/1efa5a0c-4193-4ebe-8d50-c0e32cd01bb9)
+![Original CAD plan](https://github.com/chungkang/L5IN_task1/assets/36185863/1efa5a0c-4193-4ebe-8d50-c0e32cd01bb9)
 
-The 2D floor plan generation from CAD plan. Above is the original CAD plan. Below is the zoomed view, from left to right; pre-processed plan, extracted features, and the final product - 2D floor plan
+## Workflow
+![Flowchart](https://github.com/chungkang/L5IN_task1/blob/main/flow_chart.drawio.png)
 
-# Workflow
-![image](https://github.com/chungkang/L5IN_task1/blob/main/flow_chart.drawio.png)
+## Preprocessing: Modifying AutoCAD Floorplan (DXF)
+- Use the LAYDEL command in AutoCAD to delete unneeded layers.
+- Remove arcs from the door blocks.
+- Explode blocks nested within another block feature.
+- Create door blocks that are not constructed as door blocks.
+- Delete small objects.
+  => It is assumed that all doors are represented as blocks.
 
-## Pre processing: modify autoCAD floorplan(dxf)
-- Delete uninterested layers with LAYDEL command with AutoCAD
-- Delete arcs from the door blocks
-- Explode blocks nested in another block feature
-- Create door block which is not constructed as a door block
-- Delete small objects
-  => Assume that all doors are blocks
+|![Original DXF file](https://github.com/chungkang/L5IN_task1/assets/36185863/3818d631-f58c-4fcc-a03f-2702cd1899e7)|![Interested Layers](https://github.com/chungkang/L5IN_task1/assets/36185863/0e188574-caa7-4a14-8c2e-a9ac26eb0364)|![Cleaned DXF file](https://github.com/chungkang/L5IN_task1/assets/36185863/09e4880b-281b-4378-85d7-ebd7ea8ccd86)|
+|-|-|-|
+|Original DXF file|Interested Layers|Cleaned DXF file|
 
-![image](https://github.com/chungkang/L5IN_task1/assets/36185863/3818d631-f58c-4fcc-a03f-2702cd1899e7)
-Original dxf file
+## Step a: Setting
+This step is for setting required parameters for the main logic.
 
-![image](https://github.com/chungkang/L5IN_task1/assets/36185863/0e188574-caa7-4a14-8c2e-a9ac26eb0364)
-Interested Layers
+- directory_path: directory path
+- dxf_name: DXF file name
+- min_point: minimum length as a point for geometry
+- wall_width: assumption of wall width
+- layer_list: interested layers
+- door_layer: door layer
 
-![image](https://github.com/chungkang/L5IN_task1/assets/36185863/09e4880b-281b-4378-85d7-ebd7ea8ccd86)
-Cleaned dxf file
+## Step b: DXF to GeoJSON
+This step is for converting DXF to GeoJSON.
 
+- Read the DXF file using the ezdxf library.
+- Extract the layers of interest based on the "layer_list."
+- Categorize walls and doors based on the "door_layer_name."
+  Doors are identified by the block_id attribute within each block.
+- Save the GeoJSON file.
 
-## Step a. setting
-This step is for settting requried parameters for main logic.
+## Step c: Door Component
+This step is for extracting door components.
 
-directory_path: directory path
-dxf_name: dxf file name
-min_point: minimum length as a point for geometry
-wall_width: assumption of wall width
-layer_list: interested layers
-door_layer: door layer
+- Read the GeoJSON file from Step b.
+- Extract the door layer based on "door_layer."
+- Convert features using the Shapely library for geometric purposes.
+- Save the door components as door_polygon, door_polygon_buffer, door_points, and door_lines in GeoJSON format.
 
-## Step b. dxf to geojson
-This step is for converting dxf to geojson.
+- door_polygon: outermost contour
+- door_polygon_buffer: buffered door_polygon with a length of "min_point"
+- door_points: each edge from door_polygon
+- door_lines: each line from door_polygon
 
-- Read dxf file with ezdxf library
-- Extract interested layers based on "layer_list"
-- Categorized wall and door based on "door_layer_name"
-  doors are named with block_id in attribute with each block
-- Save geojson
+## Step d: Room Index
+This step is for extracting the "Room Index" to obtain the inner parts of walls (rooms, hallways, etc.).
 
-## Step c. door component
-This step is for extracting door component.
+- Read the door_lines GeoJSON created by Step c.
+- Convert features using the Shapely library for geometric purposes.
+- Extract lines from door_lines that are longer than the "wall_width."
+- Obtain the middle point of the longer door line ("Door Point") and draw an orthogonal line.
+- Determine the direction of the orthogonal line with the longer length towards another intersection point with the wall line.
+- Place the "Room Index" inside the space (not in the wall).
+- Save the room index as GeoJSON.
 
-- Read geojson file from Step b
-- Extract door layer based on "door_layer"
-- Convert features with Shaepely library for geometric purpose
-- Save door component as door_polygon, door_polygon_buffer, door_points, door_lines as geojson
-door_polygon: outer most contour
-door_polygon_buffer: buffererd door_polygon based with length of "min_point"
-door_points: each edge from door_polygon
-door_lines: each line from door_polygon
+![Door Point and Room Index](https://github.com/chungkang/L5IN_task1/assets/36185863/d997d6c8-b9cb-4121-aa7b-108911d1c711)
 
-## Step d. Room Index
-This step is for extracting "Room Index" to get inner part of wall (room, hallway...).
+## Step e: Room Polygon
+This step is for converting closed lines to polygons.
 
-- Read door_lines geojson created by Step c
-- Convert features with Shaepely library for geometric purpose
-- Extract lines from door_lines which is longer than "wall_width"
-- Get middle point of the longer door line ("Door Point") and draw orthogonal line
-- Get the direction of the orthogonal line which have longer length to another intersection point with wall line
-- Put "Room Index" inside of the space (not in the wall)
-- Save room index as geojson
-
-![image](https://github.com/chungkang/L5IN_task1/assets/36185863/d997d6c8-b9cb-4121-aa7b-108911d1c711)
-Door Point and Room Index
-
-## Step e. Room Polygon
-This step is for converting closed lines to polygon.
-
-- Read geojson created by Step b
-- Convert features with Shaepely library for geometric purpose
-- Create polygons with closed lines
-- Extract polygons which include Room Index which is extracted by Step d
-- Save all closed polygons and extracted polygons as geojson
+- Read the GeoJSON created by Step b.
+- Convert features using the Shapely library for geometric purposes.
+- Create polygons from the closed lines.
+- Extract polygons that include the Room Index, which was obtained in Step d.
+- Save all closed polygons and the extracted polygons as GeoJSON.
 
 ## Processing with QGIS
-This step is for drawing outer most wall of the building with QGIS.
+This step is for drawing the outermost wall of the building with QGIS.
 
-- Read geojson created by Step b with QGIS
-- Draw outer most wall with snap function of QGIS
+- Read the GeoJSON created by Step b using QGIS.
+- Use the snap function in QGIS to draw the outermost wall.
 
-## Step f. Wall Polygon
-This step is for extracting wall polygon from outer most wall polygon, door polygon, and room polygon.
+## Step f: Wall Polygon
+This step is for extracting the wall polygon from the outermost wall polygon, door polygon, and room polygon.
 
-- Read geojson from Step c, Step e, and Processing with QGIS. (door_polygon_buffer.geojson, final_room_polygon.geojson, outer_wall_manual.geojson)
-- Convert features with Shaepely library for geometric purpose
-- Subtract door and room polygon from outer wall polygon
-- Save wall as geojson
+- Read the GeoJSON files from Step c (door_polygon_buffer.geojson), Step e (final_room_polygon.geojson), and the processed file from QGIS (outer_wall_manual.geojson).
+- Utilize the Shapely library for geometric operations.
+- Perform subtraction to remove the areas covered by door and room polygons from the outer wall polygon.
+- Save the resulting wall polygon as a new GeoJSON file.
 
 ## Output
-Those 3 geojson files are representing door, room, and wall part.
-door_polygon_buffer.geojson
-final_room_polygon.geojson
-wall_polygon.geojson
+The output includes three GeoJSON files representing the door, room, and wall parts:
+
+1. `door_polygon_buffer.geojson`: This file contains the GeoJSON representation of the door polygons after buffering.
+2. `final_room_polygon.geojson`: This file contains the GeoJSON representation of the room polygons extracted from the building's emergency escape plan image.
+3. `wall_polygon.geojson`: This file contains the GeoJSON representation of the wall polygons obtained by subtracting the door and room polygons from the outermost wall polygon.
+
+These three GeoJSON files provide valuable information about the building's layout, including the locations of doors, rooms, and the overall structure of the walls. They can be utilized for various purposes, such as indoor navigation, spatial analysis, and building management.
 
 ## Library
-ezdxf https://github.com/mozman/ezdxf/tree/stable
-Geopandas, Shapely, json, geojson, openCV
+- ezdxf: [https://github.com/mozman/ezdxf/tree/stable](https://github.com/mozman/ezdxf/tree/stable)
+- Geopandas, Shapely, json, geojson, openCV
