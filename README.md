@@ -1,4 +1,4 @@
-# L5IN Task1: DXF to GeoJSON
+# L5IN Task 1: DXF to GeoJSON
 
 The main aim of this project is to convert AutoCAD files (DXF) to GeoJSON format and classify features. The goal is to create a workflow that requires minimal manipulation of the DXF files. However, some pre-adjustments are indispensable due to the complexity of CAD files and the limited availability of Python libraries that can handle DXF files.
 
