@@ -1,4 +1,3 @@
-
 # source file
 directory_path = 'geojson_output\\'
 dxf_name = "dxf\\HCU_D_106_Grundriss_4OG.dxf"

@@ -1,12 +1,12 @@
 import json
-import a_config as config # load configuration parameters for the logics
+import a_setting as setting
 
 # custom coordinate system geojson
 geojson_custom = {
     "type": "FeatureCollection",
 	"crs": {
 	    "type": "name",
-		"properties": { "name": config.dxf_CRS }
+		"properties": { "name": setting.dxf_CRS }
 	},
     "features": []
 }
@@ -16,7 +16,7 @@ geojson_target = {
     "type": "FeatureCollection",
 	"crs": {
 	    "type": "name",
-        "properties": { "name": "urn:ogc:def:crs: " + config.target_CRS }
+        "properties": { "name": "urn:ogc:def:crs: " + setting.target_CRS }
 	},
     "features": []
 }

@@ -4,7 +4,7 @@ import module.create_geojson as create_geojson
 import copy
 import a_setting as setting
 
-DIRECTORY_PATH = setting.directory_path_result
+DIRECTORY_PATH = setting.directory_path
 MIN_POINT = setting.min_point
 
 with open(DIRECTORY_PATH + 'original_CRS.geojson') as f:
